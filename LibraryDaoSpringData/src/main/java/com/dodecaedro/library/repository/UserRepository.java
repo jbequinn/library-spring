@@ -1,0 +1,13 @@
+package com.dodecaedro.library.repository;
+
+import com.dodecaedro.library.data.pojo.User;
+import org.springframework.data.repository.RepositoryDefinition;
+
+import java.util.List;
+
+@RepositoryDefinition(domainClass = User.class, idClass = Integer.class)
+public interface UserRepository {
+  User findOne(Integer userId);
+  User save(User user);
+  List<User> findAll();
+}

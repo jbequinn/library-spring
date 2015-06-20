@@ -1,0 +1,123 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building LibraryDaoSpringData 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ LibraryDaoSpringData ---
+[INFO] Deleting /home/jm/development/library-spring/LibraryDaoSpringData/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ LibraryDaoSpringData ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ LibraryDaoSpringData ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to /home/jm/development/library-spring/LibraryDaoSpringData/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ LibraryDaoSpringData ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ LibraryDaoSpringData ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ LibraryDaoSpringData ---
+[INFO] Surefire report directory: /home/jm/development/library-spring/LibraryDaoSpringData/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+13:12:54.246 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class com.dodecaedro.library.repository.UserRepositoryTest].
+13:12:54.253 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+13:12:54.257 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+13:12:54.264 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.dodecaedro.library.repository.UserRepositoryTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
+13:12:54.277 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@5f9d02cb declaringClass = 'com.dodecaedro.library.repository.UserRepositoryTest', classes = '{class com.dodecaedro.library.configuration.LibraryDaoConfiguration}', locations = '{}', inheritLocations = true, initializers = '{}', inheritInitializers = true, name = [null], contextLoaderClass = 'org.springframework.boot.test.SpringApplicationContextLoader']
+13:12:54.282 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.286 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [com.dodecaedro.library.repository.UserRepositoryTest]: using defaults.
+13:12:54.293 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+13:12:54.296 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext]
+13:12:54.304 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@78e67e0a, org.springframework.test.context.support.DirtiesContextTestExecutionListener@bd8db5a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2f943d71, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@80503]
+13:12:54.306 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.307 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.dodecaedro.library.repository.UserRepositoryTest]
+Running com.dodecaedro.library.repository.UserRepositoryTest
+13:12:54.309 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class com.dodecaedro.library.repository.UserRepositoryTest].
+13:12:54.309 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+13:12:54.309 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+13:12:54.310 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.dodecaedro.library.repository.UserRepositoryTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
+13:12:54.311 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@c46bcd4 declaringClass = 'com.dodecaedro.library.repository.UserRepositoryTest', classes = '{class com.dodecaedro.library.configuration.LibraryDaoConfiguration}', locations = '{}', inheritLocations = true, initializers = '{}', inheritInitializers = true, name = [null], contextLoaderClass = 'org.springframework.boot.test.SpringApplicationContextLoader']
+13:12:54.311 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.312 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [com.dodecaedro.library.repository.UserRepositoryTest]: using defaults.
+13:12:54.313 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+13:12:54.314 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext]
+13:12:54.314 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2c039ac6, org.springframework.test.context.support.DirtiesContextTestExecutionListener@587d1d39, org.springframework.test.context.transaction.TransactionalTestExecutionListener@58c1670b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6b57696f]
+13:12:54.314 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.314 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.315 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.315 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.317 [main] DEBUG o.s.t.c.s.DirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@e874448 testClass = UserRepositoryTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@29b5cd00 testClass = UserRepositoryTest, locations = '{}', classes = '{class com.dodecaedro.library.configuration.LibraryDaoConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.boot.test.SpringApplicationContextLoader', parent = [null]]], class annotated with @DirtiesContext [false] with mode [null].
+13:12:54.318 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.318 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.dodecaedro.library.repository.UserRepositoryTest]
+13:12:54.320 [main] DEBUG o.s.t.c.s.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@e874448 testClass = UserRepositoryTest, testInstance = com.dodecaedro.library.repository.UserRepositoryTest@12cdcf4, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@29b5cd00 testClass = UserRepositoryTest, locations = '{}', classes = '{class com.dodecaedro.library.configuration.LibraryDaoConfiguration}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.boot.test.SpringApplicationContextLoader', parent = [null]]]].
+13:12:54.370 [main] DEBUG o.s.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+13:12:54.372 [main] DEBUG o.s.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+13:12:54.372 [main] DEBUG o.s.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+13:12:54.373 [main] DEBUG o.s.core.env.StandardEnvironment - Adding [integrationTest] PropertySource with search precedence immediately lower than [systemEnvironment]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::             (v1.3.0.M1)
+
+2015-06-20 13:12:54.519  INFO 22560 --- [           main] c.d.l.repository.UserRepositoryTest      : Starting UserRepositoryTest on jm-desktop with PID 22560 (/home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes started by jm in /home/jm/development/library-spring/LibraryDaoSpringData)
+2015-06-20 13:12:54.555  INFO 22560 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@15c43bd9: startup date [Sat Jun 20 13:12:54 CEST 2015]; root of context hierarchy
+2015-06-20 13:12:55.043  INFO 22560 --- [           main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2015-06-20 13:12:55.586  INFO 22560 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from URL [file:/home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes/schema.sql]
+2015-06-20 13:12:55.592  INFO 22560 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from URL [file:/home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes/schema.sql] in 6 ms.
+2015-06-20 13:12:55.594  INFO 22560 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from URL [file:/home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes/data.sql]
+2015-06-20 13:12:55.596  INFO 22560 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from URL [file:/home/jm/development/library-spring/LibraryDaoSpringData/target/test-classes/data.sql] in 2 ms.
+2015-06-20 13:12:55.639  INFO 22560 --- [           main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+[EL Info]: server: 2015-06-20 13:12:55.72--Detected server platform: org.eclipse.persistence.platform.server.NoServerPlatform.
+[EL Info]: server: 2015-06-20 13:12:55.797--ServerSession(1671007220)--Detected server platform: org.eclipse.persistence.platform.server.NoServerPlatform.
+[EL Info]: server: 2015-06-20 13:12:55.989--Detected server platform: org.eclipse.persistence.platform.server.NoServerPlatform.
+[EL Info]: server: 2015-06-20 13:12:55.989--ServerSession(1671007220)--Detected server platform: org.eclipse.persistence.platform.server.NoServerPlatform.
+[EL Info]: 2015-06-20 13:12:55.991--ServerSession(1671007220)--EclipseLink, version: Eclipse Persistence Services - 2.6.1.v20150605-31e8258
+[EL Info]: connection: 2015-06-20 13:12:56.036--ServerSession(1671007220)--/file:/home/jm/.m2/repository/com/dodecaedro/library/LibraryModelData/1.0-SNAPSHOT/LibraryModelData-1.0-SNAPSHOT.jar_default login successful
+2015-06-20 13:12:56.277  INFO 22560 --- [           main] c.d.l.repository.UserRepositoryTest      : Started UserRepositoryTest in 1.902 seconds (JVM running for 2.291)
+[EL Fine]: sql: 2015-06-20 13:12:56.307--ServerSession(1671007220)--Connection(542019831)--SELECT ID, ADDRESS, FIRST_NAME, JOIN_DATE, LAST_NAME, PHONE FROM USER
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.02 sec - in com.dodecaedro.library.repository.UserRepositoryTest
+2015-06-20 13:12:56.340  INFO 22560 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@15c43bd9: startup date [Sat Jun 20 13:12:54 CEST 2015]; root of context hierarchy
+2015-06-20 13:12:56.343  INFO 22560 --- [       Thread-1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+[EL Info]: connection: 2015-06-20 13:12:56.344--ServerSession(1671007220)--/file:/home/jm/.m2/repository/com/dodecaedro/library/LibraryModelData/1.0-SNAPSHOT/LibraryModelData-1.0-SNAPSHOT.jar_default logout successful
+
+Results :
+
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.5:jar (default-jar) @ LibraryDaoSpringData ---
+[INFO] Building jar: /home/jm/development/library-spring/LibraryDaoSpringData/target/LibraryDaoSpringData-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.5:test-jar (default) @ LibraryDaoSpringData ---
+[INFO] Building jar: /home/jm/development/library-spring/LibraryDaoSpringData/target/LibraryDaoSpringData-1.0-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- sortpom-maven-plugin:2.4.0:sort (default) @ LibraryDaoSpringData ---
+[INFO] Sorting file /home/jm/development/library-spring/LibraryDaoSpringData/pom.xml
+[INFO] Pom file is already sorted, exiting
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ LibraryDaoSpringData ---
+[INFO] Installing /home/jm/development/library-spring/LibraryDaoSpringData/target/LibraryDaoSpringData-1.0-SNAPSHOT.jar to /home/jm/.m2/repository/com/dodecaedro/library/LibraryDaoSpringData/1.0-SNAPSHOT/LibraryDaoSpringData-1.0-SNAPSHOT.jar
+[INFO] Installing /home/jm/development/library-spring/LibraryDaoSpringData/pom.xml to /home/jm/.m2/repository/com/dodecaedro/library/LibraryDaoSpringData/1.0-SNAPSHOT/LibraryDaoSpringData-1.0-SNAPSHOT.pom
+[INFO] Installing /home/jm/development/library-spring/LibraryDaoSpringData/target/LibraryDaoSpringData-1.0-SNAPSHOT-tests.jar to /home/jm/.m2/repository/com/dodecaedro/library/LibraryDaoSpringData/1.0-SNAPSHOT/LibraryDaoSpringData-1.0-SNAPSHOT-tests.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.681 s
+[INFO] Finished at: 2015-06-20T13:12:56+02:00
+[INFO] Final Memory: 29M/399M
+[INFO] ------------------------------------------------------------------------
