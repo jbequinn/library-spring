@@ -23,7 +23,6 @@
       <groupId>com.dodecaedro.library</groupId>
       <artifactId>LibraryDaoSpringData</artifactId>
     </dependency>
-    <!-- own dependencies -->
     <dependency>
       <groupId>com.dodecaedro.library</groupId>
       <artifactId>LibraryModelData</artifactId>
@@ -36,6 +35,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

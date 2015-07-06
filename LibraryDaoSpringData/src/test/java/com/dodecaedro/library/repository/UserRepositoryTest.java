@@ -8,6 +8,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -31,6 +32,11 @@ public class UserRepositoryTest {
   @Test
   public void findById() {
     User user = userRepository.findOne(1);
-    assertNotNull(user);
+    assertThat(user.getUserId(), is(1));
+    assertThat(user.getAddress(), is("Concha Espina 1"));
+    assertThat(user.getFirstName(), is("Cristiano"));
+    assertThat(user.getLastName(), is("Ronaldo"));
+    assertThat(user.getPhone(), is("555-555321"));
+    assertThat(user.getJoinDateTime(), is(LocalDateTime.of(2014, 9, 3, 0, 0, 0)));
   }
 }

@@ -3,6 +3,7 @@ package com.dodecaedro.library.data.pojo;
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(of = {"lastName", "joinDateTime"})
+@ToString(exclude="borrows")
 @Entity
 @Table(name = "USER")
 public class User {
