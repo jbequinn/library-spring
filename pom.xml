@@ -59,13 +59,13 @@
       </dependency>
       <dependency>
         <groupId>org.eclipse.persistence</groupId>
-        <artifactId>eclipselink</artifactId>
-        <version>2.6.1-RC1</version>
+        <artifactId>javax.persistence</artifactId>
+        <version>2.1.0</version>
       </dependency>
       <dependency>
         <groupId>org.eclipse.persistence</groupId>
-        <artifactId>javax.persistence</artifactId>
-        <version>2.1.0</version>
+        <artifactId>org.eclipse.persistence.jpa</artifactId>
+        <version>2.6.1-RC1</version>
       </dependency>
       <dependency>
         <groupId>org.projectlombok</groupId>
