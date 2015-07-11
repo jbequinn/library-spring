@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class User {
   private String address;
   @Column(name = "PHONE")
   private String phone;
+  @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+    +"[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+    +"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+    message="invalid email")
+  @Column(name = "EMAIL")
+  private String email;
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "JOIN_DATE")
   private LocalDateTime joinDateTime;

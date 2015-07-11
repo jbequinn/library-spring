@@ -20,6 +20,7 @@ create table user (
         join_date timestamp,
         last_name varchar(255),
         phone varchar(255),
+        email varchar(100),
         primary key (id)
 );
 

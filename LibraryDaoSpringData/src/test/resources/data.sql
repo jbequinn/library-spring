@@ -1,5 +1,5 @@
-insert into user (id, first_name, last_name, phone, address, join_date)
-values (1, 'Cristiano', 'Ronaldo', '555-555321', 'Concha Espina 1', '2014-09-03 00:00:00');
+insert into user (id, first_name, last_name, phone, address, email, join_date)
+values (1, 'Cristiano', 'Ronaldo', '555-555321', 'Concha Espina 1', 'cris@tiano.com', '2014-09-03 00:00:00');
 
 insert into book (id, title, isbn, bought_date)
 values (1, 'Guerra y paz', '1234-5678', '2014-09-01 00:00:00');

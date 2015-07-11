@@ -7,6 +7,7 @@ CREATE TABLE library.user
   "last_name" character varying(100) NOT NULL,
   "phone" character varying(100),
   "address" character varying(100) NOT NULL,
+  "email" character varying(100) NOT NULL,
   "join_date" timestamp with time zone NOT NULL,
   CONSTRAINT "user_PKEY" PRIMARY KEY ("id")
 )
