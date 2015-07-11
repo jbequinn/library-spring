@@ -177,6 +177,9 @@
           </dependencies>
           <configuration>
             <argLine>-javaagent:${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar</argLine>
+            <excludes>
+              <exclude>**/IT.java</exclude>
+            </excludes>
           </configuration>
         </plugin>
         <plugin>
@@ -197,7 +200,7 @@
             <password>password</password>
           </configuration>
         </plugin>
-        <!-- Reporting on code coverage by unit tests. -->
+        <!-- Reporting on code coverage by unit/integration tests. -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>cobertura-maven-plugin</artifactId>

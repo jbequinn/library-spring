@@ -5,7 +5,6 @@ import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
-import com.dodecaedro.library.repository.FineRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -20,13 +19,10 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
-public class LibraryServiceIT {
+public class LibraryServiceTest {
 
   @Inject
   LibraryService libraryService;
-
-  @Inject
-  FineRepository fineRepository;
 
   @Test
   @DirtiesContext
