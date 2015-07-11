@@ -16,5 +16,11 @@ values (1, 1, '2014-09-03 00:00:00', '2014-09-17 10:00:00', '2014-09-16 18:00:00
 insert into fine (id, user_id, fine_end_date)
 values (1, 2, '2014-10-19 18:00:00')
 
+insert into fine (id, user_id, fine_end_date)
+values (2, 2, '2014-11-19 18:00:00')
+
 insert into borrow (user_id, book_id, fine_id, borrow_date, expected_return_date, actual_return_date)
 values (2, 1, 1, '2014-10-03 10:00:00', '2014-10-17 10:00:00', '2014-10-18 18:00:00');
+
+insert into borrow (user_id, book_id, fine_id, borrow_date, expected_return_date, actual_return_date)
+values (2, 2, 2, '2014-11-03 10:00:00', '2014-11-17 10:00:00', '2014-11-18 18:00:00');
