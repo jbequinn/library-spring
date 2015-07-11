@@ -48,4 +48,7 @@ public class Borrow implements Serializable {
   */
   private Book book;
 
+  @OneToOne
+  @PrimaryKeyJoinColumn(name="FINE_ID", referencedColumnName="ID")
+  private Fine fine;
 }

@@ -1,9 +1,15 @@
-drop table book if exists;
+drop table fine if exists;
 drop table borrow if exists;
 drop table user if exists;
+drop table book if exists;
 
-create sequence S_BOOK start with 1;
+drop sequence if exists S_FINE;
+drop sequence if exists S_USER;
+drop sequence if exists S_BOOK;
+
+create sequence S_FINE start with 1;
 create sequence S_USER start with 1;
+create sequence S_BOOK start with 1;
 
 create table book (
         id integer not null,
@@ -24,10 +30,23 @@ create table user (
         primary key (id)
 );
 
+create table fine (
+        id integer not null,
+        user_id integer not null,
+        fine_end_date timestamp,
+        primary key (id)
+);
+
+alter table fine
+        add constraint FK_FINE_USER
+        foreign key (user_id)
+        references user(id);
+
 create table borrow (
         book_id integer not null,
         borrow_date timestamp not null,
         user_id integer not null,
+        fine_id integer,
         actual_return_date timestamp,
         expected_return_date timestamp,
         primary key (book_id, borrow_date, user_id)
@@ -41,4 +60,9 @@ alter table borrow
 alter table borrow
         add constraint FK_BORROW_USER
         foreign key (user_id)
+        references user(id);
+
+alter table borrow
+        add constraint FK_BORROW_FINE
+        foreign key (fine_id)
         references user(id);

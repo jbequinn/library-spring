@@ -41,10 +41,27 @@ CREATE TABLE library.borrow
 (
   "user_id" bigint NOT NULL REFERENCES library.user(id),
   "book_id" bigint NOT NULL REFERENCES library.book(id),
+  "fine_id" bigint REFERENCES library.fine(id),
   "borrow_date" timestamp with time zone NOT NULL,
   "expected_return_date" timestamp with time zone NOT NULL,
   "actual_return_date" timestamp with time zone NOT NULL,
   CONSTRAINT "borrow_PKEY" PRIMARY KEY ("user_id", "book_id", "borrow_date")
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE library.borrow
+  OWNER TO libraryuser;
+
+
+-- Table: library."fine"
+
+CREATE TABLE library.fine
+(
+  "id" bigint NOT NULL DEFAULT nextval('library.s_fine'::regclass),
+  "user_id" bigint NOT NULL REFERENCES library.user(id),
+  "fine_end_date" timestamp with time zone NOT NULL,
+  CONSTRAINT "fine_PKEY" PRIMARY KEY ("id")
 )
 WITH (
   OIDS=FALSE

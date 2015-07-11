@@ -33,6 +33,6 @@ public class LibraryServiceIT {
     libraryService.borrowBook(userRepository.findOne(1), bookRepository.findOne(2));
 
     List<Borrow> borrows = borrowRepository.findAll();
-    assertThat(borrows.size(), is(2));
+    assertThat(borrows.size(), is(3));
   }
 }

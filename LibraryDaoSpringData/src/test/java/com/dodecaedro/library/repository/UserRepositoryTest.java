@@ -37,6 +37,7 @@ public class UserRepositoryTest {
     assertThat(user.getFirstName(), is("Cristiano"));
     assertThat(user.getLastName(), is("Ronaldo"));
     assertThat(user.getPhone(), is("555-555321"));
+    assertThat(user.getEmail(), is("cris@cr7.com"));
     assertThat(user.getJoinDateTime(), is(LocalDateTime.of(2014, 9, 3, 0, 0, 0)));
   }
 }
