@@ -1,38 +1,92 @@
 package com.dodecaedro.library.service;
 
 import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
+import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
-import com.dodecaedro.library.repository.BookRepository;
-import com.dodecaedro.library.repository.BorrowRepository;
-import com.dodecaedro.library.repository.UserRepository;
+import com.dodecaedro.library.data.pojo.User;
+import com.dodecaedro.library.exception.BorrowNotFoundException;
+import com.dodecaedro.library.repository.FineRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.time.Duration;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
 public class LibraryServiceIT {
-  @Inject
-  BookRepository bookRepository;
-  @Inject
-  UserRepository userRepository;
-  @Inject
-  BorrowRepository borrowRepository;
+
   @Inject
   LibraryService libraryService;
 
-  @Test
-  public void saveBorrowTest() {
-    libraryService.borrowBook(userRepository.findOne(1), bookRepository.findOne(2));
+  @Inject
+  FineRepository fineRepository;
 
-    List<Borrow> borrows = borrowRepository.findAll();
-    assertThat(borrows.size(), is(3));
+  @Test
+  @DirtiesContext
+  public void saveBorrowTest() {
+    User user = new User();
+    user.setUserId(1);
+
+    Book book = new Book();
+    book.setBookId(2);
+
+    libraryService.borrowBook(user, book);
+
+    Borrow borrow = libraryService.findActiveBorrow(user, book);
+
+    assertNotNull("This user must still have one non-returned book", borrow);
+    assertThat(borrow.getBookId(), is(book.getBookId()));
+    assertThat(user.getUserId(), is(user.getUserId()));
+  }
+
+  @Test(expected = BorrowNotFoundException.class)
+  public void returnNonExistingBorrow() throws Exception {
+    User user = new User();
+    user.setUserId(1);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    libraryService.returnBook(user, book);
+  }
+
+  @Test
+  @DirtiesContext
+  public void testReturnBorrow() throws Exception {
+    User user = new User();
+    user.setUserId(3);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    Borrow borrow = libraryService.findActiveBorrow(user, book);
+    assertNotNull("This user must still have one non-returned book", borrow);
+
+    libraryService.returnBook(user, book);
+
+    Borrow borrowAfter = libraryService.findActiveBorrow(user, book);
+    assertNull("This user must not have any non-returned books", borrowAfter);
+  }
+
+  @Test
+  @DirtiesContext
+  public void testFineDate() throws Exception {
+    User user = new User();
+    user.setUserId(3);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    Borrow borrow = libraryService.returnBook(user, book);
+    Duration fineDuration = Duration.between(borrow.getExpectedReturnDate(), borrow.getActualReturnDate());
+
+    assertThat(borrow.getFine().getFineEndDate(), is(borrow.getActualReturnDate().plus(fineDuration)));
   }
 }

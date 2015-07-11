@@ -13,6 +13,10 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
 public class BorrowRepositoryTest {
@@ -26,8 +30,10 @@ public class BorrowRepositoryTest {
 
   @Test
   public void saveBorrowTest() {
-    User user = userRepository.findOne(1);
-    Book book = bookRepository.findOne(2);
+    User user = new User();
+    user.setUserId(1);
+    Book book = new Book();
+    book.setBookId(2);
 
     Borrow borrow = new Borrow();
     borrow.setBookId(book.getBookId());
@@ -42,6 +48,29 @@ public class BorrowRepositoryTest {
     borrowRepository.save(borrow);
 
     List<Borrow> borrows = borrowRepository.findAll();
+  }
 
+  @Test
+  public void findNotYetReturnedBorrow() {
+    User user = new User();
+    user.setUserId(3);
+    Book book = new Book();
+    book.setBookId(1);
+
+    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
+
+    assertThat(borrow.getBorrowDate(), is(LocalDateTime.of(2014, 11, 3, 10, 0, 0)));
+  }
+
+  @Test
+  public void findNoReturnedBorrows() {
+    User user = new User();
+    user.setUserId(1);
+    Book book = new Book();
+    book.setBookId(1);
+
+    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
+
+    assertNull(borrow);
   }
 }

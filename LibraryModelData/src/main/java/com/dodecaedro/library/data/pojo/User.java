@@ -18,7 +18,7 @@ import java.util.List;
 public class User {
   @Id
   @Column(name = "ID")
-  @SequenceGenerator(name = "userSeq", sequenceName = "S_USER")
+  @SequenceGenerator(name = "userSeq", sequenceName = "S_USER", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
   private Integer userId;
   @Column(name = "FIRST_NAME")

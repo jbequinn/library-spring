@@ -7,4 +7,5 @@ import org.springframework.data.repository.RepositoryDefinition;
 @RepositoryDefinition(domainClass = Fine.class, idClass = Integer.class)
 public interface FineRepository {
   Fine findTopByUserOrderByFineEndDateDesc(User user);
+  Fine save(Fine fine);
 }

@@ -5,6 +5,7 @@ import com.dodecaedro.library.data.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
@@ -39,5 +40,17 @@ public class UserRepositoryTest {
     assertThat(user.getPhone(), is("555-555321"));
     assertThat(user.getEmail(), is("cris@cr7.com"));
     assertThat(user.getJoinDateTime(), is(LocalDateTime.of(2014, 9, 3, 0, 0, 0)));
+  }
+
+  @Test
+  @DirtiesContext
+  public void testIdGenerated() {
+    User user = new User();
+    user.setJoinDateTime(LocalDateTime.of(2014, 9, 3, 0, 0, 0));
+    user.setFirstName("Marcelo");
+
+    userRepository.save(user);
+
+    assertNotNull(user.getUserId());
   }
 }

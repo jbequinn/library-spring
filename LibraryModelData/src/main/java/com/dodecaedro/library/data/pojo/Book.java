@@ -19,7 +19,7 @@ public class Book {
   @Id
   @NotNull
   @Column(name = "ID")
-  @SequenceGenerator(name = "bookSeq", sequenceName = "S_BOOK")
+  @SequenceGenerator(name = "bookSeq", sequenceName = "S_BOOK", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookSeq")
   private Integer bookId;
   @NotNull
