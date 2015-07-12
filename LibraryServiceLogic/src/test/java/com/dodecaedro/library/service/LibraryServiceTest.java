@@ -6,6 +6,7 @@ import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.exception.ActiveFinesException;
+import com.dodecaedro.library.exception.BorrowMaximumLimitException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
 import com.dodecaedro.library.exception.ExpiredBorrowException;
 import com.dodecaedro.library.repository.FineRepository;
@@ -116,4 +117,16 @@ public class LibraryServiceTest {
 
     libraryService.borrowBook(user, book);
   }
+
+  @Test(expected = BorrowMaximumLimitException.class)
+  public void testBorrowLimit() throws Exception {
+    User user = new User();
+    user.setUserId(5);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    libraryService.borrowBook(user, book);
+  }
+
 }

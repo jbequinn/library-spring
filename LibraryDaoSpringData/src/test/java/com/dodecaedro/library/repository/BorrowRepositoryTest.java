@@ -94,4 +94,24 @@ public class BorrowRepositoryTest {
 
     assertThat(expiredBorrows, is(empty()));
   }
+
+  @Test
+  public void testOpenBorrows() {
+    User user = new User();
+    user.setUserId(5);
+
+    Long openBorrows = borrowRepository.countByUserAndAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
+
+    assertThat(openBorrows, is(2L));
+  }
+
+  @Test
+  public void testNoOpenBorrows() {
+    User user = new User();
+    user.setUserId(1);
+
+    Long openBorrows = borrowRepository.countByUserAndAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
+
+    assertThat(openBorrows, is(0L));
+  }
 }
