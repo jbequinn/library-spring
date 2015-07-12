@@ -15,6 +15,6 @@ public interface BorrowRepository {
   Borrow save(Borrow borrow);
   List<Borrow> findAll();
   Borrow findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(User user, Book book);
-  @Query("select b from Borrow b where b.user = :user and b.expectedReturnDate < CURRENT_TIMESTAMP and b.actualReturnDate is null")
+  @Query("from Borrow b where b.user = :user and b.expectedReturnDate < CURRENT_TIMESTAMP and b.actualReturnDate is null")
   List<Borrow> findUserExpiredBorrows(@Param("user") User user);
 }
