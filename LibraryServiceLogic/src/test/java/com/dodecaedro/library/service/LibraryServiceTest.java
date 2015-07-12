@@ -3,10 +3,12 @@ package com.dodecaedro.library.service;
 import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
 import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
+import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.exception.ActiveFinesException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
 import com.dodecaedro.library.exception.ExpiredBorrowException;
+import com.dodecaedro.library.repository.FineRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -25,6 +27,9 @@ public class LibraryServiceTest {
 
   @Inject
   LibraryService libraryService;
+
+  @Inject
+  FineRepository fineRepository;
 
   @Test
   @DirtiesContext
@@ -85,7 +90,9 @@ public class LibraryServiceTest {
     Borrow borrow = libraryService.returnBook(user, book);
     Duration fineDuration = Duration.between(borrow.getExpectedReturnDate(), borrow.getActualReturnDate());
 
-    assertThat(borrow.getFine().getFineEndDate(), is(borrow.getActualReturnDate().plus(fineDuration)));
+    Fine fine = fineRepository.findByBorrow(borrow);
+
+    assertThat(fine.getFineEndDate(), is(borrow.getActualReturnDate().plus(fineDuration)));
   }
 
   @Test(expected = ActiveFinesException.class)

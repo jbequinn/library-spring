@@ -24,12 +24,10 @@ import java.util.Map;
 public class LibraryDaoConfiguration extends JpaBaseConfiguration {
   @Override
   protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
-    EclipseLinkJpaVendorAdapter adapter = new EclipseLinkJpaVendorAdapter();
-    return adapter;
+    return new EclipseLinkJpaVendorAdapter();
   }
   @Override
   protected Map<String, Object> getVendorProperties() {
-    HashMap<String, Object> map = new HashMap<String, Object>();
-    return map;
+    return new HashMap<>();
   }
 }

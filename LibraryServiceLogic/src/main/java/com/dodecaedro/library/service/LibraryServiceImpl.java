@@ -62,13 +62,12 @@ public class LibraryServiceImpl implements LibraryService {
     borrow.setActualReturnDate(nowDate);
 
     Duration fineDuration = Duration.between(borrow.getExpectedReturnDate(), nowDate);
-    if (!fineDuration.isNegative() && !fineDuration.isZero()) {
+    if (!fineDuration.isZero()) {
       Fine fine = new Fine();
       fine.setUser(user);
       fine.setUserId(user.getUserId());
       fine.setFineEndDate(nowDate.plus(fineDuration));
       fineRepository.save(fine);
-      borrow.setFine(fine);
     }
 
     borrowRepository.save(borrow);

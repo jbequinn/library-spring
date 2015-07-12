@@ -47,8 +47,4 @@ public class Borrow implements Serializable {
   * or @JoinColumn(name = "projectId", updatable = false, insertable = false, referencedColumnName = "id")
   */
   private Book book;
-
-  @OneToOne(fetch=FetchType.LAZY)
-  @PrimaryKeyJoinColumn(name="FINE_ID", referencedColumnName="ID")
-  private Fine fine;
 }

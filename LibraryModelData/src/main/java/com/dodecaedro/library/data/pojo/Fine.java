@@ -18,6 +18,9 @@ public class Fine {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fineSeq")
   private Integer fineId;
   @Convert(converter = LocalDateTimePersistenceConverter.class)
+  @Column(name = "FINE_START_DATE")
+  private LocalDateTime fineStartDate;
+  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "FINE_END_DATE")
   private LocalDateTime fineEndDate;
   @Column(name = "USER_ID")
