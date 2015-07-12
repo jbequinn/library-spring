@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -29,7 +30,7 @@ public class BorrowRepositoryTest {
   BorrowRepository borrowRepository;
 
   @Test
-  public void saveBorrowTest() {
+  public void testSaveBorrow() {
     User user = new User();
     user.setUserId(1);
     Book book = new Book();
@@ -51,7 +52,7 @@ public class BorrowRepositoryTest {
   }
 
   @Test
-  public void findNotYetReturnedBorrow() {
+  public void testFindNotYetReturnedBorrow() {
     User user = new User();
     user.setUserId(3);
     Book book = new Book();
@@ -63,7 +64,7 @@ public class BorrowRepositoryTest {
   }
 
   @Test
-  public void findNoReturnedBorrows() {
+  public void testFindNoReturnedBorrows() {
     User user = new User();
     user.setUserId(1);
     Book book = new Book();
@@ -72,5 +73,25 @@ public class BorrowRepositoryTest {
     Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
 
     assertNull(borrow);
+  }
+
+  @Test
+  public void testExpiredBorrows() {
+    User user = new User();
+    user.setUserId(3);
+
+    List<Borrow> expiredBorrows = borrowRepository.findUserExpiredBorrows(user);
+
+    assertThat(expiredBorrows.size(), is(1));
+  }
+
+  @Test
+  public void testExpiredBorrowsEmpty() {
+    User user = new User();
+    user.setUserId(1);
+
+    List<Borrow> expiredBorrows = borrowRepository.findUserExpiredBorrows(user);
+
+    assertThat(expiredBorrows, is(empty()));
   }
 }

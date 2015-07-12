@@ -10,7 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,5 +30,23 @@ public class FineRepositoryTest {
 
     Fine fine = fineRepository.findTopByUserOrderByFineEndDateDesc(user);
     assertThat(fine.getFineEndDate(), is(LocalDateTime.of(2014, 11, 19, 18, 0, 0)));
+  }
+
+  @Test
+  public void testActiveFine() {
+    User user = new User();
+    user.setUserId(4);
+
+    List<Fine> fines = fineRepository.findActiveFines(user);
+    assertThat(fines.size(), is(1));
+  }
+
+  @Test
+  public void testNoActiveFines() {
+    User user = new User();
+    user.setUserId(1);
+
+    List<Fine> fines = fineRepository.findActiveFines(user);
+    assertThat(fines, is(empty()));
   }
 }

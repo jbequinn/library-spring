@@ -4,7 +4,9 @@ import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
+import com.dodecaedro.library.exception.ActiveFinesException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
+import com.dodecaedro.library.exception.ExpiredBorrowException;
 import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.FineRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,15 @@ public class LibraryServiceImpl implements LibraryService {
   private FineRepository fineRepository;
 
   @Override
-  public Borrow borrowBook(User user, Book book) {
+  public Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException {
+    if (!fineRepository.findActiveFines(user).isEmpty()) {
+      throw new ActiveFinesException("The user has running fines");
+    }
+
+    if (!borrowRepository.findUserExpiredBorrows(user).isEmpty()) {
+      throw new ExpiredBorrowException("cannot borrow new books because the user has expired borrows");
+    }
+
     Borrow borrow = new Borrow();
     borrow.setBookId(book.getBookId());
     borrow.setUserId(user.getUserId());

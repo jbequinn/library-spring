@@ -4,7 +4,9 @@ import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
 import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.User;
+import com.dodecaedro.library.exception.ActiveFinesException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
+import com.dodecaedro.library.exception.ExpiredBorrowException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -26,7 +28,7 @@ public class LibraryServiceTest {
 
   @Test
   @DirtiesContext
-  public void saveBorrowTest() {
+  public void saveBorrowTest() throws Exception {
     User user = new User();
     user.setUserId(1);
 
@@ -84,5 +86,27 @@ public class LibraryServiceTest {
     Duration fineDuration = Duration.between(borrow.getExpectedReturnDate(), borrow.getActualReturnDate());
 
     assertThat(borrow.getFine().getFineEndDate(), is(borrow.getActualReturnDate().plus(fineDuration)));
+  }
+
+  @Test(expected = ActiveFinesException.class)
+  public void testNoBorrowBecauseFines() throws Exception {
+    User user = new User();
+    user.setUserId(4);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    libraryService.borrowBook(user, book);
+  }
+
+  @Test(expected = ExpiredBorrowException.class)
+  public void testNoBorrowBecauseExpiredBorrows() throws Exception {
+    User user = new User();
+    user.setUserId(3);
+
+    Book book = new Book();
+    book.setBookId(1);
+
+    libraryService.borrowBook(user, book);
   }
 }
