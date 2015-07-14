@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -28,20 +30,30 @@ public class UserControllerIntegrationTest {
   private UserRepository repository;
 
   private static final String USER_URL = "/users/{id}";
+  private static final String USERS_URL = "/users";
 
   @Before
   public void setup() {
     initMocks(this);
     this.mockMvc = standaloneSetup(controller)
-            .setMessageConverters(new MappingJackson2HttpMessageConverter()).build();
+      .setMessageConverters(new MappingJackson2HttpMessageConverter()).build();
   }
 
   @Test
-  public void thatViewCustomerUsesHttpOK() throws Exception {
+  public void thatViewUserUsesHttpOK() throws Exception {
     when(repository.findOne(any(Integer.class))).thenReturn(new User());
     this.mockMvc.perform(
       get(USER_URL, "1")
         .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+      .andExpect(status().isOk());
+  }
+
+  @Test
+  public void thatViewUsersUsesHttpOK() throws Exception {
+    when(repository.findAll()).thenReturn(new ArrayList<>());
+    this.mockMvc.perform(
+      get(USERS_URL)
+        .accept(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk());
   }
 }
