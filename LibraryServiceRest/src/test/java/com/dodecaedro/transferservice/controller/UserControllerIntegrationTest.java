@@ -17,6 +17,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -56,4 +58,18 @@ public class UserControllerIntegrationTest {
         .accept(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk());
   }
+
+  @Test
+  public void thatCreateUserUsesHttpCreated() throws Exception {
+    this.mockMvc.perform(
+      post(USERS_URL)
+        .content(newUserJSON())
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+      .andDo(print())
+      .andExpect(status().isCreated());
+  }
+
+  public static String newUserJSON() {
+    return "{\"userId\":99, \"firstName\":\"Emilio\", \"lastName\":\"Butragueno\", \"phone\":\"555-543\", \"address\":\"concha espina, 1\", \"email\":\"emilio@butrageno.com\", \"joinDateTime\":[2014,9,7, 0,0,0]}";  }
 }
