@@ -39,9 +39,9 @@ public class User {
   @Column(name = "JOIN_DATE")
   private LocalDateTime joinDateTime;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Borrow> borrows;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Fine> fines;
 }

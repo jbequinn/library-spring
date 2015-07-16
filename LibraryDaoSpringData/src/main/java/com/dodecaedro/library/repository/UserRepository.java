@@ -12,4 +12,5 @@ public interface UserRepository {
   User findOne(Integer userId);
   User save(User user);
   List<User> findAll();
+  void delete(Integer userId);
 }

@@ -53,4 +53,13 @@ public class UserRepositoryTest {
 
     assertNotNull(user.getUserId());
   }
+
+  @Test
+  @DirtiesContext
+  public void testDeleteUser() {
+    userRepository.delete(1);
+
+    User userDeleted = userRepository.findOne(1);
+    assertNull("user should not exist", userDeleted);
+  }
 }

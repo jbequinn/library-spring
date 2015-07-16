@@ -41,4 +41,11 @@ public class UserController {
 
     return new ResponseEntity<>(user, headers, HttpStatus.CREATED);
   }
+
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteUser(@PathVariable("id") Integer userId) {
+    this.userRepository.delete(userId);
+  }
+
 }

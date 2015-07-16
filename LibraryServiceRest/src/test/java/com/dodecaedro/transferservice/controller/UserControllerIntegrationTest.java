@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,6 +61,14 @@ public class UserControllerIntegrationTest {
   }
 
   @Test
+  public void thatViewUsersUsesHttpNoContent() throws Exception {
+    this.mockMvc.perform(
+      delete(USER_URL, 1)
+        .accept(MediaType.APPLICATION_JSON))
+      .andExpect(status().isNoContent());
+  }
+
+  @Test
   public void thatCreateUserUsesHttpCreated() throws Exception {
     this.mockMvc.perform(
       post(USERS_URL)
@@ -70,6 +79,6 @@ public class UserControllerIntegrationTest {
       .andExpect(status().isCreated());
   }
 
-  public static String newUserJSON() {
+  private static String newUserJSON() {
     return "{\"userId\":99, \"firstName\":\"Emilio\", \"lastName\":\"Butragueno\", \"phone\":\"555-543\", \"address\":\"concha espina, 1\", \"email\":\"emilio@butrageno.com\", \"joinDateTime\":[2014,9,7, 0,0,0]}";  }
 }
