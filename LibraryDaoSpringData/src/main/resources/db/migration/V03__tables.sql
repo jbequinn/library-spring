@@ -41,7 +41,6 @@ CREATE TABLE library.borrow
 (
   "user_id" bigint NOT NULL REFERENCES library.user(id),
   "book_id" bigint NOT NULL REFERENCES library.book(id),
-  "fine_id" bigint REFERENCES library.fine(id),
   "borrow_date" timestamp with time zone NOT NULL,
   "expected_return_date" timestamp with time zone NOT NULL,
   "actual_return_date" timestamp with time zone NOT NULL,
@@ -60,6 +59,7 @@ CREATE TABLE library.fine
 (
   "id" bigint NOT NULL DEFAULT nextval('library.s_fine'::regclass),
   "user_id" bigint NOT NULL REFERENCES library.user(id),
+  "fine_start_date" timestamp with time zone NOT NULL,
   "fine_end_date" timestamp with time zone NOT NULL,
   CONSTRAINT "fine_PKEY" PRIMARY KEY ("id")
 )
