@@ -1,6 +1,7 @@
 package com.dodecaedro.library.repository;
 
 import com.dodecaedro.library.data.pojo.User;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.RepositoryDefinition;
 
@@ -12,5 +13,6 @@ public interface UserRepository {
   User findOne(Integer userId);
   User save(User user);
   List<User> findAll();
+  @CacheEvict(value="users")
   void delete(Integer userId);
 }
