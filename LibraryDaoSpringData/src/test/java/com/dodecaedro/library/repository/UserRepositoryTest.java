@@ -24,14 +24,19 @@ public class UserRepositoryTest {
   private UserRepository userRepository;
 
   @Test
-  public void findAll() {
+  public void testFindAll() {
     List<User> users = userRepository.findAll();
     assertThat(users, is(not(empty())));
     assertNotNull(users);
   }
 
   @Test
-  public void findById() {
+  public void testFindNoResults() {
+    assertNull("user 99 should not exist", userRepository.findOne(99));
+  }
+
+  @Test
+  public void testFindById() {
     User user = userRepository.findOne(1);
     assertThat(user.getUserId(), is(1));
     assertThat(user.getAddress(), is("Concha Espina 1"));
@@ -60,6 +65,29 @@ public class UserRepositoryTest {
     userRepository.delete(1);
 
     User userDeleted = userRepository.findOne(1);
-    assertNull("user should not exist", userDeleted);
+    assertNull("user 1 should not exist", userDeleted);
+  }
+
+  @Test
+  @DirtiesContext
+  public void testCacheChangedUser() {
+    String changedEmail = "cristiano@cr7.com";
+
+    User user = userRepository.findOne(1);
+    user.setEmail(changedEmail);
+    userRepository.save(user);
+
+    User userChanged = userRepository.findOne(1);
+    assertThat(userChanged.getEmail(), equalTo(changedEmail));
+  }
+
+  @Test
+  @DirtiesContext
+  public void testCountCacheDeleteUser() {
+    int countBefore = userRepository.findAll().size();
+    userRepository.delete(1);
+    int countAfter = userRepository.findAll().size();
+
+    assertThat(countAfter, is(countBefore - 1));
   }
 }
