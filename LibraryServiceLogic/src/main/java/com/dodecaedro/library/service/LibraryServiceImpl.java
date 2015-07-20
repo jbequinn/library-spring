@@ -12,6 +12,7 @@ import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.FineRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.Duration;
@@ -30,6 +31,7 @@ public class LibraryServiceImpl implements LibraryService {
   private FineRepository fineRepository;
 
   @Override
+  @Transactional
   public Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
     if (!fineRepository.findActiveFines(user).isEmpty()) {
       throw new ActiveFinesException("The user has running fines");
@@ -59,6 +61,7 @@ public class LibraryServiceImpl implements LibraryService {
   }
 
   @Override
+  @Transactional
   public Borrow returnBook(User user, Book book) throws BorrowNotFoundException {
     Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
 
