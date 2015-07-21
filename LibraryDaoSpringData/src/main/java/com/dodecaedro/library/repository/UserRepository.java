@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserRepository {
   @Cacheable("users")
   User findOne(Integer userId);
-  @CachePut("users")
+  @CachePut(value = "users",  key = "#p0.userId")
   User save(User user);
   List<User> findAll();
   @CacheEvict("users")

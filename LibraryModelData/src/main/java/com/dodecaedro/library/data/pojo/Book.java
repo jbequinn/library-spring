@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString(exclude="borrows")
 @Entity
 @Table(name = "BOOK")
-public class Book {
+public class Book implements Serializable {
   @Id
   @NotNull
   @Column(name = "ID")

@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(of = {"user", "fineEndDate"})
 @Entity
 @Table(name = "FINE")
-public class Fine {
+public class Fine implements Serializable {
   @Id
   @Column(name = "ID")
   @SequenceGenerator(name = "fineSeq", sequenceName = "S_FINE", allocationSize = 1)

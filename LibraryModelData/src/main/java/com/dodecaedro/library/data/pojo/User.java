@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString(exclude="borrows")
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements Serializable {
   @Id
   @Column(name = "ID")
   @SequenceGenerator(name = "userSeq", sequenceName = "S_USER", allocationSize = 1)
