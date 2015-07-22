@@ -1,13 +1,19 @@
 package com.dodecaedro.library.data.pojo;
 
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "fineId")
+@XmlRootElement
 @Data
 @EqualsAndHashCode(of = {"user", "fineEndDate"})
 @Entity
@@ -26,6 +32,7 @@ public class Fine implements Serializable {
   private LocalDateTime fineEndDate;
   @Column(name = "USER_ID")
   private Integer userId;
+  @XmlTransient
   @OneToOne(fetch=FetchType.LAZY)
   @PrimaryKeyJoinColumn(name="USER_ID", referencedColumnName="ID")
   private User user;

@@ -4,6 +4,7 @@ import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConver
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -29,6 +30,7 @@ public class Borrow implements Serializable {
   @Column(name="ACTUAL_RETURN_DATE")
   private LocalDateTime actualReturnDate;
 
+  @XmlTransient
   @ManyToOne
   @PrimaryKeyJoinColumn(name="USER_ID", referencedColumnName="ID")
   /* if this JPA model doesn't create a table for the "PROJ_EMP" entity,
@@ -38,6 +40,7 @@ public class Borrow implements Serializable {
   */
   private User user;
 
+  @XmlTransient
   @ManyToOne
   @PrimaryKeyJoinColumn(name="BOOK_ID", referencedColumnName="ID")
   /* the same goes here:

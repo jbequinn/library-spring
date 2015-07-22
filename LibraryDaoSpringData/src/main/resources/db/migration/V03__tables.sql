@@ -43,7 +43,7 @@ CREATE TABLE library.borrow
   "book_id" bigint NOT NULL REFERENCES library.book(id),
   "borrow_date" timestamp with time zone NOT NULL,
   "expected_return_date" timestamp with time zone NOT NULL,
-  "actual_return_date" timestamp with time zone NOT NULL,
+  "actual_return_date" timestamp with time zone,
   CONSTRAINT "borrow_PKEY" PRIMARY KEY ("user_id", "book_id", "borrow_date")
 )
 WITH (

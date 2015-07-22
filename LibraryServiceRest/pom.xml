@@ -11,6 +11,10 @@
   <artifactId>LibraryServiceRest</artifactId>
   <packaging>war</packaging>
   <name>LibraryServiceRest Maven Webapp</name>
+
+  <properties>
+    <start-class>com.dodecaedro.library.RestApplication</start-class>
+  </properties>
   <dependencies>
     <!-- own dependencies -->
     <dependency>
@@ -45,6 +49,9 @@
     <finalName>LibraryServiceRest</finalName>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.4</version>
         <configuration>
@@ -69,6 +76,26 @@
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument</artifactId>
+            <version>${spring.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <!-- Normally you don't need to setup springloaded as Spring Boot Maven plugin
+               will detect its dependency and register it appropriately.
+               But we have already added the spring-instrument agent, so we will have to add springloaded explictly. -->
+          <agent>
+            <agent>${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar</agent>
+          </agent>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>

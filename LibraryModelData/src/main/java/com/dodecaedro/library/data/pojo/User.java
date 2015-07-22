@@ -1,16 +1,22 @@
 package com.dodecaedro.library.data.pojo;
 
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
+@XmlRootElement
 @Data
 @EqualsAndHashCode(of = {"lastName", "joinDateTime"})
 @ToString(exclude="borrows")
@@ -40,9 +46,11 @@ public class User implements Serializable {
   @Column(name = "JOIN_DATE")
   private LocalDateTime joinDateTime;
 
+  @XmlTransient
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Borrow> borrows;
 
+  @XmlTransient
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Fine> fines;
 }
