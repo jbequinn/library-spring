@@ -11,9 +11,4 @@ public class LibraryServiceWebApplicationInitializer extends SpringBootServletIn
   public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
     return new ServletRegistrationBean(dispatcherServlet, "*.json", "*.xml");
   }
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-    return application.sources(RestApplication.class);
-  }
 }
