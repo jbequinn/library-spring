@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Import(LibraryDaoConfiguration.class)
-public class RestApplication {
+public class LibraryRestApplication {
   public static void main(String[] args) {
-    SpringApplication.run(RestApplication.class, args);
+    SpringApplication.run(LibraryRestApplication.class, args);
   }
 }

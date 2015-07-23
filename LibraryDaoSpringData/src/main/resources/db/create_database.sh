@@ -3,6 +3,7 @@
 HOSTNAME="develvm"
 DATABASE="librarydb"
 USER="libraryuser"
+SCHEMA="library"
 
 DB_EXISTS=$(psql --host $HOSTNAME --username postgres --no-align --tuples-only --command "SELECT COUNT(1) FROM pg_database WHERE datname='$DATABASE';")
 if [[ $DB_EXISTS -gt 0 ]]; then
@@ -28,3 +29,6 @@ psql --host $HOSTNAME --username postgres --command "CREATE ROLE $USER LOGIN ENC
 
 echo "... creating database '$DATABASE'"
 createdb --host $HOSTNAME --username postgres --encoding utf8 --owner $USER --template template0 $DATABASE
+
+echo "... creating schema '$SCHEMA'"
+psql --host $HOSTNAME --username postgres --command "CREATE SCHEMA IF NOT EXISTS $SCHEMA AUTHORIZATION $USER;" $DATABASE

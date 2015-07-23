@@ -13,7 +13,7 @@
   <name>LibraryServiceRest Maven Webapp</name>
 
   <properties>
-    <start-class>com.dodecaedro.library.RestApplication</start-class>
+    <start-class>com.dodecaedro.library.LibraryRestApplication</start-class>
   </properties>
   <dependencies>
     <!-- own dependencies -->
