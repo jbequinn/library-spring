@@ -1,6 +1,5 @@
 package com.dodecaedro.library;
 
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
