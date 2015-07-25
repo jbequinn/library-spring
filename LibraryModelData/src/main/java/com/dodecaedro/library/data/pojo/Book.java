@@ -41,6 +41,6 @@ public class Book implements Serializable {
   private LocalDateTime dateTimeBought;
 
   @XmlTransient
-  @OneToMany(mappedBy = "book")
+  @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
   private List<Borrow> borrows;
 }

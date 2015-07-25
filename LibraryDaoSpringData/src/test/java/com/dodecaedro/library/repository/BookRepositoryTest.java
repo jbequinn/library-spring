@@ -5,17 +5,15 @@ import com.dodecaedro.library.data.pojo.Book;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
@@ -36,6 +34,15 @@ public class BookRepositoryTest {
     Book book = bookRepository.findByIsbn("1234-5678");
     assertThat(book.getBookId(), is(1));
     assertThat(book.getTitle(), is("Guerra y paz"));
-    assertThat(book.getDateTimeBought(), is(LocalDateTime.of(2014,9,1, 0,0,0)));
+    assertThat(book.getDateTimeBought(), is(LocalDateTime.of(2014, 9, 1, 0, 0, 0)));
+  }
+
+  @Test
+  @DirtiesContext
+  public void testDeleteBook() {
+    bookRepository.delete(1);
+
+    Book bookDeleted = bookRepository.findOne(1);
+    assertNull("book 1 should not exist", bookDeleted);
   }
 }

@@ -23,10 +23,6 @@ import static org.junit.Assert.assertThat;
 public class BorrowRepositoryTest {
 
   @Inject
-  BookRepository bookRepository;
-  @Inject
-  UserRepository userRepository;
-  @Inject
   BorrowRepository borrowRepository;
 
   @Test
