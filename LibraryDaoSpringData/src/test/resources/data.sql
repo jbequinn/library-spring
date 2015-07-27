@@ -53,10 +53,10 @@ values (5, 5, '2114-11-03 10:01:00', '2114-11-17 10:00:01');
 
 
 insert into fine (user_id, fine_start_date, fine_end_date)
-values (2, '2014-10-18 18:00:00', '2014-10-19 18:00:00')
+values (2, '2014-10-18 18:00:00', '2014-10-19 18:00:00');
 
 insert into fine (user_id, fine_start_date, fine_end_date)
-values (2, '2014-11-18 18:00:00', '2014-11-19 18:00:00')
+values (2, '2014-11-18 18:00:00', '2014-11-19 18:00:00');
 
 insert into fine (user_id, fine_start_date, fine_end_date)
-values (4, '2014-11-18 18:00:00', '2114-11-19 18:00:00')
+values (4, '2014-11-18 18:00:00', '2114-11-19 18:00:00');
