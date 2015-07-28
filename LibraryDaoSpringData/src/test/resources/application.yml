@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: library-service
+    jpa:
+        database: h2
+        show-sql: true
+    cache:
+        type: jcache
+        cache-names: users, books
+flyway:
+    enabled: false
+borrow:
+    maximum: 2
+

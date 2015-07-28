@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: library-service
+    datasource:
+        url: jdbc:postgresql://develvm:5432/librarydb
+        username: libraryuser
+        password: librarypassword
+        initialize: true
+    cache:
+        type: jcache
+        cache-names: users, books
+flyway:
+    enabled: true
+    schemas: library
+borrow:
+    maximum: 3
