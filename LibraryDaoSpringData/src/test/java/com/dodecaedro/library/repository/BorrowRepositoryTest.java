@@ -92,21 +92,32 @@ public class BorrowRepositoryTest {
   }
 
   @Test
+  public void testCountOpenBorrows() {
+    User user = new User();
+    user.setUserId(5);
+
+    Long openBorrows = borrowRepository.countByUserAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
+
+    assertThat(openBorrows, is(2L));
+  }
+
+  @Test
   public void testOpenBorrows() {
     User user = new User();
     user.setUserId(5);
 
-    Long openBorrows = borrowRepository.countByUserAndAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
+    List<Borrow> openBorrows = borrowRepository.findUserActiveBorrows(user);
 
-    assertThat(openBorrows, is(2L));
+    assertThat(openBorrows.size(), is(2));
   }
+
 
   @Test
   public void testNoOpenBorrows() {
     User user = new User();
     user.setUserId(1);
 
-    Long openBorrows = borrowRepository.countByUserAndAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
+    Long openBorrows = borrowRepository.countByUserAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
 
     assertThat(openBorrows, is(0L));
   }

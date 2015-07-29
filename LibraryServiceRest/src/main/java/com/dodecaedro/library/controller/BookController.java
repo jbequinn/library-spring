@@ -1,7 +1,10 @@
 package com.dodecaedro.library.controller;
 
 import com.dodecaedro.library.data.pojo.Book;
+import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.repository.BookRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +25,12 @@ public class BookController {
   @RequestMapping(value = "/{bookId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<Book> getBookByBookId(@PathVariable Integer bookId) {
     Book book = bookRepository.findOne(bookId);
+    return new ResponseEntity<>(book, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/isbn/{isbn}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  public ResponseEntity<Book> getBookByBookIsbn(@PathVariable String isbn) {
+    Book book = bookRepository.findByIsbn(isbn);
     return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
@@ -48,5 +57,12 @@ public class BookController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteBook(@PathVariable("id") Integer bookId) {
     this.bookRepository.delete(bookId);
+  }
+
+  @RequestMapping(value = "/{bookId}/users}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  public List<User> getUsersByBook(@PathVariable Integer bookId) {
+    Book book = new Book();
+    book.setBookId(bookId);
+    return bookRepository.findAllUsersThatBorrowed(book);
   }
 }

@@ -2,6 +2,7 @@ package com.dodecaedro.library.repository;
 
 import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
 import com.dodecaedro.library.data.pojo.Book;
+import com.dodecaedro.library.data.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -44,5 +45,14 @@ public class BookRepositoryTest {
 
     Book bookDeleted = bookRepository.findOne(1);
     assertNull("book 1 should not exist", bookDeleted);
+  }
+
+  @Test
+  public void testFindUsersBorrowedBook() {
+    Book book = new Book();
+    book.setBookId(1);
+    List<User> users = bookRepository.findAllUsersThatBorrowed(book);
+
+    assertThat(users.size(), is(3));
   }
 }

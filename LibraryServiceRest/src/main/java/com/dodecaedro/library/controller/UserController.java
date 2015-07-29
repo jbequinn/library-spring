@@ -1,6 +1,9 @@
 package com.dodecaedro.library.controller;
 
+import com.dodecaedro.library.data.pojo.Borrow;
+import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
+import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,9 @@ public class UserController {
 
   @Inject
   private UserRepository userRepository;
+
+  @Inject
+  private BorrowRepository borrowRepository;
 
   @RequestMapping(value = "/{userId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<User> getCustomerByCustomerId(@PathVariable Integer userId) {
@@ -50,4 +56,28 @@ public class UserController {
     this.userRepository.delete(userId);
   }
 
+  @RequestMapping(value = "/{userId}/expiredBorrows", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<Borrow> getExpiredBorrows(@PathVariable Integer userId) {
+    User user = new User();
+    user.setUserId(userId);
+    return borrowRepository.findUserExpiredBorrows(user);
+  }
+
+  @RequestMapping(value = "/{userId}/activeBorrows", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<Borrow> getActiveBorrows(@PathVariable Integer userId) {
+    User user = new User();
+    user.setUserId(userId);
+    return borrowRepository.findUserActiveBorrows(user);
+  }
+
+  @RequestMapping(value = "/{userId}/fines", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<Fine> getFines(@PathVariable Integer userId) {
+    return userRepository.findOne(1).getFines();
+  }
 }

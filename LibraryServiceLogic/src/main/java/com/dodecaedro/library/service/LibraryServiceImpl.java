@@ -41,7 +41,7 @@ public class LibraryServiceImpl implements LibraryService {
       throw new ExpiredBorrowException("cannot borrow new books because the user has expired borrows");
     }
 
-    if (maximumBorrows <= borrowRepository.countByUserAndAndActualReturnDateIsNullOrderByBorrowDateDesc(user)) {
+    if (maximumBorrows <= borrowRepository.countByUserAndActualReturnDateIsNullOrderByBorrowDateDesc(user)) {
       throw new BorrowMaximumLimitException("User has already reached the maximum number of simultaneous borrows");
     }
 
