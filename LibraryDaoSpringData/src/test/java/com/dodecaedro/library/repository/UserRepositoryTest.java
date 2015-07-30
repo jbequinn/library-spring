@@ -1,6 +1,7 @@
 package com.dodecaedro.library.repository;
 
 import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
+import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,5 +90,17 @@ public class UserRepositoryTest {
     int countAfter = userRepository.findAll().size();
 
     assertThat(countAfter, is(countBefore - 1));
+  }
+
+  @Test
+  public void testFinesNotEmpty() {
+    User user = userRepository.getUserAndFines(2);
+    assertThat(user.getFines(), is(not(empty())));
+  }
+
+  @Test
+  public void testFinesEmpty() {
+    User user = userRepository.getUserAndFines(1);
+    assertThat(user.getFines(), is(empty()));
   }
 }

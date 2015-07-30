@@ -77,6 +77,6 @@ public class UserController {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Fine> getFines(@PathVariable Integer userId) {
-    return userRepository.findOne(userId).getFines();
+    return userRepository.getUserAndFines(userId).getFines();
   }
 }
