@@ -15,6 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import java.util.List;
 
+import static com.dodecaedro.library.search.BorrowSpecifications.activeBorrows;
+import static com.dodecaedro.library.search.BorrowSpecifications.expiredBorrows;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -60,24 +63,20 @@ public class UserController {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Borrow> getExpiredBorrows(@PathVariable Integer userId) {
-    User user = new User();
-    user.setUserId(userId);
-    return borrowRepository.findUserExpiredBorrows(user);
+    return borrowRepository.findAll(expiredBorrows(userId));
   }
 
   @RequestMapping(value = "/{userId}/activeBorrows", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Borrow> getActiveBorrows(@PathVariable Integer userId) {
-    User user = new User();
-    user.setUserId(userId);
-    return borrowRepository.findUserActiveBorrows(user);
+    return borrowRepository.findAll(activeBorrows(userId));
   }
 
   @RequestMapping(value = "/{userId}/fines", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<Fine> getFines(@PathVariable Integer userId) {
-    return userRepository.findOne(1).getFines();
+    return userRepository.findOne(userId).getFines();
   }
 }

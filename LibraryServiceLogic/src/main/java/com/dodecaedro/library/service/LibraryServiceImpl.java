@@ -10,6 +10,7 @@ import com.dodecaedro.library.exception.BorrowNotFoundException;
 import com.dodecaedro.library.exception.ExpiredBorrowException;
 import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.FineRepository;
+import com.dodecaedro.library.search.BorrowSpecifications;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import static com.dodecaedro.library.search.BorrowSpecifications.activeBorrows;
+import static com.dodecaedro.library.search.BorrowSpecifications.expiredBorrows;
 
 @Service
 public class LibraryServiceImpl implements LibraryService {
@@ -37,11 +41,11 @@ public class LibraryServiceImpl implements LibraryService {
       throw new ActiveFinesException("The user has running fines");
     }
 
-    if (!borrowRepository.findUserExpiredBorrows(user).isEmpty()) {
+    if (borrowRepository.count(expiredBorrows(user.getUserId())) > 0) {
       throw new ExpiredBorrowException("cannot borrow new books because the user has expired borrows");
     }
 
-    if (maximumBorrows <= borrowRepository.countByUserAndActualReturnDateIsNullOrderByBorrowDateDesc(user)) {
+    if (maximumBorrows <= borrowRepository.count(activeBorrows(user.getUserId()))) {
       throw new BorrowMaximumLimitException("User has already reached the maximum number of simultaneous borrows");
     }
 

@@ -4,6 +4,7 @@ import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
 import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.User;
+import com.dodecaedro.library.search.BorrowSpecifications;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -73,40 +74,31 @@ public class BorrowRepositoryTest {
 
   @Test
   public void testExpiredBorrows() {
-    User user = new User();
-    user.setUserId(3);
-
-    List<Borrow> expiredBorrows = borrowRepository.findUserExpiredBorrows(user);
-
+    List<Borrow> expiredBorrows = borrowRepository.findAll(BorrowSpecifications.expiredBorrows(3));
     assertThat(expiredBorrows.size(), is(1));
   }
 
   @Test
+  public void testCountExpiredBorrows() {
+    Long expiredBorrows = borrowRepository.count(BorrowSpecifications.expiredBorrows(3));
+    assertThat(expiredBorrows, is(1L));
+  }
+
+  @Test
   public void testExpiredBorrowsEmpty() {
-    User user = new User();
-    user.setUserId(1);
-
-    List<Borrow> expiredBorrows = borrowRepository.findUserExpiredBorrows(user);
-
+    List<Borrow> expiredBorrows = borrowRepository.findAll(BorrowSpecifications.expiredBorrows(1));
     assertThat(expiredBorrows, is(empty()));
   }
 
   @Test
-  public void testCountOpenBorrows() {
-    User user = new User();
-    user.setUserId(5);
-
-    Long openBorrows = borrowRepository.countByUserAndActualReturnDateIsNullOrderByBorrowDateDesc(user);
-
+  public void testCountActiveBorrows() {
+    Long openBorrows = borrowRepository.count(BorrowSpecifications.activeBorrows(5));
     assertThat(openBorrows, is(2L));
   }
 
   @Test
   public void testOpenBorrows() {
-    User user = new User();
-    user.setUserId(5);
-
-    List<Borrow> openBorrows = borrowRepository.findUserActiveBorrows(user);
+    List<Borrow> openBorrows = borrowRepository.findAll(BorrowSpecifications.activeBorrows(5));
 
     assertThat(openBorrows.size(), is(2));
   }
