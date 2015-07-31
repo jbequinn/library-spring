@@ -16,6 +16,8 @@ public interface UserRepository {
   User findOne(Integer userId);
   @Query("from User u join fetch u.fines f where u.userId = :userid")
   User getUserAndFines(@Param("userid")Integer userId);
+  @Query("from User u join fetch u.borrows b where u.userId = :userid")
+  User getUserAndBorrows(@Param("userid")Integer userId);
   @CachePut(value = "users",  key = "#p0.userId")
   User save(User user);
   List<User> findAll();

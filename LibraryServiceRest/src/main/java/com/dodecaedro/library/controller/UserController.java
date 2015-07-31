@@ -79,4 +79,11 @@ public class UserController {
   public List<Fine> getFines(@PathVariable Integer userId) {
     return userRepository.getUserAndFines(userId).getFines();
   }
+
+  @RequestMapping(value = "/{userId}/borrows", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<Borrow> getBorrows(@PathVariable Integer userId) {
+    return userRepository.getUserAndBorrows(userId).getBorrows();
+  }
 }

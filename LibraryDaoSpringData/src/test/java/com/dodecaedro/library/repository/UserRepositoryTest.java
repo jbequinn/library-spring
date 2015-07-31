@@ -103,4 +103,10 @@ public class UserRepositoryTest {
     User user = userRepository.getUserAndFines(1);
     assertThat(user.getFines(), is(empty()));
   }
+
+  @Test
+  public void testBorrowsNotEmpty() {
+    User user = userRepository.getUserAndBorrows(1);
+    assertThat(user.getBorrows(), is(not(empty())));
+  }
 }
