@@ -1,7 +1,9 @@
 package com.dodecaedro.library.data.pojo;
 
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
+import com.dodecaedro.library.views.ModelViews;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,18 +28,25 @@ public class Book implements Serializable {
   @Id
   @NotNull
   @Column(name = "ID")
+  @JsonView({ModelViews.BasicBookView.class, ModelViews.BasicBorrowView.class})
   @SequenceGenerator(name = "bookSeq", sequenceName = "S_BOOK", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookSeq")
   private Integer bookId;
+
   @NotNull
   @Column(name = "TITLE")
+  @JsonView({ModelViews.BasicBookView.class, ModelViews.BasicBorrowView.class})
   private String title;
+
   @NotNull
   @Column(name = "ISBN")
+  @JsonView({ModelViews.BasicBookView.class, ModelViews.BasicBorrowView.class})
   private String isbn;
+
   @NotNull
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "BOUGHT_DATE")
+  @JsonView(ModelViews.BasicBookView.class)
   private LocalDateTime dateTimeBought;
 
   @XmlTransient

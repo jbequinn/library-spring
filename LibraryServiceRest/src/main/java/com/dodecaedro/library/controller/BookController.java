@@ -3,8 +3,8 @@ package com.dodecaedro.library.controller;
 import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.repository.BookRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.dodecaedro.library.views.ModelViews;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,18 +24,21 @@ public class BookController {
   @Inject
   private BookRepository bookRepository;
 
+  @JsonView(ModelViews.BasicBookView.class)
   @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
   public ResponseEntity<Book> getBookByBookId(@PathVariable Integer bookId) {
     Book book = bookRepository.findOne(bookId);
     return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
+  @JsonView(ModelViews.BasicBookView.class)
   @RequestMapping(value = "/isbn/{isbn}", method = RequestMethod.GET)
   public ResponseEntity<Book> getBookByBookIsbn(@PathVariable String isbn) {
     Book book = bookRepository.findByIsbn(isbn);
     return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
+  @JsonView(ModelViews.BasicBookView.class)
   @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
   public List<Book> getAllBooks() {
@@ -60,6 +63,7 @@ public class BookController {
     this.bookRepository.delete(bookId);
   }
 
+  @JsonView(ModelViews.BasicUserView.class)
   @RequestMapping(value = "/{bookId}/users", method = RequestMethod.GET)
   public List<User> getUsersByBook(@PathVariable Integer bookId) {
     Book book = new Book();

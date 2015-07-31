@@ -5,6 +5,8 @@ import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.UserRepository;
+import com.dodecaedro.library.views.ModelViews;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,12 +31,14 @@ public class UserController {
   @Inject
   private BorrowRepository borrowRepository;
 
+  @JsonView(ModelViews.BasicUserView.class)
   @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
   public ResponseEntity<User> getCustomerByCustomerId(@PathVariable Integer userId) {
     User user = userRepository.findOne(userId);
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
+  @JsonView(ModelViews.BasicUserView.class)
   @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
   public List<User> getAllUsers() {
@@ -59,27 +63,31 @@ public class UserController {
     this.userRepository.delete(userId);
   }
 
+  @JsonView(ModelViews.BasicBorrowView.class)
   @RequestMapping(value = "/{userId}/expiredBorrows", method = RequestMethod.GET)
   @ResponseBody
   public List<Borrow> getExpiredBorrows(@PathVariable Integer userId) {
     return borrowRepository.findAll(expiredBorrows(userId));
   }
 
+  @JsonView(ModelViews.BasicBorrowView.class)
   @RequestMapping(value = "/{userId}/activeBorrows", method = RequestMethod.GET)
   @ResponseBody
   public List<Borrow> getActiveBorrows(@PathVariable Integer userId) {
     return borrowRepository.findAll(activeBorrows(userId));
   }
 
-  @RequestMapping(value = "/{userId}/fines", method = RequestMethod.GET)
-  @ResponseBody
-  public List<Fine> getFines(@PathVariable Integer userId) {
-    return userRepository.getUserAndFines(userId).getFines();
-  }
-
+  @JsonView(ModelViews.BasicBorrowView.class)
   @RequestMapping(value = "/{userId}/borrows", method = RequestMethod.GET)
   @ResponseBody
   public List<Borrow> getBorrows(@PathVariable Integer userId) {
     return userRepository.getUserAndBorrows(userId).getBorrows();
+  }
+
+  @JsonView(ModelViews.BasicFineView.class)
+  @RequestMapping(value = "/{userId}/fines", method = RequestMethod.GET)
+  @ResponseBody
+  public List<Fine> getFines(@PathVariable Integer userId) {
+    return userRepository.getUserAndFines(userId).getFines();
   }
 }
