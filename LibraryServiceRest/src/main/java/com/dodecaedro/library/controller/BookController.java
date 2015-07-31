@@ -16,26 +16,27 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping(value = "/books", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+@ResponseStatus(HttpStatus.OK)
+
 public class BookController {
 
   @Inject
   private BookRepository bookRepository;
 
-  @RequestMapping(value = "/{bookId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
   public ResponseEntity<Book> getBookByBookId(@PathVariable Integer bookId) {
     Book book = bookRepository.findOne(bookId);
     return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/isbn/{isbn}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @RequestMapping(value = "/isbn/{isbn}", method = RequestMethod.GET)
   public ResponseEntity<Book> getBookByBookIsbn(@PathVariable String isbn) {
     Book book = bookRepository.findByIsbn(isbn);
     return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
-  @RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
   public List<Book> getAllBooks() {
     return bookRepository.findAll();
@@ -59,7 +60,7 @@ public class BookController {
     this.bookRepository.delete(bookId);
   }
 
-  @RequestMapping(value = "/{bookId}/users}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @RequestMapping(value = "/{bookId}/users", method = RequestMethod.GET)
   public List<User> getUsersByBook(@PathVariable Integer bookId) {
     Book book = new Book();
     book.setBookId(bookId);

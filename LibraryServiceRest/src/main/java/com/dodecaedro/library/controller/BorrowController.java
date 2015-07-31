@@ -1,8 +1,6 @@
 package com.dodecaedro.library.controller;
 
-import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.Borrow;
-import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.exception.ActiveFinesException;
 import com.dodecaedro.library.exception.BorrowMaximumLimitException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 
