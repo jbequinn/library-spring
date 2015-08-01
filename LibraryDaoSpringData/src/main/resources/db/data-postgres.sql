@@ -29,6 +29,9 @@ values ('Once and future king', '1234-5681', '2014-09-03 00:00:00');
 insert into library.book (title, isbn, bought_date)
 values ('Tale of two cities', '1234-5682', '2014-09-04 00:00:00');
 
+insert into library.book (title, isbn, bought_date)
+values ('El guardian en el centeno', '1234-5683', '2014-09-05 00:00:00');
+
 
 insert into library.borrow (user_id, book_id, borrow_date, expected_return_date, actual_return_date)
 values (1, 1, '2014-09-03 00:00:00', '2014-09-17 10:00:00', '2014-09-16 18:00:00');
