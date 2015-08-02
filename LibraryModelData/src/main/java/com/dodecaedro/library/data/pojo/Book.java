@@ -11,14 +11,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "bookId")
-@XmlRootElement
 @Data
 @EqualsAndHashCode(of = {"isbn"})
 @ToString(exclude="borrows")
@@ -49,7 +46,6 @@ public class Book implements Serializable {
   @JsonView(ModelViews.BasicBookView.class)
   private LocalDateTime dateTimeBought;
 
-  @XmlTransient
   @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
   private List<Borrow> borrows;
 }

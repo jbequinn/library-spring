@@ -11,14 +11,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
-@XmlRootElement
 @Data
 @EqualsAndHashCode(of = {"lastName", "joinDateTime"})
 @ToString(exclude="borrows")
@@ -61,11 +58,9 @@ public class User implements Serializable {
   @JsonView(ModelViews.BasicUserView.class)
   private LocalDateTime joinDateTime;
 
-  @XmlTransient
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Borrow> borrows;
 
-  @XmlTransient
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Fine> fines;
 }

@@ -9,13 +9,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "fineId")
-@XmlRootElement
 @Data
 @EqualsAndHashCode(of = {"user", "fineEndDate"})
 @Entity
@@ -40,7 +37,6 @@ public class Fine implements Serializable {
   @Column(name = "USER_ID")
   private Integer userId;
 
-  @XmlTransient
   @OneToOne(fetch = FetchType.LAZY)
   @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
   private User user;

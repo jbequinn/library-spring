@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -39,7 +38,6 @@ public class Borrow implements Serializable {
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime actualReturnDate;
 
-  @XmlTransient
   @ManyToOne
   @PrimaryKeyJoinColumn(name="USER_ID", referencedColumnName="ID")
   /* if this JPA model doesn't create a table for the "PROJ_EMP" entity,
@@ -49,7 +47,6 @@ public class Borrow implements Serializable {
   */
   private User user;
 
-  @XmlTransient
   @ManyToOne
   @JsonView(ModelViews.BasicBorrowView.class)
   @PrimaryKeyJoinColumn(name="BOOK_ID", referencedColumnName="ID")
