@@ -2,6 +2,7 @@ package com.dodecaedro.library.data.pojo;
 
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
 import com.dodecaedro.library.views.ModelViews;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -53,6 +54,7 @@ public class User implements Serializable {
   @JsonView(ModelViews.BasicUserView.class)
   private String email;
 
+  @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "JOIN_DATE")
   @JsonView(ModelViews.BasicUserView.class)

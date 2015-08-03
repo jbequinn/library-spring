@@ -2,6 +2,7 @@ package com.dodecaedro.library.data.pojo;
 
 import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
 import com.dodecaedro.library.views.ModelViews;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
@@ -23,16 +24,19 @@ public class Borrow implements Serializable {
   private Integer bookId;
 
   @Id
+  @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="BORROW_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime borrowDate;
 
+  @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="EXPECTED_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime expectedReturnDate;
 
+  @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
   @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="ACTUAL_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
