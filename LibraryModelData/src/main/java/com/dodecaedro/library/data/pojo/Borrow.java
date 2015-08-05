@@ -26,19 +26,16 @@ public class Borrow implements Serializable {
 
   @Id
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="BORROW_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime borrowDate;
 
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="EXPECTED_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime expectedReturnDate;
 
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name="ACTUAL_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
   private LocalDateTime actualReturnDate;

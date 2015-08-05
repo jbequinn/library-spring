@@ -44,7 +44,6 @@ public class Book implements Serializable {
 
   @NotNull
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "BOUGHT_DATE")
   @JsonView(ModelViews.BasicBookView.class)
   private LocalDateTime dateTimeBought;

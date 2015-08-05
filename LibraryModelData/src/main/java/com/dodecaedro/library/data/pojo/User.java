@@ -56,7 +56,6 @@ public class User implements Serializable {
   private String email;
 
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "JOIN_DATE")
   @JsonView(ModelViews.BasicUserView.class)
   private LocalDateTime joinDateTime;

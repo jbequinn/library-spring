@@ -27,13 +27,11 @@ public class Fine implements Serializable {
   private Integer fineId;
 
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "FINE_START_DATE")
   @JsonView(ModelViews.BasicFineView.class)
   private LocalDateTime fineStartDate;
 
   @JsonFormat(pattern = DateFormat.DATE_TIME)
-  @Convert(converter = LocalDateTimePersistenceConverter.class)
   @Column(name = "FINE_END_DATE")
   @JsonView(ModelViews.BasicFineView.class)
   private LocalDateTime fineEndDate;
