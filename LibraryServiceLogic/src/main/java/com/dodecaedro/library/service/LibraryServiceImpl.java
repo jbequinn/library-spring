@@ -10,7 +10,6 @@ import com.dodecaedro.library.exception.BorrowNotFoundException;
 import com.dodecaedro.library.exception.ExpiredBorrowException;
 import com.dodecaedro.library.repository.BorrowRepository;
 import com.dodecaedro.library.repository.FineRepository;
-import com.dodecaedro.library.search.BorrowSpecifications;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +81,7 @@ public class LibraryServiceImpl implements LibraryService {
       Fine fine = new Fine();
       fine.setUser(user);
       fine.setUserId(user.getUserId());
+      fine.setFineStartDate(nowDate);
       fine.setFineEndDate(nowDate.plus(fineDuration));
       fineRepository.save(fine);
     }
