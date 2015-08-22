@@ -36,7 +36,9 @@ public class LibraryServiceImpl implements LibraryService {
   @Override
   @Transactional
   public Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
-    if (!fineRepository.findActiveFines(user).isEmpty()) {
+    LocalDateTime nowDate = LocalDateTime.now();
+
+    if (!fineRepository.findActiveFinesInDate(user, nowDate).isEmpty()) {
       throw new ActiveFinesException("The user has running fines");
     }
 
@@ -54,7 +56,6 @@ public class LibraryServiceImpl implements LibraryService {
     borrow.setBook(book);
     borrow.setUser(user);
 
-    LocalDateTime nowDate = LocalDateTime.now();
     borrow.setBorrowDate(nowDate);
     borrow.setExpectedReturnDate(nowDate.plusWeeks(2));
 

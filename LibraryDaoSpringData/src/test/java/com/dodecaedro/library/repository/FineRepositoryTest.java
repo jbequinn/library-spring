@@ -37,7 +37,7 @@ public class FineRepositoryTest {
     User user = new User();
     user.setUserId(4);
 
-    List<Fine> fines = fineRepository.findActiveFines(user);
+    List<Fine> fines = fineRepository.findActiveFinesInDate(user, LocalDateTime.of(2014, 12, 19, 18, 0, 0));
     assertThat(fines.size(), is(1));
   }
 
@@ -46,7 +46,7 @@ public class FineRepositoryTest {
     User user = new User();
     user.setUserId(1);
 
-    List<Fine> fines = fineRepository.findActiveFines(user);
+    List<Fine> fines = fineRepository.findActiveFinesInDate(user, LocalDateTime.now());
     assertThat(fines, is(empty()));
   }
 }
