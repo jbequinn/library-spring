@@ -10,7 +10,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -35,7 +36,7 @@ public class BookRepositoryTest {
     Book book = bookRepository.findByIsbn("1234-5678");
     assertThat(book.getBookId(), is(1));
     assertThat(book.getTitle(), is("Guerra y paz"));
-    assertThat(book.getDateTimeBought(), is(LocalDateTime.of(2014, 9, 1, 0, 0, 0)));
+    assertThat(book.getDateTimeBought(), is(ZonedDateTime.of(2014, 9, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
   }
 
   @Test

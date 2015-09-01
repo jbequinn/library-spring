@@ -1,3 +1,5 @@
+SET TIME ZONE INTERVAL '+00:00' HOUR TO MINUTE;
+
 insert into user (first_name, last_name, phone, address, email, join_date)
 values ('Cristiano', 'Ronaldo', '555-555321', 'Concha Espina 1', 'cris@cr7.com', '2014-09-03 00:00:00');
 

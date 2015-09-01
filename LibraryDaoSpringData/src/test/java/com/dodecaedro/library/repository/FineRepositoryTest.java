@@ -9,7 +9,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.empty;
@@ -29,7 +30,7 @@ public class FineRepositoryTest {
     user.setUserId(2);
 
     Fine fine = fineRepository.findTopByUserOrderByFineEndDateDesc(user);
-    assertThat(fine.getFineEndDate(), is(LocalDateTime.of(2014, 11, 19, 18, 0, 0)));
+    assertThat(fine.getFineEndDate(), is(ZonedDateTime.of(2014, 11, 19, 18, 0, 0, 0, ZoneOffset.UTC)));
   }
 
   @Test
@@ -37,7 +38,7 @@ public class FineRepositoryTest {
     User user = new User();
     user.setUserId(4);
 
-    List<Fine> fines = fineRepository.findActiveFinesInDate(user, LocalDateTime.of(2014, 12, 19, 18, 0, 0));
+    List<Fine> fines = fineRepository.findActiveFinesInDate(user, ZonedDateTime.of(2014, 12, 19, 18, 0, 0, 0, ZoneOffset.UTC));
     assertThat(fines.size(), is(1));
   }
 
@@ -46,7 +47,7 @@ public class FineRepositoryTest {
     User user = new User();
     user.setUserId(1);
 
-    List<Fine> fines = fineRepository.findActiveFinesInDate(user, LocalDateTime.now());
+    List<Fine> fines = fineRepository.findActiveFinesInDate(user, ZonedDateTime.now());
     assertThat(fines, is(empty()));
   }
 }

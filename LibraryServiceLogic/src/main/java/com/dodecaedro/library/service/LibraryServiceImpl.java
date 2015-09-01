@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import static com.dodecaedro.library.search.BorrowSpecifications.activeBorrows;
 import static com.dodecaedro.library.search.BorrowSpecifications.expiredBorrows;
@@ -36,7 +36,7 @@ public class LibraryServiceImpl implements LibraryService {
   @Override
   @Transactional
   public Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
-    LocalDateTime nowDate = LocalDateTime.now();
+    ZonedDateTime nowDate = ZonedDateTime.now();
 
     if (!fineRepository.findActiveFinesInDate(user, nowDate).isEmpty()) {
       throw new ActiveFinesException("The user has running fines");
@@ -73,7 +73,7 @@ public class LibraryServiceImpl implements LibraryService {
       throw new BorrowNotFoundException("No unreturned borrow found for the user and book");
     }
 
-    LocalDateTime nowDate = LocalDateTime.now();
+    ZonedDateTime nowDate = ZonedDateTime.now();
 
     borrow.setActualReturnDate(nowDate);
 

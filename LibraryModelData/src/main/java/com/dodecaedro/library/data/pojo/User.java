@@ -1,9 +1,6 @@
 package com.dodecaedro.library.data.pojo;
 
-import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
-import com.dodecaedro.library.data.pojo.format.DateFormat;
 import com.dodecaedro.library.views.ModelViews;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -14,7 +11,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
@@ -55,14 +52,21 @@ public class User implements Serializable {
   @JsonView(ModelViews.BasicUserView.class)
   private String email;
 
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name = "JOIN_DATE")
   @JsonView(ModelViews.BasicUserView.class)
-  private LocalDateTime joinDateTime;
+  private ZonedDateTime joinDateTime;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Borrow> borrows;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Fine> fines;
+
+  @PrePersist
+  void createdAt() {
+    if (this.joinDateTime == null) {
+      this.joinDateTime = ZonedDateTime.now();
+    }
+  }
+
 }

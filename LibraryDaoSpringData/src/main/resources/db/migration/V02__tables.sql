@@ -8,7 +8,7 @@ CREATE TABLE library.user
   "phone" character varying(100),
   "address" character varying(100) NOT NULL,
   "email" character varying(100) NOT NULL,
-  "join_date" timestamp with time zone NOT NULL,
+  "join_date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
   CONSTRAINT "user_PKEY" PRIMARY KEY ("id")
 )
 WITH (
@@ -25,7 +25,7 @@ CREATE TABLE library.book
   "id" bigint NOT NULL DEFAULT nextval('library.s_book'::regclass),
   "title" character varying(100) NOT NULL,
   "isbn" character varying(100) NOT NULL UNIQUE,
-  "bought_date" timestamp with time zone NOT NULL,
+  "bought_date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
   CONSTRAINT "book_PKEY" PRIMARY KEY ("id")
 )
 WITH (

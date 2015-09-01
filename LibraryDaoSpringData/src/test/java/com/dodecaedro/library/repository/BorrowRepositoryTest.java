@@ -11,7 +11,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.empty;
@@ -39,7 +40,7 @@ public class BorrowRepositoryTest {
     borrow.setBook(book);
     borrow.setUser(user);
 
-    LocalDateTime nowDate = LocalDateTime.now();
+    ZonedDateTime nowDate = ZonedDateTime.now();
     borrow.setBorrowDate(nowDate);
     borrow.setExpectedReturnDate(nowDate.plusWeeks(2));
 
@@ -57,7 +58,7 @@ public class BorrowRepositoryTest {
 
     Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
 
-    assertThat(borrow.getBorrowDate(), is(LocalDateTime.of(2014, 11, 3, 10, 0, 0)));
+    assertThat(borrow.getBorrowDate(), is(ZonedDateTime.of(2014, 11, 3, 10, 0, 0, 0 , ZoneOffset.UTC)));
   }
 
   @Test

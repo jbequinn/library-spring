@@ -1,9 +1,6 @@
 package com.dodecaedro.library.data.pojo;
 
-import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
-import com.dodecaedro.library.data.pojo.format.DateFormat;
 import com.dodecaedro.library.views.ModelViews;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -14,7 +11,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "bookId")
@@ -43,11 +40,17 @@ public class Book implements Serializable {
   private String isbn;
 
   @NotNull
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name = "BOUGHT_DATE")
   @JsonView(ModelViews.BasicBookView.class)
-  private LocalDateTime dateTimeBought;
+  private ZonedDateTime dateTimeBought;
 
   @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
   private List<Borrow> borrows;
+
+  @PrePersist
+  void createdAt() {
+    if (this.dateTimeBought == null) {
+      this.dateTimeBought = ZonedDateTime.now();
+    }
+  }
 }

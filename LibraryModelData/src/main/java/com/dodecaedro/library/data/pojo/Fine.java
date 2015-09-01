@@ -1,9 +1,6 @@
 package com.dodecaedro.library.data.pojo;
 
-import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
-import com.dodecaedro.library.data.pojo.format.DateFormat;
 import com.dodecaedro.library.views.ModelViews;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -12,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "fineId")
 @Data
@@ -26,15 +23,13 @@ public class Fine implements Serializable {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fineSeq")
   private Integer fineId;
 
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name = "FINE_START_DATE")
   @JsonView(ModelViews.BasicFineView.class)
-  private LocalDateTime fineStartDate;
+  private ZonedDateTime fineStartDate;
 
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name = "FINE_END_DATE")
   @JsonView(ModelViews.BasicFineView.class)
-  private LocalDateTime fineEndDate;
+  private ZonedDateTime fineEndDate;
 
   @Column(name = "USER_ID")
   private Integer userId;

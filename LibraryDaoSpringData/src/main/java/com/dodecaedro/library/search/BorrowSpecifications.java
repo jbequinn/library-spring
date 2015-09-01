@@ -4,12 +4,12 @@ import com.dodecaedro.library.data.pojo.Borrow;
 import com.dodecaedro.library.data.pojo.Borrow_;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class BorrowSpecifications {
   public static Specification<Borrow> expiredBorrows(final Integer userId) {
     return (root, criteriaQuery, criteriaBuilder) -> {
-      LocalDateTime nowDate = LocalDateTime.now();
+      ZonedDateTime nowDate = ZonedDateTime.now();
       return criteriaBuilder.and(criteriaBuilder.isNull(root.get(Borrow_.actualReturnDate)),
         criteriaBuilder.lessThanOrEqualTo(root.get(Borrow_.expectedReturnDate), nowDate),
         criteriaBuilder.equal(root.get(Borrow_.userId), userId));
@@ -18,7 +18,7 @@ public class BorrowSpecifications {
 
   public static Specification<Borrow> activeBorrows(final Integer userId) {
     return (root, criteriaQuery, criteriaBuilder) -> {
-      LocalDateTime nowDate = LocalDateTime.now();
+      ZonedDateTime nowDate = ZonedDateTime.now();
       return criteriaBuilder.and(criteriaBuilder.isNull(root.get(Borrow_.actualReturnDate)),
         criteriaBuilder.greaterThan(root.get(Borrow_.expectedReturnDate), nowDate),
         criteriaBuilder.equal(root.get(Borrow_.userId), userId));

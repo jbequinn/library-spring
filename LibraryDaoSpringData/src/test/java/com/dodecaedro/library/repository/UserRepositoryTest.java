@@ -1,7 +1,6 @@
 package com.dodecaedro.library.repository;
 
 import com.dodecaedro.library.configuration.LibraryDaoConfiguration;
-import com.dodecaedro.library.data.pojo.Fine;
 import com.dodecaedro.library.data.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -45,14 +45,28 @@ public class UserRepositoryTest {
     assertThat(user.getLastName(), is("Ronaldo"));
     assertThat(user.getPhone(), is("555-555321"));
     assertThat(user.getEmail(), is("cris@cr7.com"));
-    assertThat(user.getJoinDateTime(), is(LocalDateTime.of(2014, 9, 3, 0, 0, 0)));
+    assertThat(user.getJoinDateTime(), is(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC)));
+  }
+
+  @Test
+  @DirtiesContext
+  public void testSaveAndLoadDates() {
+    User user = new User();
+    user.setFirstName("James");
+    user.setLastName("Rodriguez");
+    user.setJoinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC));
+
+    userRepository.save(user);
+
+    User user2 = userRepository.findOne(user.getUserId());
+    assertThat(user2.getJoinDateTime(), is(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC)));
   }
 
   @Test
   @DirtiesContext
   public void testIdGenerated() {
     User user = new User();
-    user.setJoinDateTime(LocalDateTime.of(2014, 9, 3, 0, 0, 0));
+    user.setJoinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC));
     user.setFirstName("Marcelo");
 
     userRepository.save(user);

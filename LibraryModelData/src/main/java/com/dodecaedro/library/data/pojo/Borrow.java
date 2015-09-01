@@ -1,15 +1,12 @@
 package com.dodecaedro.library.data.pojo;
 
-import com.dodecaedro.library.data.pojo.converter.LocalDateTimePersistenceConverter;
-import com.dodecaedro.library.data.pojo.format.DateFormat;
 import com.dodecaedro.library.views.ModelViews;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -25,20 +22,17 @@ public class Borrow implements Serializable {
   private Integer bookId;
 
   @Id
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name="BORROW_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
-  private LocalDateTime borrowDate;
+  private ZonedDateTime borrowDate;
 
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name="EXPECTED_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
-  private LocalDateTime expectedReturnDate;
+  private ZonedDateTime expectedReturnDate;
 
-  @JsonFormat(pattern = DateFormat.DATE_TIME)
   @Column(name="ACTUAL_RETURN_DATE")
   @JsonView(ModelViews.BasicBorrowView.class)
-  private LocalDateTime actualReturnDate;
+  private ZonedDateTime actualReturnDate;
 
   @ManyToOne
   @PrimaryKeyJoinColumn(name="USER_ID", referencedColumnName="ID")

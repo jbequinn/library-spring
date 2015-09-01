@@ -1,17 +1,17 @@
 insert into library.user (first_name, last_name, phone, address, email, join_date)
-values ('Cristiano', 'Ronaldo', '555-555321', 'Concha Espina 1', 'cris@cr7.com', '2014-09-03 00:00:00');
+values ('Cristiano', 'Ronaldo', '555-555321', 'Concha Espina 1', 'cris@cr7.com', '2014-09-03 00:00:00+00');
 
 insert into library.user (first_name, last_name, phone, address, email, join_date)
-values ('Karim', 'Benzema', '555-555322', 'Concha Espina 1', 'karim@benzema.com', '2014-09-04 00:00:00');
+values ('Karim', 'Benzema', '555-555322', 'Concha Espina 1', 'karim@benzema.com', '2014-09-04 00:00:00+00');
 
 insert into library.user (first_name, last_name, phone, address, email, join_date)
-values ('Gareth', 'Bale', '555-555323', 'Concha Espina 1', 'gareth@bale.com', '2014-09-05 00:00:00');
+values ('Gareth', 'Bale', '555-555323', 'Concha Espina 1', 'gareth@bale.com', '2014-09-05 00:00:00+00');
 
 insert into library.user (first_name, last_name, phone, address, email, join_date)
-values ('Ramos', 'Sergio', '555-555324', 'Concha Espina 1', 'sergio@ramos.com', '2014-09-06 00:00:00');
+values ('Ramos', 'Sergio', '555-555324', 'Concha Espina 1', 'sergio@ramos.com', '2014-09-06 00:00:00+00');
 
 insert into library.user (first_name, last_name, phone, address, email, join_date)
-values ('Iker', 'Casillas', '555-555325', 'Concha Espina 1', 'iker@casillas.com', '2014-09-07 00:00:00');
+values ('Iker', 'Casillas', '555-555325', 'Concha Espina 1', 'iker@casillas.com', '2014-09-07 00:00:00+00');
 
 
 insert into library.book (title, isbn, bought_date)

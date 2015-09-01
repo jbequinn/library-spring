@@ -4,6 +4,9 @@ spring:
     jpa:
         database: h2
         show-sql: true
+    jackson:
+        serialization:
+            write-dates-as-timestamps: false
     cache:
         type: jcache
         cache-names: users, books
