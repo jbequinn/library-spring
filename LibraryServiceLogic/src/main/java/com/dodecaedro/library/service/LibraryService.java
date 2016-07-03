@@ -8,8 +8,10 @@ import com.dodecaedro.library.exception.BorrowMaximumLimitException;
 import com.dodecaedro.library.exception.BorrowNotFoundException;
 import com.dodecaedro.library.exception.ExpiredBorrowException;
 
+import java.util.Optional;
+
 public interface LibraryService {
   Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException;
   Borrow returnBook(User user, Book book) throws BorrowNotFoundException;
-  Borrow findActiveBorrow(User user, Book book);
+  Optional<Borrow> findActiveBorrow(User user, Book book);
 }

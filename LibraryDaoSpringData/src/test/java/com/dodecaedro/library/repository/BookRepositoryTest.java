@@ -5,9 +5,9 @@ import com.dodecaedro.library.data.pojo.Book;
 import com.dodecaedro.library.data.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import java.time.ZoneOffset;
@@ -17,8 +17,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LibraryDaoConfiguration.class)
 public class BookRepositoryTest {
 
   @Inject

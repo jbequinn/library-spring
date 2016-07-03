@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 import static com.dodecaedro.library.search.BorrowSpecifications.activeBorrows;
 import static com.dodecaedro.library.search.BorrowSpecifications.expiredBorrows;
@@ -67,11 +68,9 @@ public class LibraryServiceImpl implements LibraryService {
   @Override
   @Transactional
   public Borrow returnBook(User user, Book book) throws BorrowNotFoundException {
-    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
-
-    if (borrow == null) {
-      throw new BorrowNotFoundException("No unreturned borrow found for the user and book");
-    }
+    Borrow borrow = borrowRepository
+      .findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book)
+      .orElseThrow(() -> new BorrowNotFoundException("No unreturned borrow found for the user and book"));
 
     ZonedDateTime nowDate = ZonedDateTime.now();
 
@@ -93,7 +92,7 @@ public class LibraryServiceImpl implements LibraryService {
   }
 
   @Override
-  public Borrow findActiveBorrow(User user, Book book) {
+  public Optional<Borrow> findActiveBorrow(User user, Book book) {
     return borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
   }
 }

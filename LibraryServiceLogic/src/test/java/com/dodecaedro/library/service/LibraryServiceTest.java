@@ -12,18 +12,19 @@ import com.dodecaedro.library.exception.ExpiredBorrowException;
 import com.dodecaedro.library.repository.FineRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import java.time.Duration;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LibraryDaoConfiguration.class)
 public class LibraryServiceTest {
 
   @Inject
@@ -43,7 +44,7 @@ public class LibraryServiceTest {
 
     libraryService.borrowBook(user, book);
 
-    Borrow borrow = libraryService.findActiveBorrow(user, book);
+    Borrow borrow = libraryService.findActiveBorrow(user, book).get();
 
     assertNotNull("This user must still have one non-returned book", borrow);
     assertThat(borrow.getBookId(), is(book.getBookId()));
@@ -70,13 +71,13 @@ public class LibraryServiceTest {
     Book book = new Book();
     book.setBookId(1);
 
-    Borrow borrow = libraryService.findActiveBorrow(user, book);
+    Borrow borrow = libraryService.findActiveBorrow(user, book).get();
     assertNotNull("This user must still have one non-returned book", borrow);
 
     libraryService.returnBook(user, book);
 
-    Borrow borrowAfter = libraryService.findActiveBorrow(user, book);
-    assertNull("This user must not have any non-returned books", borrowAfter);
+    Optional<Borrow> borrowAfter = libraryService.findActiveBorrow(user, book);
+    assertFalse("This user must not have any non-returned books", borrowAfter.isPresent());
   }
 
   @Test

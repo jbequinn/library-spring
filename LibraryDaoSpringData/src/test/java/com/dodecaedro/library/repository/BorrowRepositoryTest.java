@@ -7,21 +7,22 @@ import com.dodecaedro.library.data.pojo.User;
 import com.dodecaedro.library.search.BorrowSpecifications;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = LibraryDaoConfiguration.class)
+@SpringBootTest(classes = LibraryDaoConfiguration.class)
 public class BorrowRepositoryTest {
 
   @Inject
@@ -56,7 +57,7 @@ public class BorrowRepositoryTest {
     Book book = new Book();
     book.setBookId(1);
 
-    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
+    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book).get();
 
     assertThat(borrow.getBorrowDate(), is(ZonedDateTime.of(2014, 11, 3, 10, 0, 0, 0 , ZoneOffset.UTC)));
   }
@@ -68,9 +69,9 @@ public class BorrowRepositoryTest {
     Book book = new Book();
     book.setBookId(1);
 
-    Borrow borrow = borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
+    Optional<Borrow> borrow =  borrowRepository.findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book);
 
-    assertNull(borrow);
+    assertFalse(borrow.isPresent());
   }
 
   @Test

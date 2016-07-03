@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-
 @RestController
 @RequestMapping("/borrows")
 public class BorrowController {
-  @Inject
-  LibraryService service;
+
+  private LibraryService service;
+
+  public BorrowController(LibraryService service) {
+    this.service = service;
+  }
 
   @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity<Borrow> borrowBook(@RequestBody Borrow borrow)

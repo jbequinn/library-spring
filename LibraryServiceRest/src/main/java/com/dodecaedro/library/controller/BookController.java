@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @RestController
@@ -21,8 +20,11 @@ import java.util.List;
 
 public class BookController {
 
-  @Inject
   private BookRepository bookRepository;
+
+  public BookController(BookRepository bookRepository) {
+    this.bookRepository = bookRepository;
+  }
 
   @JsonView(ModelViews.BasicBookView.class)
   @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
