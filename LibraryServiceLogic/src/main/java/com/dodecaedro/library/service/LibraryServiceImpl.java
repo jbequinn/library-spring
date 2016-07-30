@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.dodecaedro.library.search.BorrowSpecifications.activeBorrows;
@@ -37,6 +38,11 @@ public class LibraryServiceImpl implements LibraryService {
   @Override
   @Transactional
   public Borrow borrowBook(User user, Book book) throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
+    Objects.requireNonNull(user, "user cannot be null");
+    Objects.requireNonNull(user.getUserId(), "user id cannot be null");
+    Objects.requireNonNull(book, "book cannot be null");
+    Objects.requireNonNull(book.getBookId(), "book id cannot be null");
+
     ZonedDateTime nowDate = ZonedDateTime.now();
 
     if (!fineRepository.findActiveFinesInDate(user, nowDate).isEmpty()) {
@@ -68,12 +74,16 @@ public class LibraryServiceImpl implements LibraryService {
   @Override
   @Transactional
   public Borrow returnBook(User user, Book book) throws BorrowNotFoundException {
+    Objects.requireNonNull(user, "user cannot be null");
+    Objects.requireNonNull(user.getUserId(), "user id cannot be null");
+    Objects.requireNonNull(book, "book cannot be null");
+    Objects.requireNonNull(book.getBookId(), "book id cannot be null");
+
     Borrow borrow = borrowRepository
       .findTopByUserAndBookAndActualReturnDateIsNullOrderByBorrowDateDesc(user, book)
       .orElseThrow(() -> new BorrowNotFoundException("No unreturned borrow found for the user and book"));
 
     ZonedDateTime nowDate = ZonedDateTime.now();
-
     borrow.setActualReturnDate(nowDate);
 
     Duration fineDuration = Duration.between(borrow.getExpectedReturnDate(), nowDate);
