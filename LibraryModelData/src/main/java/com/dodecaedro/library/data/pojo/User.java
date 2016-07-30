@@ -4,9 +4,7 @@ import com.dodecaedro.library.views.ModelViews;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -19,6 +17,9 @@ import java.util.List;
 @EqualsAndHashCode(of = {"lastName", "joinDateTime"})
 @ToString(exclude="borrows")
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "USER")
 public class User implements Serializable {
   @Id

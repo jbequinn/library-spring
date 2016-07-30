@@ -39,22 +39,27 @@ public class UserRepositoryTest {
   @Test
   public void testFindById() {
     User user = userRepository.findOne(1);
-    assertThat(user.getUserId(), is(1));
-    assertThat(user.getAddress(), is("Concha Espina 1"));
-    assertThat(user.getFirstName(), is("Cristiano"));
-    assertThat(user.getLastName(), is("Ronaldo"));
-    assertThat(user.getPhone(), is("555-555321"));
-    assertThat(user.getEmail(), is("cris@cr7.com"));
-    assertThat(user.getJoinDateTime(), is(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC)));
+    User expectedUser = User.builder()
+      .userId(1)
+      .address("Concha Espina 1")
+      .firstName("Cristiano")
+      .lastName("Ronaldo")
+      .phone("555-555321")
+      .email("cris@cr7.com")
+      .joinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC))
+      .build();
+
+    assertThat(user, is(expectedUser));
   }
 
   @Test
   @DirtiesContext
   public void testSaveAndLoadDates() {
-    User user = new User();
-    user.setFirstName("James");
-    user.setLastName("Rodriguez");
-    user.setJoinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC));
+    User user = User.builder()
+      .firstName("James")
+      .lastName("Rodriguez")
+      .joinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC))
+      .build();
 
     userRepository.save(user);
 
@@ -65,12 +70,12 @@ public class UserRepositoryTest {
   @Test
   @DirtiesContext
   public void testIdGenerated() {
-    User user = new User();
-    user.setJoinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC));
-    user.setFirstName("Marcelo");
+    User user =  User.builder()
+      .joinDateTime(ZonedDateTime.of(2014, 9, 3, 0, 0, 0, 0, ZoneOffset.UTC))
+      .firstName("Marcelo")
+      .build();
 
     userRepository.save(user);
-
     assertNotNull(user.getUserId());
   }
 
