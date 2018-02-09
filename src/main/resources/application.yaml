@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: library-service
+    datasource:
+        url: jdbc:postgresql://172.17.0.2:5432/librarydb?currentSchema=library
+        username: libraryuser
+        password: librarypassword
+        initialize: true
+flyway:
+    schemas: library
+borrow:
+    maximum: 3
