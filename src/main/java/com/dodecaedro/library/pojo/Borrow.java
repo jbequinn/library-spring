@@ -1,9 +1,7 @@
 package com.dodecaedro.library.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,11 +9,14 @@ import java.time.ZonedDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(of = "id")
 @Entity
 @Table(name = "borrow")
+@Builder
 public class Borrow implements Serializable {
-  @EmbeddedId private BorrowId id;
+  @EmbeddedId
+  private BorrowId id;
 
   @ManyToOne
   @JoinColumn(name = "book_id", insertable = false, updatable = false)
@@ -32,12 +33,4 @@ public class Borrow implements Serializable {
 
   @Column(name = "actual_return_date")
   private ZonedDateTime actualReturnDate;
-
-  public Borrow(User user, Book book) {
-    this.id = new BorrowId(book.getBookId(), user.getUserId());
-    this.user = user;
-    this.book = book;
-    this.user.getBorrows().add(this);
-    this.book.getBorrows().add(this);
-  }
 }

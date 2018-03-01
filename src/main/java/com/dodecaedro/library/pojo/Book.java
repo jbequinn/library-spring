@@ -19,32 +19,30 @@ import static javax.persistence.CascadeType.REMOVE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "BOOK")
+@Table(name = "book")
 public class Book implements Serializable {
   @Id
   @NotNull
-  @Column(name = "ID")
+  @Column(name = "id")
   @SequenceGenerator(name = "bookSeq", sequenceName = "S_BOOK", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookSeq")
   private Long bookId;
 
   @NotNull
-  @Column(name = "TITLE")
+  @Column
   private String title;
 
   @NotNull
-  @Column(name = "ISBN")
+  @Column
   private String isbn;
 
   @NotNull
-  @Column(name = "BOUGHT_DATE")
+  @Column(name = "bought_date")
   private ZonedDateTime dateTimeBought;
 
+  @OneToMany
+  @JoinColumn(name = "id",insertable = false, updatable = false)
   @JsonIgnoreProperties("book")
-  @OneToMany(
-    mappedBy = "book",
-    cascade = {REMOVE, PERSIST}
-  )
   private List<Borrow> borrows;
 
   @PrePersist

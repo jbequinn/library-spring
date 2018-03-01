@@ -7,11 +7,8 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString(of = {"bookId", "userId", "borrowDate"})
-@EqualsAndHashCode(of = {"bookId", "userId", "borrowDate"})
 @Embeddable
 public class BorrowId implements Serializable {
   @Column(name = "book_id")
@@ -22,10 +19,4 @@ public class BorrowId implements Serializable {
 
   @Column(name = "borrow_date")
   private ZonedDateTime borrowDate;
-
-  public BorrowId(Long bookId, Long userId) {
-    this.bookId = bookId;
-    this.userId = userId;
-    this.borrowDate = ZonedDateTime.now();
-  }
 }

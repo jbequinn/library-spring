@@ -2,7 +2,7 @@
 
 CREATE TABLE library.user
 (
-  "id" bigint NOT NULL DEFAULT nextval('library.s_user'::regclass),
+  "id" bigint NOT NULL DEFAULT nextval('library.s_user'),
   "first_name" character varying(100) NOT NULL,
   "last_name" character varying(100) NOT NULL,
   "phone" character varying(100),
@@ -22,7 +22,7 @@ ALTER TABLE library.user
 
 CREATE TABLE library.book
 (
-  "id" bigint NOT NULL DEFAULT nextval('library.s_book'::regclass),
+  "id" bigint NOT NULL DEFAULT nextval('library.s_book'),
   "title" character varying(100) NOT NULL,
   "isbn" character varying(100) NOT NULL UNIQUE,
   "bought_date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -57,7 +57,7 @@ ALTER TABLE library.borrow
 
 CREATE TABLE library.fine
 (
-  "id" bigint NOT NULL DEFAULT nextval('library.s_fine'::regclass),
+  "id" bigint NOT NULL DEFAULT nextval('library.s_fine'),
   "user_id" bigint NOT NULL REFERENCES library.user(id),
   "fine_start_date" timestamp with time zone NOT NULL,
   "fine_end_date" timestamp with time zone NOT NULL,
