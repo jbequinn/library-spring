@@ -1,6 +1,5 @@
 package com.dodecaedro.library.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,7 +24,6 @@ public class Fine implements Serializable {
   @Column(name = "FINE_END_DATE")
   private ZonedDateTime fineEndDate;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JsonIgnoreProperties("fines")
+  @OneToOne
   private User user;
 }

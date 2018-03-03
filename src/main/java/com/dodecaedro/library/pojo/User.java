@@ -1,6 +1,5 @@
 package com.dodecaedro.library.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,9 +7,6 @@ import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
-
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REMOVE;
 
 @Data
 @EqualsAndHashCode(of = {"lastName", "joinDateTime"})
@@ -33,29 +29,19 @@ public class User implements Serializable {
   @Column(name = "last_name")
   private String lastName;
 
-  @Column
-  private String address;
+  @Column private String address;
 
-  @Column
-  private String phone;
+  @Column private String phone;
 
-  @Email
-  @Column
-  private String email;
+  @Email @Column private String email;
 
   @Column(name = "join_date")
   private ZonedDateTime joinDateTime;
 
-  @OneToMany
-  @JoinColumn(name = "id",insertable = false, updatable = false)
-  @JsonIgnoreProperties("user")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private List<Borrow> borrows;
 
-  @OneToMany(
-    mappedBy = "user",
-    cascade = {REMOVE, PERSIST}
-  )
-  @JsonIgnoreProperties("user")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private List<Fine> fines;
 
   @PrePersist

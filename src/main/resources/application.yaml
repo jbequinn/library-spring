@@ -1,12 +1,16 @@
 spring:
   application:
     name: library-service
+  data:
+    rest:
+      basePath: /api
   datasource:
-    url: jdbc:postgresql://172.17.0.2:5432/librarydb
+    url: jdbc:postgresql://localhost:5432/librarydb
     username: libraryuser
     password: librarypassword
     initialize: true
   jpa:
+    show-sql: true
     properties:
       hibernate:
         default_schema: library

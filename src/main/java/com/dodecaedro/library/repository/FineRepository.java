@@ -14,9 +14,12 @@ import java.util.List;
 @Repository
 public interface FineRepository extends JpaRepository<Fine, Long> {
   Fine findTopByUserOrderByFineEndDateDesc(User user);
+
   Fine save(Fine fine);
+
   @Query("from Fine f where f.user = :user and :time BETWEEN f.fineStartDate and f.fineEndDate")
   List<Fine> findActiveFinesInDate(@Param("user") User user, @Param("time") ZonedDateTime time);
+
   @Query("from Fine f left join f.user u left join u.borrows b where b = :borrow")
   Fine findByBorrow(@Param("borrow") Borrow borrow);
 }

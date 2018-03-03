@@ -25,8 +25,10 @@ public class LibraryService {
   private final FineRepository fineRepository;
   private final BorrowRepository borrowRepository;
 
-  public LibraryService(LibraryProperties properties, FineRepository fineRepository,
-                        BorrowRepository borrowRepository) {
+  public LibraryService(
+      LibraryProperties properties,
+      FineRepository fineRepository,
+      BorrowRepository borrowRepository) {
     this.properties = properties;
     this.fineRepository = fineRepository;
     this.borrowRepository = borrowRepository;
@@ -45,37 +47,52 @@ public class LibraryService {
     Objects.requireNonNull(book, "book cannot be null");
     Objects.requireNonNull(book.getBookId(), "book id cannot be null");
 
+    if (borrowRepository.exists(sameItemStillBorrowed(user, book))) {
+      throw new IllegalStateException("The user still has the same item borrowed");
+    }
+
     ZonedDateTime nowDate = ZonedDateTime.now();
 
     if (!fineRepository.findActiveFinesInDate(user, nowDate).isEmpty()) {
       throw new ActiveFinesException("The user has running fines");
     }
 
-    if (borrowRepository.count(expiredBorrows(user, nowDate)) > 0) {
-      throw new ExpiredBorrowException("cannot borrow new books because the user has expired borrows");
+    if (borrowRepository.exists(expiredBorrows(user, nowDate))) {
+      throw new ExpiredBorrowException(
+          "cannot borrow new books because the user has expired unreturned borrows");
     }
 
     if (properties.getMaximumBorrows() <= borrowRepository.count(activeBorrows(user))) {
-      throw new BorrowMaximumLimitException("User has already reached the maximum number of simultaneous borrows");
+      throw new BorrowMaximumLimitException(
+          "User has already reached the maximum number of simultaneous borrows");
     }
 
-    Borrow borrow = borrowRepository.save(Borrow.builder()
-      .user(user)
-      .book(book)
-      .expectedReturnDate(nowDate.plusWeeks(properties.getBorrowLength()))
-      .build());
+    Borrow borrow =
+        borrowRepository.save(
+            Borrow.builder()
+                .user(user)
+                .book(book)
+                .expectedReturnDate(nowDate.plusWeeks(properties.getBorrowLength()))
+                .build());
 
-    log.info("Created borrow with id: " + borrow.getId());
+    log.info("Created borrow: " + borrow.getId());
 
     return borrow;
   }
 
   private Predicate expiredBorrows(User user, ZonedDateTime date) {
-    return QBorrow.borrow.user.eq(user).and(QBorrow.borrow.actualReturnDate.lt(date));
+    return QBorrow.borrow.user.eq(user)
+      .and(QBorrow.borrow.actualReturnDate.lt(date));
   }
 
   private Predicate activeBorrows(User user) {
-    return QBorrow.borrow.user.eq(user).and(QBorrow.borrow.actualReturnDate.isNull());
+    return QBorrow.borrow.user.eq(user)
+      .and(QBorrow.borrow.actualReturnDate.isNull());
   }
 
+  private Predicate sameItemStillBorrowed(User user, Book book) {
+    return QBorrow.borrow.user.eq(user)
+      .and(QBorrow.borrow.book.eq(book))
+      .and(QBorrow.borrow.actualReturnDate.isNotNull());
+  }
 }

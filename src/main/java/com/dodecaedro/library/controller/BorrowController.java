@@ -1,9 +1,9 @@
 package com.dodecaedro.library.controller;
 
 import com.dodecaedro.library.service.LibraryService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BorrowController {
   private final LibraryService libraryService;
 
