@@ -62,6 +62,19 @@ public class UsersIT {
     assertThat(users).hasSize(5);
   }
 
+  @Test
+  @DataSet(value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
+    disableConstraints = true, cleanAfter = true, transactional = true)
+  public void getUser() {
+    User user = when()
+      .get("/users/1")
+      .then().assertThat()
+      .statusCode(HTTP_OK)
+      .extract().body().as(User.class);
+
+    assertThat(user.getFirstName()).isEqualTo("Cristiano");
+  }
+
   /*
   @Test
   @ExportDataSet(format = DataSetFormat.XML,outputName="target/exported/xml/allTables.xml")
