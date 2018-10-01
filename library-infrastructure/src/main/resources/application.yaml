@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: library-service
+  data:
+    rest:
+      basePath: /api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/librarydb
+    username: libraryuser
+    password: librarypassword
+    initialize: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: library
+  flyway:
+    schemas: library
+borrow:
+  maximumBorrows: 3
+  borrowLength: 2
+
+logging:
+  level:
+    org.springframework.web: WARN
+    org.hibernate: WARN
+  file: /var/log/libraryservice.log

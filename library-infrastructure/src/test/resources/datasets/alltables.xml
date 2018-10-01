@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a01" title="Guerra y paz" isbn="1234-5678" bought_date="2014-09-01 00:00:00.0"/>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a02" title="Crimen y castigo" isbn="1234-5679" bought_date="2014-09-01 00:00:00.0"/>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a03" title="La Metamorfosis" isbn="1234-5680" bought_date="2014-09-02 00:00:00.0"/>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a04" title="Once and future king" isbn="1234-5681" bought_date="2014-09-03 00:00:00.0"/>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a05" title="Tale of two cities" isbn="1234-5682" bought_date="2014-09-04 00:00:00.0"/>
+  <library.book id="264c72cb-c43e-4160-bd92-6f5fd1b22a06" title="El guardian en el centeno" isbn="1234-5683" bought_date="2014-09-05 00:00:00.0"/>
+
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f601" user_id="3060754f-8543-416f-b4f5-6f762c620f01" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a01" borrow_date="2014-09-03 00:00:00.0" expected_return_date="2014-09-17 10:00:00.0" actual_return_date="2014-09-16 18:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f602" user_id="3060754f-8543-416f-b4f5-6f762c620f02" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a01" borrow_date="2014-10-03 10:00:00.0" expected_return_date="2014-10-17 10:00:00.0" actual_return_date="2014-10-18 18:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f603" user_id="3060754f-8543-416f-b4f5-6f762c620f02" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a02" borrow_date="2014-11-03 10:00:00.0" expected_return_date="2014-11-17 10:00:00.0" actual_return_date="2014-11-18 18:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f604" user_id="3060754f-8543-416f-b4f5-6f762c620f03" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a01" borrow_date="2014-11-03 10:00:00.0" expected_return_date="2014-11-17 10:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f605" user_id="3060754f-8543-416f-b4f5-6f762c620f04" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a03" borrow_date="2014-11-03 10:00:00.0" expected_return_date="2014-11-17 10:00:00.0" actual_return_date="2014-11-18 18:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f606" user_id="3060754f-8543-416f-b4f5-6f762c620f05" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a04" borrow_date="2114-11-03 10:00:00.0" expected_return_date="2114-11-17 10:00:00.0"/>
+  <library.borrow id="211d4877-ba4d-4e10-b9ab-fa8211c7f607" user_id="3060754f-8543-416f-b4f5-6f762c620f05" book_id="264c72cb-c43e-4160-bd92-6f5fd1b22a05" borrow_date="2114-11-03 10:01:00.0" expected_return_date="2114-11-17 10:00:01.0"/>
+
+  <library.fine id="7eb56161-8a54-490e-b842-e85512cecb01" user_id="3060754f-8543-416f-b4f5-6f762c620f02" fine_start_date="2014-10-18 18:00:00.0" fine_end_date="2014-10-19 18:00:00.0"/>
+  <library.fine id="7eb56161-8a54-490e-b842-e85512cecb02" user_id="3060754f-8543-416f-b4f5-6f762c620f02" fine_start_date="2014-11-18 18:00:00.0" fine_end_date="2014-11-19 18:00:00.0"/>
+  <library.fine id="7eb56161-8a54-490e-b842-e85512cecb03" user_id="3060754f-8543-416f-b4f5-6f762c620f04" fine_start_date="2014-11-18 18:00:00.0" fine_end_date="2114-11-19 18:00:00.0"/>
+
+  <library.user id="3060754f-8543-416f-b4f5-6f762c620f01" first_name="Cristiano" last_name="Ronaldo" phone="555-555321" address="Concha Espina 1" email="cris@cr7.com" join_date="2014-09-03 02:00:00.0"/>
+  <library.user id="3060754f-8543-416f-b4f5-6f762c620f02" first_name="Karim" last_name="Benzema" phone="555-555322" address="Concha Espina 1" email="karim@benzema.com" join_date="2014-09-04 02:00:00.0"/>
+  <library.user id="3060754f-8543-416f-b4f5-6f762c620f03" first_name="Gareth" last_name="Bale" phone="555-555323" address="Concha Espina 1" email="gareth@bale.com" join_date="2014-09-05 02:00:00.0"/>
+  <library.user id="3060754f-8543-416f-b4f5-6f762c620f04" first_name="Sergio" last_name="Ramos" phone="555-555324" address="Concha Espina 1" email="sergio@ramos.com" join_date="2014-09-06 02:00:00.0"/>
+  <library.user id="3060754f-8543-416f-b4f5-6f762c620f05" first_name="Iker" last_name="Casillas" phone="555-555325" address="Concha Espina 1" email="iker@casillas.com" join_date="2014-09-07 02:00:00.0"/>
+</dataset>
