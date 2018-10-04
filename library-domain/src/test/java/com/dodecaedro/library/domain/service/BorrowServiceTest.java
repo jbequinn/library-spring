@@ -63,8 +63,8 @@ public class BorrowServiceTest {
 	@Test
 	void successfulBorrowBook() throws Exception {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
@@ -80,7 +80,7 @@ public class BorrowServiceTest {
 				.thenAnswer(returnsFirstArg());
 
 		// WHEN the user borrows the book
-		Borrow borrow = borrowService.borrowBook(book, user);
+		var borrow = borrowService.borrowBook(book, user);
 
 		// THEN a borrow is created
 		SoftAssertions.assertSoftly(softly -> {
@@ -99,8 +99,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnActiveFines() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
@@ -119,8 +119,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnExpiredBorrows() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
@@ -141,8 +141,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnActiveBorrows() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
@@ -168,7 +168,7 @@ public class BorrowServiceTest {
 			softly.assertThatThrownBy(() -> borrowService.borrowBook(Book.builder().build(), null))
 					.isInstanceOf(NullPointerException.class);
 
-			Book book = Book.builder().build();
+			var book = Book.builder().build();
 			book.setId(null);
 			softly.assertThatThrownBy(() -> borrowService.borrowBook(book, null))
 					.isInstanceOf(NullPointerException.class);
@@ -184,7 +184,7 @@ public class BorrowServiceTest {
 			softly.assertThatThrownBy(() -> borrowService.borrowBook(null, User.builder().build()))
 					.isInstanceOf(NullPointerException.class);
 
-			User user = User.builder().build();
+			var user = User.builder().build();
 			user.setId(null);
 			softly.assertThatThrownBy(() -> borrowService.borrowBook(null, user))
 					.isInstanceOf(NullPointerException.class);
@@ -197,15 +197,15 @@ public class BorrowServiceTest {
 	@Test
 	void returnBookWithoutFine() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a borrow exists for that pair
-		Borrow borrow = Borrow.builder()
+		var borrow = Borrow.builder()
 				.book(book)
 				.user(user)
 				.expectedReturnDate(ZonedDateTime.now().plusDays(1))
@@ -230,15 +230,15 @@ public class BorrowServiceTest {
 	@Test
 	void returnBookWithFine() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a borrow exists for that pair
-		Borrow borrow = Borrow.builder()
+		var borrow = Borrow.builder()
 				.book(book)
 				.user(user)
 				// the book should've been returned yesterday
@@ -270,8 +270,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnNonExistingBorrow() {
 		// GIVEN a book and a user
-		Book book = Book.builder().isbn("abc-123").build();
-		User user = User.builder().email("karim@benzema.com").build();
+		var book = Book.builder().isbn("abc-123").build();
+		var user = User.builder().email("karim@benzema.com").build();
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
@@ -287,12 +287,12 @@ public class BorrowServiceTest {
 	@Test
 	void failOnBorrowNonExistingUser() {
 		// GIVEN an existing book
-		Book book = Book.builder().isbn("abc-123").build();
+		var book = Book.builder().isbn("abc-123").build();
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a non-existing user
-		User user = User.builder().email("karim@benzema.com").build();
+		var user = User.builder().email("karim@benzema.com").build();
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.empty());
 
@@ -305,12 +305,12 @@ public class BorrowServiceTest {
 	@Test
 	void failOnBorrowNonExistingBook() {
 		// GIVEN an non-existing book
-		Book book = Book.builder().isbn("abc-123").build();
+		var book = Book.builder().isbn("abc-123").build();
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.empty());
 
 		// GIVEN an existing user
-		User user = User.builder().email("karim@benzema.com").build();
+		var user = User.builder().email("karim@benzema.com").build();
 
 		// WHEN the user tries to borrow the non-existing book
 		assertThatExceptionOfType(EntityNotFoundException.class)

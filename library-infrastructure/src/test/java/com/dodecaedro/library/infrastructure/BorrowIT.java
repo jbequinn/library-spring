@@ -21,10 +21,10 @@ public class BorrowIT extends ITBase {
 	@Test
 	public void createBorrow() {
 		// GIVEN a valid user and book
-		User user = User.builder().id(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01")).build();
-		Book book = Book.builder().id(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06")).build();
+		var user = User.builder().id(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01")).build();
+		var book = Book.builder().id(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06")).build();
 
-		Borrow borrow = given()
+		var borrow = given()
 				.contentType(ContentType.JSON)
 				.accept(ContentType.ANY)
 				.body(toJson(Borrow.builder()

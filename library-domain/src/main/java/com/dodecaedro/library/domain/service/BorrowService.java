@@ -50,9 +50,9 @@ public class BorrowService {
 		requireNonNull(book, "book cannot be null");
 		requireNonNull(book.getId(), "book id cannot be null");
 
-		Book actualBook = bookRepository.findById(book.getId())
+		var actualBook = bookRepository.findById(book.getId())
 				.orElseThrow(() -> new EntityNotFoundException("Book with id: " + book.getId() + " not found."));
-		User actualUser = userRepository.findById(user.getId())
+		var actualUser = userRepository.findById(user.getId())
 				.orElseThrow(() -> new EntityNotFoundException("User with id: " + user.getId() + " not found."));
 
 		ZonedDateTime nowDate = ZonedDateTime.now();
@@ -82,15 +82,15 @@ public class BorrowService {
 		requireNonNull(book, "book cannot be null");
 		requireNonNull(book.getId(), "book id cannot be null");
 
-		Book actualBook = bookRepository.findById(book.getId())
+		var actualBook = bookRepository.findById(book.getId())
 				.orElseThrow(() -> new EntityNotFoundException("Book with id: " + book.getId() + " not found."));
-		User actualUser = userRepository.findById(user.getId())
+		var actualUser = userRepository.findById(user.getId())
 				.orElseThrow(() -> new EntityNotFoundException("User with id: " + user.getId() + " not found."));
 
-		Borrow borrow = borrowRepository.findByBookAndUser(actualBook, actualUser)
+		var borrow = borrowRepository.findByBookAndUser(actualBook, actualUser)
 				.orElseThrow(() -> new IllegalArgumentException("There is no active borrow for that book and user"));
 
-		ZonedDateTime nowDate = ZonedDateTime.now();
+		var nowDate = ZonedDateTime.now();
 		borrow.setActualReturnDate(nowDate);
 
 		if (nowDate.isAfter(borrow.getExpectedReturnDate())) {

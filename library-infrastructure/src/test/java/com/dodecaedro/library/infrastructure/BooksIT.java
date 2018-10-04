@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BooksIT extends ITBase {
 	@Test
 	public void getAllBooks() {
-		List<Book> books = when()
+		var books = when()
 			.get("/books")
 			.then().assertThat()
 			.statusCode(HTTP_OK)
@@ -31,7 +31,7 @@ public class BooksIT extends ITBase {
 
 	@Test
 	public void getBookById() {
-		Book book = given()
+		var book = given()
 			.pathParam("id", "264c72cb-c43e-4160-bd92-6f5fd1b22a04")
 			.when()
 			.get("/books/{id}")

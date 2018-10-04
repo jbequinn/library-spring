@@ -28,8 +28,8 @@ public class BorrowController {
 	@PostMapping("/borrows/borrow")
 	public @ResponseBody ResponseEntity<?> borrowBook(@RequestBody Borrow borrow)
 			throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
-		Borrow createdBorrow = borrowService.borrowBook(borrow.getBook(), borrow.getUser());
-		Resource<Borrow> resource = new Resource<>(createdBorrow);
+		var createdBorrow = borrowService.borrowBook(borrow.getBook(), borrow.getUser());
+		var resource = new Resource<>(createdBorrow);
 		resource.add(linkTo(methodOn(BorrowController.class).borrowBook(borrow)).withSelfRel());
 		return ResponseEntity.status(HttpStatus.CREATED).body(resource);
 	}

@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UsersIT extends ITBase {
 	@Test
 	public void getAllUsers() {
-		List<User> users = when()
+		var users = when()
 				.get("/users")
 				.then().assertThat()
 				.statusCode(HTTP_OK)
@@ -30,7 +30,7 @@ public class UsersIT extends ITBase {
 
 	@Test
 	public void getUserById() {
-		User user = given()
+		var user = given()
 				.pathParam("id", "3060754f-8543-416f-b4f5-6f762c620f01")
 				.when()
 					.get("/users/{id}")
