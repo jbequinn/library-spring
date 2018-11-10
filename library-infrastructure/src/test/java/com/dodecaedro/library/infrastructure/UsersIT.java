@@ -5,8 +5,6 @@ import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.dodecaedro.library.domain.model.User;
 import org.junit.Test;
 
-import java.util.List;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static java.net.HttpURLConnection.HTTP_OK;

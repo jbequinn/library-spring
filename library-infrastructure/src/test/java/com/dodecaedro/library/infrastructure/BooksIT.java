@@ -3,9 +3,7 @@ package com.dodecaedro.library.infrastructure;
 import com.dodecaedro.library.domain.model.Book;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
-import org.junit.Test;
-
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;

@@ -6,7 +6,7 @@ import com.dodecaedro.library.domain.model.User;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import io.restassured.http.ContentType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
