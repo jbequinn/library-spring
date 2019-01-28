@@ -9,8 +9,8 @@ import org.springframework.data.repository.config.BootstrapMode;
 
 @SpringBootApplication
 @EnableJpaRepositories(
-		bootstrapMode = BootstrapMode.DEFERRED,
-		basePackages = "com.dodecaedro.library.infrastructure.repository"
+	bootstrapMode = BootstrapMode.DEFERRED,
+	basePackages = "com.dodecaedro.library.infrastructure.repository"
 )
 @EntityScan("com.dodecaedro.library.domain.model")
 @EnableCaching

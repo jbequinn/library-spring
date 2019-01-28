@@ -1,8 +1,8 @@
 package com.dodecaedro.library.infrastructure.repository;
 
-import com.dodecaedro.library.infrastructure.projection.BookExcerptProjection;
 import com.dodecaedro.library.domain.model.Book;
 import com.dodecaedro.library.domain.repository.BookRepository;
+import com.dodecaedro.library.infrastructure.projection.BookExcerptProjection;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RepositoryRestResource(
-		collectionResourceRel = "books",
-		path = "books",
-		excerptProjection = BookExcerptProjection.class
+	collectionResourceRel = "books",
+	path = "books",
+	excerptProjection = BookExcerptProjection.class
 )
 public interface JpaBookRepository extends CrudRepository<Book, UUID>, BookRepository {
 	@Cacheable("books")

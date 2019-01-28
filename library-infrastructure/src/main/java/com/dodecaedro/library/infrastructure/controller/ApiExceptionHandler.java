@@ -15,10 +15,10 @@ public class ApiExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ApiErrorResponse handleNotFoundException(EntityNotFoundException ex) {
 		return ApiErrorResponse.builder()
-				.status(HttpStatus.NOT_FOUND)
-				.error_code("NOT_FOUND")
-				.message(ex.getLocalizedMessage())
-				.build();
+			.status(HttpStatus.NOT_FOUND)
+			.error_code("NOT_FOUND")
+			.message(ex.getLocalizedMessage())
+			.build();
 	}
 
 	@Data
