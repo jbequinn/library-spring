@@ -3,7 +3,10 @@ sudo: required
 language: java
 
 jdk:
-  - openjdk11
+	- openjdk11
 
 services:
-- docker
+	- docker
+
+script:
+	- mvn -B -V clean verify jacoco:report
