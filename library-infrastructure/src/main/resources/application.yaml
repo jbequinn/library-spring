@@ -16,6 +16,11 @@ spring:
         default_schema: library
   flyway:
     schemas: library
+	cache:
+		cache-names: books,users
+		caffeine:
+			spec: maximumSize=500,expireAfterAccess=1200s
+
 borrow:
   maximumBorrows: 3
   borrowLength: 2
