@@ -1,7 +1,6 @@
 package com.dodecaedro.library.infrastructure;
 
 import com.dodecaedro.library.domain.model.Book;
-import com.dodecaedro.library.domain.model.Borrow;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import io.restassured.http.ContentType;

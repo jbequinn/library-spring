@@ -52,12 +52,12 @@ public class BookController {
 	@GetMapping("search")
 	@ResponseBody
 	public ResponseEntity<?> findBooksByAttributes(@RequestParam("title") String title) {
-		List<UUID> bookIds = searchDocumentRepository.findByTitle(title).stream()
+		var bookIds = searchDocumentRepository.findByTitle(title).stream()
 			.map(BookSearchDocument::getId)
 			.collect(Collectors.toList());
 
-		List<Book> books = bookIds.isEmpty() ? Collections.emptyList() : bookRepository.findAllById(bookIds);
-		Resources<Book> resources = new Resources<>(books);
+		var books = bookIds.isEmpty() ? Collections.emptyList() : bookRepository.findAllById(bookIds);
+		var resources = new Resources<>(books);
 		resources.add(linkTo(methodOn(BookController.class).findBooksByAttributes(title)).withSelfRel());
 		return ResponseEntity.ok(resources);
 	}
