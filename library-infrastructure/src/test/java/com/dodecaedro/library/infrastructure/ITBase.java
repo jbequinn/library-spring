@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
 import java.util.TimeZone;
 
@@ -36,10 +37,15 @@ public abstract class ITBase {
 		.withPassword("librarypassword")
 		.withDatabaseName("librarydb");
 
+	public static ElasticsearchContainer elasticsearchContainer =
+		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.2.2")
+		.withEnv("cluster.name", "integration-test-cluster");
+
 	@BeforeAll
 	public static void containerStart() {
 		// teardown done automatically on jvm exit
 		postgresContainer.start();
+		elasticsearchContainer.start();
 	}
 
 	@BeforeAll
@@ -61,7 +67,9 @@ public abstract class ITBase {
 			TestPropertyValues.of(
 				"spring.datasource.url=" + postgresContainer.getJdbcUrl(),
 				"spring.datasource.username=" + postgresContainer.getUsername(),
-				"spring.datasource.password=" + postgresContainer.getPassword()
+				"spring.datasource.password=" + postgresContainer.getPassword(),
+				"spring.data.elasticsearch.cluster-name=integration-test-cluster",
+				"spring.data.elasticsearch.cluster-nodes=localhost:" + elasticsearchContainer.getMappedPort(9300)
 			).applyTo(configurableApplicationContext.getEnvironment());
 		}
 	}

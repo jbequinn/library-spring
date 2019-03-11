@@ -4,6 +4,8 @@ spring:
   data:
     rest:
       basePath: /api
+    elasticsearch:
+      cluster-nodes: localhost:9300
   datasource:
     url: jdbc:postgresql://localhost:5432/librarydb
     username: libraryuser
@@ -16,10 +18,10 @@ spring:
         default_schema: library
   flyway:
     schemas: library
-	cache:
-		cache-names: books,users
-		caffeine:
-			spec: maximumSize=500,expireAfterAccess=1200s
+  cache:
+    cache-names: books,users
+    caffeine:
+      spec: maximumSize=500,expireAfterAccess=1200s
 
 borrow:
   maximumBorrows: 3

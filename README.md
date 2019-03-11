@@ -10,6 +10,7 @@ Simple Spring application for lending books to users. This project is a testing 
 - Spring Data Rest
 - Hibernate
 - Flyway
+- Elasticsearch
 - Testcontainers with a Postgres Docker image
 - Database Rider
 - RestAssured
