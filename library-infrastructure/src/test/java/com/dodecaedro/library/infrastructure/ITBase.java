@@ -38,7 +38,7 @@ public abstract class ITBase {
 		.withDatabaseName("librarydb");
 
 	public static ElasticsearchContainer elasticsearchContainer =
-		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.6.2")
+		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.1")
 		.withEnv("cluster.name", "integration-test-cluster");
 
 	@BeforeAll
