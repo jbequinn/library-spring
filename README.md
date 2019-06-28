@@ -1,6 +1,7 @@
 Spring Library Service
 ======================
-[![Build Status](https://travis-ci.org/bquintanajm/library-spring.svg?branch=master)](https://travis-ci.org/bquintanajm/library-spring)
+[![Build Status](https://travis-ci.org/jbequinn/library-spring.svg?branch=master)](https://travis-ci.org/bquintanajm/library-spring)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jbequinn/library-spring)](https://dependabot.com)
 [![Coverage Status](https://coveralls.io/repos/github/bquintanajm/library-spring/badge.svg?branch=master)](https://coveralls.io/github/bquintanajm/library-spring?branch=master)
 
 Simple Spring application for lending books to users. This project is a testing practice of:
