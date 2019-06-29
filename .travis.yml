@@ -6,6 +6,8 @@ sudo: required
 services:
   - docker
 
+script:
+  - mvn -B -V clean verify
 
 after_success:
   - mvn jacoco:report coveralls:report
