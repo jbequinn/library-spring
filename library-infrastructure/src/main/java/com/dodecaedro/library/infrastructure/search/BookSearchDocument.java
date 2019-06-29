@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.UUID;
 
@@ -18,6 +19,6 @@ import java.util.UUID;
 public class BookSearchDocument {
 	@Id
 	private UUID id;
-	@Field
+	@Field(type = FieldType.Text)
 	private String title;
 }
