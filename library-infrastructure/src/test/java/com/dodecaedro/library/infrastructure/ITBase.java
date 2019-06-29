@@ -25,7 +25,6 @@ import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.fail;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {ITBase.Initializer.class})
 @DBRider
 @TestMethodOrder(MethodOrderer.Random.class)
 public abstract class ITBase {
@@ -49,6 +48,12 @@ public abstract class ITBase {
 		Stream.of(postgresContainer, elasticsearchContainer)
 				.parallel()
 				.forEach(GenericContainer::start);
+
+		System.setProperty("spring.datasource.url", postgresContainer.getJdbcUrl());
+		System.setProperty("spring.datasource.username", postgresContainer.getUsername());
+		System.setProperty("spring.datasource.password", postgresContainer.getPassword());
+		System.setProperty("spring.data.elasticsearch.cluster-name", "integration-test-cluster");
+		System.setProperty("spring.data.elasticsearch.cluster-nodes", "localhost:" + elasticsearchContainer.getMappedPort(9300));
 	}
 
 	@BeforeAll
@@ -63,18 +68,6 @@ public abstract class ITBase {
 			.objectMapperConfig(config().getObjectMapperConfig()
 				.jackson2ObjectMapperFactory((cls, charset) -> objectMapper));
 		RestAssured.basePath = "/api";
-	}
-
-	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-		public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-			TestPropertyValues.of(
-				"spring.datasource.url=" + postgresContainer.getJdbcUrl(),
-				"spring.datasource.username=" + postgresContainer.getUsername(),
-				"spring.datasource.password=" + postgresContainer.getPassword(),
-				"spring.data.elasticsearch.cluster-name=integration-test-cluster",
-				"spring.data.elasticsearch.cluster-nodes=localhost:" + elasticsearchContainer.getMappedPort(9300)
-			).applyTo(configurableApplicationContext.getEnvironment());
-		}
 	}
 
 	String toJson(Object object) {
