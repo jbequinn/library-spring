@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.database.rider.spring.api.DBRider;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -14,18 +12,22 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.testcontainers.containers.Container;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
 import java.util.TimeZone;
+import java.util.stream.Stream;
 
 import static io.restassured.config.RestAssuredConfig.config;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.fail;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {UsersIT.Initializer.class})
+@ContextConfiguration(initializers = {ITBase.Initializer.class})
 @DBRider
+@TestMethodOrder(MethodOrderer.Random.class)
 public abstract class ITBase {
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -38,14 +40,15 @@ public abstract class ITBase {
 		.withDatabaseName("librarydb");
 
 	public static ElasticsearchContainer elasticsearchContainer =
-		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.1")
+		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.2")
 		.withEnv("cluster.name", "integration-test-cluster");
 
 	@BeforeAll
 	public static void containerStart() {
 		// teardown done automatically on jvm exit
-		postgresContainer.start();
-		elasticsearchContainer.start();
+		Stream.of(postgresContainer, elasticsearchContainer)
+				.parallel()
+				.forEach(GenericContainer::start);
 	}
 
 	@BeforeAll
