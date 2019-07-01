@@ -25,7 +25,6 @@
 		<java.version>11</java.version>
 		<database-rider.version>1.7.2</database-rider.version>
 		<testcontainers.version>1.11.3</testcontainers.version>
-		<junit-jupiter.version>5.5.0</junit-jupiter.version>
 	</properties>
 
 	<dependencyManagement>
@@ -49,16 +48,6 @@
 				<groupId>org.testcontainers</groupId>
 				<artifactId>elasticsearch</artifactId>
 				<version>${testcontainers.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-api</artifactId>
-				<version>${junit-jupiter.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>${junit-jupiter.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
