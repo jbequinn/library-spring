@@ -4,23 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.database.rider.spring.api.DBRider;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.*;
+import io.restassured.config.RestAssuredConfig;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.Container;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
+import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 import java.util.stream.Stream;
 
-import static io.restassured.config.RestAssuredConfig.config;
+import static io.restassured.config.LogConfig.logConfig;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.fail;
 
@@ -33,14 +33,25 @@ public abstract class ITBase {
 	@LocalServerPort
 	private int port;
 
-	public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer("postgres:11.1-alpine")
-		.withUsername("libraryuser")
-		.withPassword("librarypassword")
-		.withDatabaseName("librarydb");
+	@PostConstruct
+	void configureRestAssured() {
+		RestAssured.port = port;
+		RestAssured.config = RestAssuredConfig.config()
+				.logConfig(logConfig()
+						.enableLoggingOfRequestAndResponseIfValidationFails())
+				.objectMapperConfig(objectMapperConfig()
+						.jackson2ObjectMapperFactory((cls, charset) -> objectMapper));
+		RestAssured.basePath = "/api";
+	}
+
+	public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer("postgres:11.4-alpine")
+			.withUsername("libraryuser")
+			.withPassword("librarypassword")
+			.withDatabaseName("librarydb");
 
 	public static ElasticsearchContainer elasticsearchContainer =
-		new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.2")
-		.withEnv("cluster.name", "integration-test-cluster");
+			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.2")
+					.withEnv("cluster.name", "integration-test-cluster");
 
 	@BeforeAll
 	public static void containerStart() {
@@ -59,15 +70,6 @@ public abstract class ITBase {
 	@BeforeAll
 	public static void setDefaultTimeZone() {
 		TimeZone.setDefault(TimeZone.getTimeZone(UTC)); // because DBUnit doesn't handle timezones correctly
-	}
-
-	@BeforeEach
-	public void setUpRestAssured() {
-		RestAssured.port = port;
-		RestAssured.config = config()
-			.objectMapperConfig(config().getObjectMapperConfig()
-				.jackson2ObjectMapperFactory((cls, charset) -> objectMapper));
-		RestAssured.basePath = "/api";
 	}
 
 	String toJson(Object object) {
