@@ -44,13 +44,13 @@ public abstract class ITBase {
 		RestAssured.basePath = "/api";
 	}
 
-	public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer("postgres:11.4-alpine")
+	public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer("postgres:12.2-alpine")
 			.withUsername("libraryuser")
 			.withPassword("librarypassword")
 			.withDatabaseName("librarydb");
 
 	public static ElasticsearchContainer elasticsearchContainer =
-			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:6.7.2")
+			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
 					.withEnv("cluster.name", "integration-test-cluster");
 
 	@BeforeAll
@@ -65,6 +65,7 @@ public abstract class ITBase {
 		System.setProperty("spring.datasource.password", postgresContainer.getPassword());
 		System.setProperty("spring.data.elasticsearch.cluster-name", "integration-test-cluster");
 		System.setProperty("spring.data.elasticsearch.cluster-nodes", "localhost:" + elasticsearchContainer.getMappedPort(9300));
+		System.setProperty("spring.data.elasticsearch.client-url", "localhost:" + elasticsearchContainer.getMappedPort(9200));
 	}
 
 	@BeforeAll
