@@ -10,10 +10,16 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -27,11 +33,40 @@ import static org.junit.Assert.fail;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DBRider
 @TestMethodOrder(MethodOrderer.Random.class)
+@ContextConfiguration(initializers = ITBase.Initializer.class)
+@Testcontainers
 public abstract class ITBase {
 	@Autowired
 	private ObjectMapper objectMapper;
 	@LocalServerPort
 	private int port;
+
+	@Container
+	static PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:12.2-alpine")
+			.withUsername("libraryuser")
+			.withPassword("librarypassword")
+			.withDatabaseName("librarydb");
+
+	@Container
+	static ElasticsearchContainer elasticsearchContainer =
+			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
+					.withEnv("cluster.name", "integration-test-cluster");
+
+	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+		@Override
+		public void initialize(ConfigurableApplicationContext context) {
+			TestPropertyValues.of("spring.datasource.url=" + postgresContainer.getJdbcUrl())
+					.applyTo(context.getEnvironment());
+			TestPropertyValues.of("spring.datasource.username=" + postgresContainer.getUsername())
+					.applyTo(context.getEnvironment());
+			TestPropertyValues.of("spring.datasource.password=" + postgresContainer.getPassword())
+					.applyTo(context.getEnvironment());
+			TestPropertyValues.of("spring.data.elasticsearch.cluster-name=integration-test-cluster")
+					.applyTo(context.getEnvironment());
+			TestPropertyValues.of("spring.data.elasticsearch.cluster-nodes=" + "127.0.0.1:" + elasticsearchContainer.getMappedPort(9200))
+					.applyTo(context.getEnvironment());;
+		}
+	}
 
 	@PostConstruct
 	void configureRestAssured() {
@@ -42,30 +77,6 @@ public abstract class ITBase {
 				.objectMapperConfig(objectMapperConfig()
 						.jackson2ObjectMapperFactory((cls, charset) -> objectMapper));
 		RestAssured.basePath = "/api";
-	}
-
-	public static PostgreSQLContainer postgresContainer = new PostgreSQLContainer("postgres:12.2-alpine")
-			.withUsername("libraryuser")
-			.withPassword("librarypassword")
-			.withDatabaseName("librarydb");
-
-	public static ElasticsearchContainer elasticsearchContainer =
-			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
-					.withEnv("cluster.name", "integration-test-cluster");
-
-	@BeforeAll
-	public static void containerStart() {
-		// teardown done automatically on jvm exit
-		Stream.of(postgresContainer, elasticsearchContainer)
-				.parallel()
-				.forEach(GenericContainer::start);
-
-		System.setProperty("spring.datasource.url", postgresContainer.getJdbcUrl());
-		System.setProperty("spring.datasource.username", postgresContainer.getUsername());
-		System.setProperty("spring.datasource.password", postgresContainer.getPassword());
-		System.setProperty("spring.data.elasticsearch.cluster-name", "integration-test-cluster");
-		System.setProperty("spring.data.elasticsearch.cluster-nodes", "localhost:" + elasticsearchContainer.getMappedPort(9300));
-		System.setProperty("spring.data.elasticsearch.client-url", "localhost:" + elasticsearchContainer.getMappedPort(9200));
 	}
 
 	@BeforeAll

@@ -22,7 +22,7 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 	@Bean
 	public RestHighLevelClient elasticsearchClient() {
 		final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-				.connectedTo(requireNonNull(environment.getProperty("spring.data.elasticsearch.client-url")))
+				.connectedTo(requireNonNull(environment.getProperty("spring.data.elasticsearch.cluster-nodes")))
 				.build();
 
 		return RestClients.create(clientConfiguration).rest();
