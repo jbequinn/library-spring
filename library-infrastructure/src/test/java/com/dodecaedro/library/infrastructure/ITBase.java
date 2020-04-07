@@ -15,6 +15,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
@@ -33,7 +35,6 @@ import static org.junit.Assert.fail;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DBRider
 @TestMethodOrder(MethodOrderer.Random.class)
-@ContextConfiguration(initializers = ITBase.Initializer.class)
 @Testcontainers
 public abstract class ITBase {
 	@Autowired
@@ -52,20 +53,13 @@ public abstract class ITBase {
 			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
 					.withEnv("cluster.name", "integration-test-cluster");
 
-	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-		@Override
-		public void initialize(ConfigurableApplicationContext context) {
-			TestPropertyValues.of("spring.datasource.url=" + postgresContainer.getJdbcUrl())
-					.applyTo(context.getEnvironment());
-			TestPropertyValues.of("spring.datasource.username=" + postgresContainer.getUsername())
-					.applyTo(context.getEnvironment());
-			TestPropertyValues.of("spring.datasource.password=" + postgresContainer.getPassword())
-					.applyTo(context.getEnvironment());
-			TestPropertyValues.of("spring.data.elasticsearch.cluster-name=integration-test-cluster")
-					.applyTo(context.getEnvironment());
-			TestPropertyValues.of("spring.data.elasticsearch.cluster-nodes=" + "127.0.0.1:" + elasticsearchContainer.getMappedPort(9200))
-					.applyTo(context.getEnvironment());;
-		}
+	@DynamicPropertySource
+	static void testcontainersProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
+		registry.add("spring.datasource.username", postgresContainer::getUsername);
+		registry.add("spring.datasource.password", postgresContainer::getPassword);
+		registry.add("spring.data.elasticsearch.cluster-name", () -> "integration-test-cluster");
+		registry.add("spring.data.elasticsearch.cluster-nodes", () -> "127.0.0.1:" + elasticsearchContainer.getMappedPort(9200));
 	}
 
 	@PostConstruct
