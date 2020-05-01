@@ -22,9 +22,9 @@
 	</modules>
 
 	<properties>
-		<java.version>13</java.version>
-		<database-rider.version>1.11.1</database-rider.version>
-		<testcontainers.version>1.13.0</testcontainers.version>
+		<java.version>14</java.version>
+		<database-rider.version>1.13.0</database-rider.version>
+		<testcontainers.version>1.14.0</testcontainers.version>
 	</properties>
 
 	<dependencyManagement>
