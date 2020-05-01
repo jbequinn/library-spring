@@ -35,23 +35,26 @@ import static org.junit.Assert.fail;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DBRider
 @TestMethodOrder(MethodOrderer.Random.class)
-@Testcontainers
 public abstract class ITBase {
 	@Autowired
 	private ObjectMapper objectMapper;
 	@LocalServerPort
 	private int port;
 
-	@Container
-	static PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:12.2-alpine")
+	private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:12.2-alpine")
 			.withUsername("libraryuser")
 			.withPassword("librarypassword")
 			.withDatabaseName("librarydb");
 
-	@Container
-	static ElasticsearchContainer elasticsearchContainer =
+	private static final ElasticsearchContainer elasticsearchContainer =
 			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
 					.withEnv("cluster.name", "integration-test-cluster");
+
+	static {
+		Stream.of(postgresContainer, elasticsearchContainer)
+				.parallel()
+				.forEach(GenericContainer::start);
+	}
 
 	@DynamicPropertySource
 	static void testcontainersProperties(DynamicPropertyRegistry registry) {
