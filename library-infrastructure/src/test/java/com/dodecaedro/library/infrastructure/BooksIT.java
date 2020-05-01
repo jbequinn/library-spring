@@ -14,8 +14,10 @@ import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataSet(value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
-	disableConstraints = true, cleanAfter = true)
+@DataSet(
+		value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
+		disableConstraints = true, cleanBefore = true
+)
 public class BooksIT extends ITBase {
 	@Test
 	public void getAllBooks() {

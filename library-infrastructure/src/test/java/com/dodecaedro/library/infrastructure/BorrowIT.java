@@ -14,8 +14,10 @@ import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataSet(value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
-		disableConstraints = true, cleanAfter = true)
+@DataSet(
+		value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
+		disableConstraints = true, cleanBefore = true
+)
 public class BorrowIT extends ITBase {
 
 	@Test
