@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 		value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
 		disableConstraints = true, cleanBefore = true
 )
-public class BorrowIT extends ITBase {
+public class BorrowIT extends AbstractIntegrationTest {
 
 	@Test
 	public void createBorrow() {

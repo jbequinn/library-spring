@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 		value = "alltables.xml", strategy = SeedStrategy.CLEAN_INSERT,
 		disableConstraints = true, cleanAfter = true
 )
-public class UsersIT extends ITBase {
+public class UsersIT extends AbstractIntegrationTest {
 	@Test
 	public void getAllUsers() {
 		var users = when()
