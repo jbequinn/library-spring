@@ -24,7 +24,7 @@
 	<properties>
 		<java.version>14</java.version>
 		<database-rider.version>1.13.1</database-rider.version>
-		<testcontainers.version>1.14.1</testcontainers.version>
+		<testcontainers.version>1.14.2</testcontainers.version>
 	</properties>
 
 	<dependencyManagement>
