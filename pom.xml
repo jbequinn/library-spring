@@ -23,7 +23,7 @@
 
 	<properties>
 		<java.version>14</java.version>
-		<database-rider.version>1.15.2</database-rider.version>
+		<database-rider.version>1.15.3</database-rider.version>
 		<testcontainers.version>1.14.3</testcontainers.version>
 	</properties>
 
