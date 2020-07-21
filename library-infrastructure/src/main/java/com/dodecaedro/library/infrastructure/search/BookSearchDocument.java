@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(indexName = "library", type = "book")
+@Document(indexName = "library")
 public class BookSearchDocument {
 	@Id
 	private UUID id;
