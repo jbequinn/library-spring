@@ -43,13 +43,13 @@ public abstract class AbstractIntegrationTest {
 	@LocalServerPort
 	private int port;
 
-	private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:12.2-alpine")
+	private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:12.4-alpine")
 			.withUsername("libraryuser")
 			.withPassword("librarypassword")
 			.withDatabaseName("librarydb");
 
 	private static final ElasticsearchContainer elasticsearchContainer =
-			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.6.1")
+			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.9.0")
 					.withEnv("cluster.name", "integration-test-cluster");
 
 	@DynamicPropertySource
