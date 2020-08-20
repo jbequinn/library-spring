@@ -5,9 +5,9 @@ spring:
     rest:
       basePath: /api
     elasticsearch:
-      cluster-nodes: localhost:9300
+      cluster-nodes: es01:9300
   datasource:
-    url: jdbc:postgresql://localhost:5432/librarydb
+    url: jdbc:postgresql://db:5432/librarydb
     username: libraryuser
     password: librarypassword
     initialize: true

@@ -1,0 +1,50 @@
+version: "3.5"
+services:
+  db:
+    image: postgres:12.4-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=librarydb
+      - POSTGRES_USER=libraryuser
+      - POSTGRES_PASSWORD=librarypassword
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+    networks:
+      - internal
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    restart: unless-stopped
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+    volumes:
+      - type: volume
+        source: es01-data
+        target: /usr/share/elasticsearch/data
+    networks:
+      - internal
+  app:
+    image: jbequinn/library:latest
+    logging:
+      options:
+        max-size: "10m"
+    restart: unless-stopped
+    depends_on:
+      - db
+      - es01
+    networks:
+      - internal
+    ports:
+      - target: 80
+        published: 8080
+
+networks:
+  internal:
+
+volumes:
+  db-data:
+  es01-data:
+  app-data:

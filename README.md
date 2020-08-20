@@ -17,3 +17,10 @@ Simple Spring application for lending books to users. This project is a testing 
 - RestAssured
 - AssertJ
 - Mockito
+
+## Running ##
+### Build the docker image ###
+mvn clean package spring-boot:build-image -Dspring-boot.build-image.imageName=jbequinn/library
+
+### Starting services ###
+docker-compose up
