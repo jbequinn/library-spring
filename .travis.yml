@@ -7,7 +7,7 @@ services:
   - docker
 
 script:
-  - mvn -B -V clean verify
+  - ./mvnw -B -V clean verify
 
 after_success:
-  - mvn jacoco:report coveralls:report
+  - ./mvnw jacoco:report coveralls:report
