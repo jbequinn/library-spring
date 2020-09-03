@@ -5,6 +5,8 @@ import com.dodecaedro.library.domain.exception.BorrowMaximumLimitException;
 import com.dodecaedro.library.domain.exception.ExpiredBorrowException;
 import com.dodecaedro.library.domain.model.Borrow;
 import com.dodecaedro.library.domain.service.BorrowService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RepositoryRestController
+@RequiredArgsConstructor
 public class BorrowController {
-	private final BorrowService borrowService;
-
-	public BorrowController(BorrowService borrowService) {
-		this.borrowService = borrowService;
-	}
+	@NonNull private final BorrowService borrowService;
 
 	@PostMapping("/borrows/borrow")
 	public @ResponseBody ResponseEntity<?> borrowBook(@RequestBody Borrow borrow)

@@ -5,6 +5,8 @@ import com.dodecaedro.library.infrastructure.repository.ElasticBookSearchDocumen
 import com.dodecaedro.library.infrastructure.repository.JpaBookRepository;
 import com.dodecaedro.library.infrastructure.search.BookSearchDocument;
 import com.dodecaedro.library.infrastructure.search.BookToSearchDocumentConverter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -25,18 +27,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RepositoryRestController
 @RequestMapping(path = "books")
+@RequiredArgsConstructor
 public class BookController {
-	private final JpaBookRepository bookRepository;
-	private final ElasticBookSearchDocumentRepository searchDocumentRepository;
-	private final BookToSearchDocumentConverter bookToSearchDocumentConverter;
-
-	public BookController(JpaBookRepository bookRepository,
-												ElasticBookSearchDocumentRepository searchDocumentRepository,
-												BookToSearchDocumentConverter bookToSearchDocumentConverter) {
-		this.bookRepository = bookRepository;
-		this.searchDocumentRepository = searchDocumentRepository;
-		this.bookToSearchDocumentConverter = bookToSearchDocumentConverter;
-	}
+	@NonNull private final JpaBookRepository bookRepository;
+	@NonNull private final ElasticBookSearchDocumentRepository searchDocumentRepository;
+	@NonNull private final BookToSearchDocumentConverter bookToSearchDocumentConverter;
 
 	@PostMapping
 	@ResponseBody
