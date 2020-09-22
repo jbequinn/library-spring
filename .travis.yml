@@ -11,7 +11,7 @@ cache:
     - $HOME/.m2
 
 script:
-  - ./mvnw -B -V clean verify
+  - ./gradlew clean test
 
 after_success:
-  - ./mvnw jacoco:report coveralls:report
+  - ./gradlew jacocoTestReport coveralls
