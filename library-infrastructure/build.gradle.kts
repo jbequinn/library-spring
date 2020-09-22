@@ -2,6 +2,8 @@ plugins {
 	id("org.springframework.boot").version("2.4.0-M3")
 	id("io.spring.dependency-management").version("1.0.10.RELEASE")
 	id("java")
+	id("net.saliman.cobertura").version("3.0.1-SNAPSHOT")
+	id("com.github.kt3k.coveralls").version("2.10.2")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_15
