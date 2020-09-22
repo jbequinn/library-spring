@@ -6,8 +6,6 @@ plugins {
 
 java.sourceCompatibility = JavaVersion.VERSION_15
 
-apply(plugin = "io.spring.dependency-management")
-
 extra["testcontainersVersion"] = "1.14.3"
 
 dependencies {
