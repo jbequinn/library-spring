@@ -6,8 +6,6 @@ plugins {
 	id("com.github.kt3k.coveralls").version("2.10.2")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_15
-
 extra["testcontainersVersion"] = "1.14.3"
 
 dependencies {

@@ -10,6 +10,7 @@ subprojects {
 	plugins.withType<JavaPlugin>().configureEach {
 		configure<JavaPluginExtension> {
 			modularity.inferModulePath.set(true)
+			sourceCompatibility = JavaVersion.VERSION_15
 		}
 	}
 
