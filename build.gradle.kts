@@ -15,5 +15,7 @@ subprojects {
 
 	tasks.withType<Test>().configureEach {
 		useJUnitPlatform()
+		// show standard out and standard error of the test JVM(s) on the console
+		testLogging.showStandardStreams = true
 	}
 }
