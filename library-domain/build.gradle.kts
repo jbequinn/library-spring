@@ -2,8 +2,6 @@ plugins {
 	id("java-library")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_15
-
 dependencies {
 	compileOnly("org.projectlombok:lombok:1.18.12")
 	annotationProcessor("org.projectlombok:lombok:1.18.12")
