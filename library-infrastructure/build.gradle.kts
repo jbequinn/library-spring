@@ -1,15 +1,16 @@
 plugins {
-	id("org.springframework.boot").version("2.4.0-RC1")
-	id("io.spring.dependency-management").version("1.0.10.RELEASE")
-	id("java")
-	id("net.saliman.cobertura").version("3.0.1-SNAPSHOT")
-	id("com.github.kt3k.coveralls").version("2.10.2")
+	id("com.dodecaedro.library.java-application-conventions")
+	id("net.saliman.cobertura") version "4.0.0"
+	id("com.github.kt3k.coveralls") version "2.10.2"
+	id("org.springframework.boot") version "2.4.0-RC1"
+	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 }
-
-extra["testcontainersVersion"] = "1.14.3"
 
 dependencies {
 	implementation(project(":library-domain"))
+
+	implementation("org.springframework.boot:spring-boot-starter")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
@@ -17,6 +18,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
 	implementation("org.flywaydb:flyway-core")
 
 	compileOnly("org.projectlombok:lombok")
@@ -34,6 +36,8 @@ dependencies {
 	testImplementation("org.assertj:assertj-core")
 	testImplementation("io.rest-assured:rest-assured")
 }
+
+extra["testcontainersVersion"] = "1.14.3"
 
 dependencyManagement {
 	imports {

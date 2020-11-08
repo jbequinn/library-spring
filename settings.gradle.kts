@@ -1,7 +1,9 @@
+rootProject.name = "library-spring"
+include("library-domain", "library-infrastructure")
+
 pluginManagement {
 	repositories {
 		maven { url = uri("https://repo.spring.io/milestone") }
-		maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 		gradlePluginPortal()
 	}
 	resolutionStrategy {
@@ -12,6 +14,3 @@ pluginManagement {
 		}
 	}
 }
-rootProject.name = "library-spring"
-
-include("library-domain", "library-infrastructure")
