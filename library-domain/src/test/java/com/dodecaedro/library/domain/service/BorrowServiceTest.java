@@ -24,18 +24,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.persistence.EntityNotFoundException;
 import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-/* unit tests are cheaper to write/maintain that IT tests. test more combinations here */
+/* easier/faster that IT tests. test more combinations here */
 @ExtendWith(MockitoExtension.class)
 public class BorrowServiceTest {
 	private BorrowService borrowService;
@@ -51,7 +50,6 @@ public class BorrowServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		Mockito.reset(bookRepository, borrowRepository, fineRepository, userRepository);
 		borrowService = new BorrowService(LibraryProperties.builder()
 				.borrowLength(2)
 				.maximumBorrows(2)
@@ -66,16 +64,23 @@ public class BorrowServiceTest {
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
 
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
+
+		// GIVEN that the user does not have any active fines nor expired borrows
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
 				.thenReturn(Collections.emptyList());
 		when(borrowRepository.countExpiredBorrows(eq(user), any()))
 				.thenReturn(0);
+
+		// GIVEN that the user has 1 active borrow (which is under the limit of the maximum)
 		when(borrowRepository.countActiveBorrows(user))
 				.thenReturn(1);
+
+		// GIVEN that the repository accepts new borrows
 		when(borrowRepository.save(any()))
 				.thenAnswer(returnsFirstArg());
 
@@ -90,10 +95,6 @@ public class BorrowServiceTest {
 			softly.assertThat(borrow.getActualReturnDate()).isNull();
 			softly.assertThat(borrow.getExpectedReturnDate()).isNotNull().isAfter(borrow.getBorrowDate());
 		});
-
-		verify(fineRepository).findActiveFinesInDate(eq(user), any());
-		verify(borrowRepository).countExpiredBorrows(eq(user), any());
-		verify(borrowRepository).countActiveBorrows(user);
 	}
 
 	@Test
@@ -102,17 +103,22 @@ public class BorrowServiceTest {
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
 
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
-		when(fineRepository.findActiveFinesInDate(eq(user), any()))
-				.thenReturn(Lists.list(Fine.builder().build()));
 
+		// GIVEN that the user *does have* an active fine
+		when(fineRepository.findActiveFinesInDate(eq(user), any()))
+				.thenReturn(List.of(Fine.builder().build()));
+
+		// WHEN trying to borrow a book
+		// THEN an error happens
 		assertThatExceptionOfType(ActiveFinesException.class)
 				.isThrownBy(() -> borrowService.borrowBook(book, user));
 
-		// THEN no borrow is created
+		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
 	}
 
@@ -122,19 +128,26 @@ public class BorrowServiceTest {
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
 
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
+
+		// GIVEN that the user does not have any fines
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
 				.thenReturn(Collections.emptyList());
+
+		// GIVEN that the user *does have* 1 expired borrow
 		when(borrowRepository.countExpiredBorrows(eq(user), any()))
 				.thenReturn(1);
 
+		// WHEN trying to borrow a book
+		// THEN an error happens
 		assertThatExceptionOfType(ExpiredBorrowException.class)
 				.isThrownBy(() -> borrowService.borrowBook(book, user));
 
-		// THEN no borrow is created
+		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
 	}
 
@@ -144,53 +157,88 @@ public class BorrowServiceTest {
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
 
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
+
+		// GIVEN that the user does not have any active fines nor expired borrows
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
 				.thenReturn(Collections.emptyList());
 		when(borrowRepository.countExpiredBorrows(eq(user), any()))
 				.thenReturn(0);
+
+		// GIVEN that the user has already the maximum of allowed borrows
 		when(borrowRepository.countActiveBorrows(user))
 				.thenReturn(3);
 
+		// WHEN trying to borrow a book
+		// THEN an error happens
 		assertThatExceptionOfType(BorrowMaximumLimitException.class)
 				.isThrownBy(() -> borrowService.borrowBook(book, user));
 
-		// THEN no borrow is created
+		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
 	}
 
 	@Test
-	void failOnInvalidUser() {
-		SoftAssertions.assertSoftly(softly -> {
-			softly.assertThatThrownBy(() -> borrowService.borrowBook(Book.builder().build(), null))
-					.isInstanceOf(NullPointerException.class);
+	void failOnNullUser() {
+		// GIVEN a valid book
+		var validBook = Book.builder().build();
 
-			var book = Book.builder().build();
-			book.setId(null);
-			softly.assertThatThrownBy(() -> borrowService.borrowBook(book, null))
-					.isInstanceOf(NullPointerException.class);
-		});
+		// WHEN trying to borrow that book by a null user
+		// THEN an error happens
+		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(validBook, null));
 
-		// THEN no borrow is created
+		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
 	}
 
 	@Test
-	void failOnInvalidBook() {
-		SoftAssertions.assertSoftly(softly -> {
-			softly.assertThatThrownBy(() -> borrowService.borrowBook(null, User.builder().build()))
-					.isInstanceOf(NullPointerException.class);
+	void failOnBookWithoutId() {
+		// GIVEN an invalid book: it has no id
+		var invalidBook = Book.builder().build();
+		invalidBook.setId(null);
 
-			var user = User.builder().build();
-			user.setId(null);
-			softly.assertThatThrownBy(() -> borrowService.borrowBook(null, user))
-					.isInstanceOf(NullPointerException.class);
-		});
+		// GIVEN a valid user
+		User validUser = User.builder().build();
 
-		// THEN no borrow is created
+		// WHEN trying to borrow that book by a user
+		// THEN an error happens
+		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(invalidBook, validUser));
+
+		// AND THEN no borrow is created
+		verify(borrowRepository, never()).save(any());
+	}
+
+	@Test
+	void failOnNullBook() {
+		// GIVEN a valid user
+		User validUser = User.builder().build();
+
+		// WHEN trying to borrow a null book by a user
+		// THEN an error happens
+		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(null, validUser));
+
+		// AND THEN no borrow is created
+		verify(borrowRepository, never()).save(any());
+	}
+
+	@Test
+	void failOnUserWithoutId() {
+		// GIVEN an valid book
+		var validBook = Book.builder().build();
+
+		// GIVEN an invalid user: he has no id
+		User invalidUser = User.builder().build();
+		invalidUser.setId(null);
+
+		// WHEN trying to borrow that book by a user without id
+		// THEN an error happens
+		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(validBook, invalidUser));
+
+		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
 	}
 
@@ -199,20 +247,23 @@ public class BorrowServiceTest {
 		// GIVEN a book and a user
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
+
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
-		// GIVEN a borrow exists for that pair
+		// GIVEN that a borrow exists for that pair
 		var borrow = Borrow.builder()
 				.book(book)
 				.user(user)
 				.expectedReturnDate(ZonedDateTime.now().plusDays(1))
 				.build();
-
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
+
+		// GIVEN that the repository accepts new borrows
 		when(borrowRepository.save(any()))
 				.then(returnsFirstArg());
 
@@ -223,7 +274,7 @@ public class BorrowServiceTest {
 		verify(borrowRepository).save(argThat(arg ->
 				arg.getActualReturnDate() != null
 		));
-		// THEN there is no fine created
+		// AND THEN there is no fine created
 		verify(fineRepository, never()).save(any());
 	}
 
@@ -232,6 +283,8 @@ public class BorrowServiceTest {
 		// GIVEN a book and a user
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
+
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
@@ -244,9 +297,10 @@ public class BorrowServiceTest {
 				// the book should've been returned yesterday
 				.expectedReturnDate(ZonedDateTime.now().minusDays(1))
 				.build();
-
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
+
+		// GIVEN that the repository accepts new borrows
 		when(borrowRepository.save(any()))
 				.then(returnsFirstArg());
 
@@ -272,14 +326,19 @@ public class BorrowServiceTest {
 		// GIVEN a book and a user
 		var book = Book.builder().isbn("abc-123").build();
 		var user = User.builder().email("karim@benzema.com").build();
+
+		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.of(user));
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
+		// GIVEN that no borrow exists for that user/book pair
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.empty());
 
+		// WHEN the user tries to return the book
+		// THEN an error happens
 		assertThatIllegalArgumentException()
 				.isThrownBy(() -> borrowService.returnBook(book, user));
 	}
@@ -288,6 +347,8 @@ public class BorrowServiceTest {
 	void failOnBorrowNonExistingUser() {
 		// GIVEN an existing book
 		var book = Book.builder().isbn("abc-123").build();
+
+		// GIVEN that the book exists in the repository
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
