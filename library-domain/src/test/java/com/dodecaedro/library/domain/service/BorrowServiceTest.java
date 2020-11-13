@@ -253,11 +253,14 @@ public class BorrowServiceTest {
 				.thenReturn(Optional.of(book));
 
 		// GIVEN that a borrow exists for that pair
-		var borrow = Borrow.builder()
-				.book(book)
-				.user(user)
-				.expectedReturnDate(ZonedDateTime.now().plusDays(1))
-				.build();
+		var borrow = new Borrow(
+				UUID.randomUUID(),
+				book,
+				user,
+				null,
+				ZonedDateTime.now().plusDays(1),
+				null
+		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
 
@@ -289,12 +292,15 @@ public class BorrowServiceTest {
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a borrow exists for that pair
-		var borrow = Borrow.builder()
-				.book(book)
-				.user(user)
+		var borrow = new Borrow(
+				UUID.randomUUID(),
+				book,
+				user,
+				null,
 				// the book should've been returned yesterday
-				.expectedReturnDate(ZonedDateTime.now().minusDays(1))
-				.build();
+				ZonedDateTime.now().minusDays(1),
+				null
+		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
 

@@ -17,6 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
 
@@ -66,12 +67,14 @@ public class BorrowService {
 			throw new BorrowMaximumLimitException("User has already reached the maximum number of simultaneous borrows");
 		}
 
-		return borrowRepository.save(Borrow.builder()
-			.user(actualUser)
-			.book(actualBook)
-			.borrowDate(nowDate)
-			.expectedReturnDate(nowDate.plusWeeks(properties.getBorrowLength()))
-			.build());
+		return borrowRepository.save(new Borrow(
+				UUID.randomUUID(),
+				actualBook,
+				actualUser,
+				nowDate,
+				nowDate.plusWeeks(properties.getBorrowLength()),
+				null
+		));
 	}
 
 	@Transactional

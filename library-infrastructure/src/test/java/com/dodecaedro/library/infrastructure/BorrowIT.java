@@ -29,11 +29,14 @@ public class BorrowIT extends AbstractIntegrationTest {
 		var borrow = given()
 				.contentType(ContentType.JSON)
 				.accept(ContentType.ANY)
-				.body(toJson(Borrow.builder()
-						.id(null)
-						.user(user)
-						.book(book)
-						.build()))
+				.body(toJson(new Borrow(
+						null,
+						book,
+						user,
+						null,
+						null,
+						null
+						)))
 				.when()
 					.post("/borrows/borrow")
 				.then().assertThat()
