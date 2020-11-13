@@ -51,10 +51,8 @@ public class BorrowServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		borrowService = new BorrowService(LibraryProperties.builder()
-				.borrowLength(2)
-				.maximumBorrows(2)
-				.build(),
+		borrowService = new BorrowService(
+				new LibraryProperties(2, 2),
 				fineRepository,
 				borrowRepository, bookRepository, userRepository);
 	}
