@@ -24,7 +24,7 @@ public class BorrowIT extends AbstractIntegrationTest {
 	public void createBorrow() {
 		// GIVEN a valid user and book
 		var user = User.builder().id(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01")).build();
-		var book = Book.builder().id(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06")).build();
+		var book = new Book(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06"), null, null, null);
 
 		var borrow = given()
 				.contentType(ContentType.JSON)
