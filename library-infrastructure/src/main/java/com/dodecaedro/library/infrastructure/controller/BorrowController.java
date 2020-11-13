@@ -28,7 +28,7 @@ public class BorrowController {
 	public @ResponseBody ResponseEntity<?> borrowBook(@RequestBody Borrow borrow)
 		throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
 		var createdBorrow = borrowService.borrowBook(borrow.getBook(), borrow.getUser());
-		var resource = new EntityModel<>(createdBorrow);
+		var resource = EntityModel.of(createdBorrow);
 		resource.add(linkTo(methodOn(BorrowController.class).borrowBook(borrow)).withSelfRel());
 		return ResponseEntity.status(HttpStatus.CREATED).body(resource);
 	}
