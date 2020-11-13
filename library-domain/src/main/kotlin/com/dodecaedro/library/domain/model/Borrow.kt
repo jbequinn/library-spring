@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 data class Borrow(
-		@Id var id: UUID? = UUID.randomUUID(),
+		@Id val id: UUID? = UUID.randomUUID(),
 		@ManyToOne
 		@JoinColumn(name = "book_id")
 		var book: Book?,

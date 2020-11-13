@@ -9,7 +9,8 @@ import javax.persistence.Id
 @Entity
 data class Book(
 		@Id val id: UUID? = UUID.randomUUID(),
-		val title: String?,
-		val isbn: String?,
-		@Column(name = "bought_date") val dateTimeBought: ZonedDateTime?,
+		var title: String?,
+		var isbn: String?,
+		@Column(name = "bought_date")
+		var dateTimeBought: ZonedDateTime?,
 )
