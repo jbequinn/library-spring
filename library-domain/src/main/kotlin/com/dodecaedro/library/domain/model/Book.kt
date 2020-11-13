@@ -11,5 +11,5 @@ data class Book(
 		@Id val id: UUID? = UUID.randomUUID(),
 		val title: String?,
 		val isbn: String?,
-		@Column(name = "bought_date") val dateTimeBought: ZonedDateTime?
+		@Column(name = "bought_date") val dateTimeBought: ZonedDateTime?,
 )
