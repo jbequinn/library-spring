@@ -97,11 +97,12 @@ public class BorrowService {
 
 		if (nowDate.isAfter(borrow.getExpectedReturnDate())) {
 			var fineDays = Math.max(1, ChronoUnit.DAYS.between(nowDate, borrow.getActualReturnDate()));
-			fineRepository.save(Fine.builder()
-				.user(actualUser)
-				.fineStartDate(nowDate)
-				.fineEndDate(nowDate.plusDays(fineDays))
-				.build());
+			fineRepository.save(new Fine(
+					UUID.randomUUID(),
+					user,
+					nowDate,
+					nowDate.plusDays(fineDays)
+					));
 		}
 		borrowRepository.save(borrow);
 	}

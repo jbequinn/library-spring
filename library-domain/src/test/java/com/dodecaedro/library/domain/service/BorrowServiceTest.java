@@ -110,7 +110,7 @@ public class BorrowServiceTest {
 
 		// GIVEN that the user *does have* an active fine
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
-				.thenReturn(List.of(Fine.builder().build()));
+				.thenReturn(List.of(new Fine()));
 
 		// WHEN trying to borrow a book
 		// THEN an error happens
