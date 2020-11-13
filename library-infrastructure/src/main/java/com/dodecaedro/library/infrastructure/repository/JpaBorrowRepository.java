@@ -25,14 +25,18 @@ public interface JpaBorrowRepository extends CrudRepository<Borrow, UUID>, Borro
 
 	List<Borrow> findAll();
 
-	@Query("SELECT COUNT(b) FROM Borrow b JOIN b.user u " +
-		"WHERE u = :user " +
-		"AND b.actualReturnDate IS NULL " +
-		"AND :time > b.expectedReturnDate")
+	@Query("""
+			SELECT COUNT(b) FROM Borrow b JOIN b.user u
+			WHERE u = :user
+			AND b.actualReturnDate IS NULL
+			AND :time > b.expectedReturnDate
+			""")
 	int countExpiredBorrows(@Param("user") User user, @Param("time") ZonedDateTime time);
 
-	@Query("SELECT COUNT(b) FROM Borrow b JOIN b.user u " +
-		"WHERE u = :user " +
-		"AND b.actualReturnDate IS NULL")
+	@Query("""
+			SELECT COUNT(b) FROM Borrow b JOIN b.user u
+			WHERE u = :user
+			AND b.actualReturnDate IS NULL
+			""")
 	int countActiveBorrows(User user);
 }
