@@ -21,11 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BooksIT extends AbstractIntegrationTest {
 	@Test
 	public void getAllBooks() {
-		var books = when()
-			.get("/books")
+		var books =
+			when()
+				.get("/books")
 			.then().assertThat()
 				.statusCode(HTTP_OK)
-			.extract().jsonPath().getList("_embedded.books", Book.class);
+				.extract().jsonPath().getList("_embedded.books", Book.class);
 
 		assertThat(books)
 			.extracting(Book::getTitle)
@@ -35,42 +36,45 @@ public class BooksIT extends AbstractIntegrationTest {
 
 	@Test
 	public void getBookById() {
-		var book = given()
-			.pathParam("id", "264c72cb-c43e-4160-bd92-6f5fd1b22a04")
+		var book =
+			given()
+				.pathParam("id", "264c72cb-c43e-4160-bd92-6f5fd1b22a04")
 			.when()
 				.get("/books/{id}")
 			.then().assertThat()
 				.statusCode(HTTP_OK)
-			.extract().body().as(Book.class);
+				.extract().body().as(Book.class);
 
 		assertThat(book.getTitle()).isEqualTo("Once and future king");
 	}
 
 	@Test
 	public void saveBook() {
-		var book = given()
-			.contentType(ContentType.JSON)
-			.accept(ContentType.ANY)
-			.body(toJson(Book.builder()
-				.isbn("123-456-789")
-				.title("Matar a un ruiseñor")
-				.dateTimeBought(ZonedDateTime.parse("2014-09-01T00:00:00.0Z"))
-				.build()))
+		var book =
+			given()
+				.contentType(ContentType.JSON)
+				.accept(ContentType.ANY)
+				.body(toJson(Book.builder()
+					.isbn("123-456-789")
+					.title("Matar a un ruiseñor")
+					.dateTimeBought(ZonedDateTime.parse("2014-09-01T00:00:00.0Z"))
+					.build()))
 			.when()
 				.post("/books")
 			.then().assertThat()
 				.statusCode(HTTP_CREATED)
-			.extract().body().as(Book.class);
+				.extract().body().as(Book.class);
 
 		assertThat(book.getId()).isNotNull();
 
-		var books = given()
-			.queryParam("title", "ruiseñor")
+		var books =
+			given()
+				.queryParam("title", "ruiseñor")
 			.when()
 				.get("/books/search")
 			.then().assertThat()
 				.statusCode(HTTP_OK)
-			.extract().jsonPath().getList("_embedded.books", Book.class);
+				.extract().jsonPath().getList("_embedded.books", Book.class);
 
 		assertThat(books)
 			.hasSize(1)
