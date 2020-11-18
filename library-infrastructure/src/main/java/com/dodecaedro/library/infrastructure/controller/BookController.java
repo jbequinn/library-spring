@@ -12,21 +12,19 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
-@RepositoryRestController
-@RequestMapping(path = "books")
+@RepositoryRestController // override some methods from the @RepositoryRestResource
+@RequestMapping("books")
 @RequiredArgsConstructor
 public class BookController {
 	@NonNull private final JpaBookRepository bookRepository;
@@ -44,15 +42,18 @@ public class BookController {
 	}
 
 	@GetMapping("search")
-	@ResponseBody
 	public ResponseEntity<?> findBooksByAttributes(@RequestParam("title") String title) {
 		var bookIds = searchDocumentRepository.findByTitle(title).stream()
 			.map(BookSearchDocument::getId)
 			.collect(Collectors.toList());
 
-		var books = bookIds.isEmpty() ? Collections.emptyList() : bookRepository.findAllById(bookIds);
-		var resources = new CollectionModel<>(books);
-		resources.add(linkTo(methodOn(BookController.class).findBooksByAttributes(title)).withSelfRel());
-		return ResponseEntity.ok(resources);
+		var books = bookIds.isEmpty() ? List.of() : bookRepository.findAllById(bookIds);
+
+		return ResponseEntity
+				.ok(CollectionModel
+						.of(books)
+						.add(linkTo(methodOn(BookController.class)
+								.findBooksByAttributes(title))
+								.withSelfRel()));
 	}
 }
