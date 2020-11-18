@@ -12,6 +12,8 @@ import com.dodecaedro.library.domain.repository.BookRepository;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
 import com.dodecaedro.library.domain.repository.UserRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -20,21 +22,13 @@ import java.time.temporal.ChronoUnit;
 
 import static java.util.Objects.requireNonNull;
 
+@RequiredArgsConstructor
 public class BorrowService {
-	private final LibraryProperties properties;
-	private final FineRepository fineRepository;
-	private final BorrowRepository borrowRepository;
-	private final BookRepository bookRepository;
-	private final UserRepository userRepository;
-
-	public BorrowService(LibraryProperties properties, FineRepository fineRepository,
-											 BorrowRepository borrowRepository, BookRepository bookRepository, UserRepository userRepository) {
-		this.properties = requireNonNull(properties, "Properties cannot be null");
-		this.fineRepository = requireNonNull(fineRepository, "Fine repository cannot be null");
-		this.borrowRepository = requireNonNull(borrowRepository, "Borrow repository cannot be null");
-		this.bookRepository = requireNonNull(bookRepository, "Book repository cannot be null");
-		this.userRepository = requireNonNull(userRepository, "User repositoru cannot be null");
-	}
+	@NonNull private final LibraryProperties properties;
+	@NonNull private final FineRepository fineRepository;
+	@NonNull private final BorrowRepository borrowRepository;
+	@NonNull private final BookRepository bookRepository;
+	@NonNull private final UserRepository userRepository;
 
 	/*
 	A user can borrow from the library iif:
@@ -42,11 +36,9 @@ public class BorrowService {
 	2. Does not have unreturned items past their return date
 	3. Does not exceed the maximum allowed borrowed items
 	 */
-	public Borrow borrowBook(Book book, User user)
+	public Borrow borrowBook(@NonNull Book book, @NonNull User user)
 		throws ActiveFinesException, ExpiredBorrowException, BorrowMaximumLimitException {
-		requireNonNull(user, "user cannot be null");
 		requireNonNull(user.getId(), "user id cannot be null");
-		requireNonNull(book, "book cannot be null");
 		requireNonNull(book.getId(), "book id cannot be null");
 
 		var actualBook = bookRepository.findById(book.getId())
@@ -75,10 +67,8 @@ public class BorrowService {
 	}
 
 	@Transactional
-	public void returnBook(Book book, User user) {
-		requireNonNull(user, "user cannot be null");
+	public void returnBook(@NonNull  Book book, @NonNull  User user) {
 		requireNonNull(user.getId(), "user id cannot be null");
-		requireNonNull(book, "book cannot be null");
 		requireNonNull(book.getId(), "book id cannot be null");
 
 		var actualBook = bookRepository.findById(book.getId())
