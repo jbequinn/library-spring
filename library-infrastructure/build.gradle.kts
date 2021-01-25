@@ -2,8 +2,8 @@ plugins {
 	id("com.dodecaedro.library.java-application-conventions")
 	id("net.saliman.cobertura") version "4.0.0"
 	id("com.github.kt3k.coveralls") version "2.10.2"
-	id("org.springframework.boot") version "2.4.0-RC1"
-	id("io.spring.dependency-management") version "1.0.10.RELEASE"
+	id("org.springframework.boot") version "2.5.0-M1"
+	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
 dependencies {
