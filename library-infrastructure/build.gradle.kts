@@ -37,7 +37,7 @@ dependencies {
 	testImplementation("io.rest-assured:rest-assured")
 }
 
-extra["testcontainersVersion"] = "1.14.3"
+extra["testcontainersVersion"] = "1.15.1"
 
 dependencyManagement {
 	imports {
