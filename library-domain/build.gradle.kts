@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	compileOnly("org.projectlombok:lombok:1.18.12")
+	compileOnly("org.projectlombok:lombok:1.18.16")
 	annotationProcessor("org.projectlombok:lombok:1.18.12")
 	implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
 
