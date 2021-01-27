@@ -1,7 +1,5 @@
 package com.dodecaedro.library.domain.service;
 
-import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.util.Lists;
 import com.dodecaedro.library.domain.LibraryProperties;
 import com.dodecaedro.library.domain.exception.ActiveFinesException;
 import com.dodecaedro.library.domain.exception.BorrowMaximumLimitException;
@@ -14,14 +12,14 @@ import com.dodecaedro.library.domain.repository.BookRepository;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
 import com.dodecaedro.library.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -29,9 +27,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /* easier/faster that IT tests. test more combinations here */

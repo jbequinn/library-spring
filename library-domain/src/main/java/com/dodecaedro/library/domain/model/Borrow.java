@@ -1,8 +1,8 @@
 package com.dodecaedro.library.domain.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -16,10 +16,10 @@ public class Borrow {
 	@Builder.Default
 	@Id
 	private UUID id = UUID.randomUUID();
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id")
 	private Book book;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	@Column(name = "borrow_date")

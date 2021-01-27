@@ -12,11 +12,11 @@ import com.dodecaedro.library.domain.repository.BookRepository;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
 import com.dodecaedro.library.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 

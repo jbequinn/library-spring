@@ -1,8 +1,8 @@
 package com.dodecaedro.library.domain.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,8 +26,16 @@ public class User {
 	private String email;
 	@Column(name = "join_date")
 	private ZonedDateTime joinDateTime;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(
+			mappedBy = "user",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
 	private List<Borrow> borrows;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(
+			mappedBy = "user",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
 	private List<Fine> fines;
 }

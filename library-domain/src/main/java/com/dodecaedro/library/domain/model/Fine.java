@@ -1,8 +1,8 @@
 package com.dodecaedro.library.domain.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
