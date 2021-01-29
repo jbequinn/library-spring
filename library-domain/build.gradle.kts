@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-	compileOnly("org.projectlombok:lombok:1.18.16")
-	annotationProcessor("org.projectlombok:lombok:1.18.12")
+	compileOnly("org.projectlombok:lombok:1.18.18")
+	annotationProcessor("org.projectlombok:lombok:1.18.18")
 	implementation("jakarta.persistence:jakarta.persistence-api:3.0.0")
 
 	compileOnly("jakarta.transaction:jakarta.transaction-api:2.0.0")
