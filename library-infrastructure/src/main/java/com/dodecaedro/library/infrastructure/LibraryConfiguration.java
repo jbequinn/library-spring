@@ -1,6 +1,10 @@
 package com.dodecaedro.library.infrastructure;
 
 import com.dodecaedro.library.domain.LibraryProperties;
+import com.dodecaedro.library.domain.model.Book;
+import com.dodecaedro.library.domain.model.Borrow;
+import com.dodecaedro.library.domain.model.Fine;
+import com.dodecaedro.library.domain.model.User;
 import com.dodecaedro.library.domain.repository.BookRepository;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
@@ -15,7 +19,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.config.BootstrapMode;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.function.Consumer;
 
 @Configuration
 @EnableConfigurationProperties
@@ -40,5 +48,14 @@ public class LibraryConfiguration {
 	BorrowService borrowService(LibraryProperties libraryProperties, FineRepository fineRepository,
 															BorrowRepository borrowRepository, BookRepository bookRepository, UserRepository userRepository) {
 		return new BorrowService(libraryProperties, fineRepository, borrowRepository, bookRepository, userRepository);
+	}
+
+	@Bean
+	public RepositoryRestConfigurer repositoryRestConfigurer() {
+		return RepositoryRestConfigurer
+				.withConfig(repositoryRestConfiguration ->
+						repositoryRestConfiguration.exposeIdsFor(
+								Book.class, Borrow.class, Fine.class, User.class
+						));
 	}
 }
