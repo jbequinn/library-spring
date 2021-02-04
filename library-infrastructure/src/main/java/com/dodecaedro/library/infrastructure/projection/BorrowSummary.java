@@ -8,8 +8,8 @@ import org.springframework.data.rest.core.config.Projection;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Projection(name = "borrowExcerpt", types = Borrow.class)
-public interface BorrowExcerptProjection {
+@Projection(name = "borrowSummary", types = Borrow.class)
+public interface BorrowSummary {
 	UUID getId();
 
 	ZonedDateTime borrowDate();

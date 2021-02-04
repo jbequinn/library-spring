@@ -2,7 +2,6 @@ package com.dodecaedro.library.infrastructure.repository;
 
 import com.dodecaedro.library.domain.model.Book;
 import com.dodecaedro.library.domain.repository.BookRepository;
-import com.dodecaedro.library.infrastructure.projection.BookExcerptProjection;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

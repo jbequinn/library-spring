@@ -5,8 +5,8 @@ import org.springframework.data.rest.core.config.Projection;
 
 import java.util.UUID;
 
-@Projection(name = "bookExcerpt", types = Book.class)
-public interface BookExcerptProjection {
+@Projection(name = "bookSummary", types = Book.class)
+public interface BookSummary {
 	UUID getId();
 
 	String getTitle();
