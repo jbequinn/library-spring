@@ -17,5 +17,7 @@ public interface BorrowRepository {
 
 	int countExpiredBorrows(User user, ZonedDateTime nowDate);
 
+	List<Borrow> findAllExpiredBorrows(ZonedDateTime time);
+
 	int countActiveBorrows(User user);
 }

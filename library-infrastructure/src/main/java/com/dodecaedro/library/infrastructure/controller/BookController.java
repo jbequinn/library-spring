@@ -50,8 +50,7 @@ public class BookController {
 		var books = bookIds.isEmpty() ? List.of() : bookRepository.findAllById(bookIds);
 
 		return ResponseEntity
-				.ok(CollectionModel
-						.of(books)
+				.ok(CollectionModel.of(books)
 						.add(linkTo(methodOn(BookController.class)
 								.findBooksByAttributes(title))
 								.withSelfRel()));

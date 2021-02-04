@@ -29,8 +29,8 @@ public interface JpaFineRepository extends CrudRepository<Fine, UUID>, FineRepos
 	List<Fine> findActiveFinesInDate(@Param("user") User user, @Param("time") ZonedDateTime time);
 
 	@Query("""
-			from Fine f left
-			join f.user u
+			from Fine f
+			left join f.user u
 			left join u.borrows b
 			where b = :borrow
 			""")

@@ -1,8 +1,9 @@
 package com.dodecaedro.library.infrastructure;
 
+import com.dodecaedro.library.domain.model.User;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
-import com.dodecaedro.library.domain.model.User;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -17,11 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UsersIT extends AbstractIntegrationTest {
 	@Test
 	public void getAllUsers() {
-		var users = when()
-				.get("/users")
+		var users =
+				when()
+					.get("/users")
 				.then().assertThat()
-				.statusCode(HTTP_OK)
-				.extract().jsonPath().getList("_embedded.users", User.class);
+					.statusCode(HTTP_OK)
+					.extract().jsonPath().getList("_embedded.users", User.class);
 
 		assertThat(users)
 				.extracting(User::getFirstName)
@@ -29,11 +31,13 @@ public class UsersIT extends AbstractIntegrationTest {
 	}
 
 	@Test
+	@Disabled
 	public void getUserById() {
 		var user = given()
-				.pathParam("id", "3060754f-8543-416f-b4f5-6f762c620f01")
+					.pathParam("id", "3060754f-8543-416f-b4f5-6f762c620f01")
+					//.queryParam("projection", "userExcerptProjection")
 				.when()
-					.get("/users/{id}")
+					.get("/users/{id}?projection=userExcerpt")
 				.then().assertThat()
 					.statusCode(HTTP_OK)
 					.extract().body().as(User.class);

@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,6 +22,7 @@ public interface JpaBookRepository extends CrudRepository<Book, UUID>, BookRepos
 	@Cacheable("books")
 	Optional<Book> findById(UUID bookId);
 
+	@CachePut(value = "books", key = "#p0.id")
 	Book save(Book book);
 
 	List<Book> findAll();

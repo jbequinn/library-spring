@@ -6,7 +6,6 @@ import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
 import com.dodecaedro.library.domain.repository.UserRepository;
 import com.dodecaedro.library.domain.service.BorrowService;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

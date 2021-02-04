@@ -15,5 +15,7 @@ public interface BookRepository {
 
 	List<Book> findAll();
 
+	List<Book> findAllById(Iterable<UUID> ids);
+
 	void delete(Book book);
 }

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,8 +24,6 @@ public interface JpaUserRepository extends PagingAndSortingRepository<User, UUID
 
 	@CachePut(value = "users", key = "#p0.id")
 	User save(User user);
-
-	List<User> findAll();
 
 	@Modifying
 	@CacheEvict("users")
