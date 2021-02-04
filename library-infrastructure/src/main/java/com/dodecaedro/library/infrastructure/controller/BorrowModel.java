@@ -1,34 +1,36 @@
 package com.dodecaedro.library.infrastructure.controller;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Data
+@Value
 @Builder
+@EqualsAndHashCode(callSuper = false)
 public class BorrowModel extends RepresentationModel<BorrowModel> {
-	private final UUID id;
-	private final ZonedDateTime borrowDate;
-	private final ZonedDateTime expectedReturnDate;
-	private final ZonedDateTime actualReturnDate;
-	private final UserModel user;
-	private final BookModel book;
+	UUID id;
+	ZonedDateTime borrowDate;
+	ZonedDateTime expectedReturnDate;
+	ZonedDateTime actualReturnDate;
+	UserModel user;
+	BookModel book;
 
-	@Data
+	@Value
 	@Builder
+	@EqualsAndHashCode(callSuper = false)
 	public static class BookModel extends RepresentationModel<BookModel> {
-		private final UUID id;
-		private final String title;
+		UUID id;
+		String title;
 	}
 
-	@Data
+	@Value
 	@Builder
+	@EqualsAndHashCode(callSuper = false)
 	public static class UserModel extends RepresentationModel<UserModel> {
-		private final UUID id;
-		private final String firstName;
-		private final String lastName;
+		UUID id;
+		String firstName;
+		String lastName;
 	}
 }
