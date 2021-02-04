@@ -12,7 +12,6 @@ import com.dodecaedro.library.domain.repository.BookRepository;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
 import com.dodecaedro.library.domain.repository.FineRepository;
 import com.dodecaedro.library.domain.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
