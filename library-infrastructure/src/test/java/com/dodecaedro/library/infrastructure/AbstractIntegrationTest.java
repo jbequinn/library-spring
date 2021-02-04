@@ -43,7 +43,7 @@ public abstract class AbstractIntegrationTest {
 			.withDatabaseName("librarydb");
 
 	private static final ElasticsearchContainer elasticsearchContainer =
-			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.9.0")
+			new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.10.2")
 					.withEnv("cluster.name", "integration-test-cluster");
 
 	@DynamicPropertySource
