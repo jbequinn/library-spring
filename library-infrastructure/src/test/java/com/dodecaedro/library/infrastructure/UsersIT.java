@@ -31,7 +31,6 @@ public class UsersIT extends AbstractIntegrationTest {
 	}
 
 	@Test
-	@Disabled
 	public void getUserById() {
 		var user = given()
 					.pathParam("id", "3060754f-8543-416f-b4f5-6f762c620f01")
