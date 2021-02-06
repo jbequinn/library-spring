@@ -7,6 +7,7 @@ plugins {
 }
 
 dependencies {
+	implementation(project(":library-model"))
 	implementation(project(":library-domain"))
 
 	implementation("org.springframework.boot:spring-boot-starter")

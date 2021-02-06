@@ -1,5 +1,5 @@
 rootProject.name = "library-spring"
-include("library-domain", "library-infrastructure")
+include("library-model", "library-domain", "library-infrastructure")
 
 pluginManagement {
 	repositories {
