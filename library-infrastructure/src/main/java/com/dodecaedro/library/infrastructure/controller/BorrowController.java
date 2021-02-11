@@ -5,27 +5,20 @@ import com.dodecaedro.library.domain.exception.BorrowMaximumLimitException;
 import com.dodecaedro.library.domain.exception.ExpiredBorrowException;
 import com.dodecaedro.library.domain.model.Borrow;
 import com.dodecaedro.library.domain.repository.BorrowRepository;
-import com.dodecaedro.library.domain.repository.UserRepository;
 import com.dodecaedro.library.domain.service.BorrowService;
-import com.dodecaedro.library.infrastructure.repository.JpaUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.ExposesResourceFor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RepositoryRestController
 @RequestMapping("borrows")

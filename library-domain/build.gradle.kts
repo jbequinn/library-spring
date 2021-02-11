@@ -1,7 +1,6 @@
 plugins {
 	id("com.dodecaedro.library.java-library-conventions")
-	id("org.jetbrains.kotlin.jvm") version "1.4.20-RC"
-	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.20-RC"
+	kotlin("jvm") version "1.4.30"
 }
 
 dependencies {
@@ -17,6 +16,6 @@ dependencies {
 	compileOnly("jakarta.transaction:jakarta.transaction-api:1.3.3")
 	compileOnly("jakarta.validation:jakarta.validation-api:2.0.2")
 
-	testCompileOnly("org.projectlombok:lombok:1.18.12")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
+	testCompileOnly("org.projectlombok:lombok:1.18.18")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.18")
 }

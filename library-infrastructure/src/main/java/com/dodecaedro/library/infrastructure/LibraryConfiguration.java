@@ -19,11 +19,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.config.BootstrapMode;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.function.Consumer;
 
 @Configuration
 @EnableConfigurationProperties

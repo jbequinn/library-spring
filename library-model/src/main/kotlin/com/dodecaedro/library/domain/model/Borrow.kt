@@ -6,17 +6,17 @@ import javax.persistence.*
 
 @Entity
 data class Borrow(
-		@Id val id: UUID? = UUID.randomUUID(),
-		@ManyToOne
+	@Id val id: UUID? = UUID.randomUUID(),
+	@ManyToOne
 		@JoinColumn(name = "book_id")
 		var book: Book?,
-		@ManyToOne
+	@ManyToOne
 		@JoinColumn(name = "user_id")
 		var user: User?,
-		@Column(name = "borrow_date")
+	@Column(name = "borrow_date")
 		var borrowDate: ZonedDateTime?,
-		@Column(name = "expected_return_date")
+	@Column(name = "expected_return_date")
 		var expectedReturnDate: ZonedDateTime?,
-		@Column(name = "actual_return_date")
+	@Column(name = "actual_return_date")
 		var actualReturnDate: ZonedDateTime?,
 )
