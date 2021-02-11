@@ -8,15 +8,15 @@ import javax.persistence.*
 data class Borrow(
 	@Id val id: UUID? = UUID.randomUUID(),
 	@ManyToOne
-		@JoinColumn(name = "book_id")
-		var book: Book?,
+	@JoinColumn(name = "book_id")
+	var book: Book?,
 	@ManyToOne
-		@JoinColumn(name = "user_id")
-		var user: User?,
+	@JoinColumn(name = "user_id")
+	var user: User?,
 	@Column(name = "borrow_date")
-		var borrowDate: ZonedDateTime?,
+	var borrowDate: ZonedDateTime?,
 	@Column(name = "expected_return_date")
-		var expectedReturnDate: ZonedDateTime?,
+	var expectedReturnDate: ZonedDateTime?,
 	@Column(name = "actual_return_date")
-		var actualReturnDate: ZonedDateTime?,
+	var actualReturnDate: ZonedDateTime?,
 )
