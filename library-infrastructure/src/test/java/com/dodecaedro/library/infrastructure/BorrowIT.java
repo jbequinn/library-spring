@@ -26,19 +26,22 @@ public class BorrowIT extends AbstractIntegrationTest {
 	@Test
 	public void createBorrow() {
 		// GIVEN a valid user and book
-		var user = User.builder().id(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01")).build();
-		var book = Book.builder().id(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06")).build();
+		var user = new User(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01"), null, null, null, null, null, null, null, null);
+		var book = new Book(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06"), null, null, null);
 
 		// WHEN a new borrow is created
 		var borrow =
 				given()
 					.contentType(ContentType.JSON)
 					.accept(ContentType.ANY)
-					.body(toJson(Borrow.builder()
-						.id(null)
-						.user(user)
-						.book(book)
-						.build()))
+					.body(toJson(new Borrow(
+							null,
+							book,
+							user,
+							null,
+							null,
+							null
+					)))
 				.when()
 					.post("/borrows/borrow")
 				.then().assertThat()

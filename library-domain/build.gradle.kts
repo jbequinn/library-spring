@@ -1,9 +1,14 @@
 plugins {
 	id("com.dodecaedro.library.java-library-conventions")
+	id("org.jetbrains.kotlin.jvm") version "1.4.20-RC"
+	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.20-RC"
 }
 
 dependencies {
 	implementation(project(":library-model"))
+
+	implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 
 	compileOnly("org.projectlombok:lombok:1.18.18")
 	annotationProcessor("org.projectlombok:lombok:1.18.18")

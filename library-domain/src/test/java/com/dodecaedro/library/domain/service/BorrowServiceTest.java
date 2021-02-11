@@ -24,6 +24,7 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -46,10 +47,8 @@ public class BorrowServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		borrowService = new BorrowService(LibraryProperties.builder()
-				.borrowLength(2)
-				.maximumBorrows(2)
-				.build(),
+		borrowService = new BorrowService(
+				new LibraryProperties(2, 2),
 				fineRepository,
 				borrowRepository, bookRepository, userRepository);
 	}
@@ -57,8 +56,8 @@ public class BorrowServiceTest {
 	@Test
 	void successfulBorrowBook() throws Exception {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -96,8 +95,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnActiveFines() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -107,7 +106,7 @@ public class BorrowServiceTest {
 
 		// GIVEN that the user *does have* an active fine
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
-				.thenReturn(List.of(Fine.builder().build()));
+				.thenReturn(List.of(new Fine()));
 
 		// WHEN trying to borrow a book
 		// THEN an error happens
@@ -121,8 +120,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnExpiredBorrows() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -150,8 +149,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnActiveBorrows() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -181,7 +180,7 @@ public class BorrowServiceTest {
 	@Test
 	void failOnNullUser() {
 		// GIVEN a valid book
-		var validBook = Book.builder().build();
+		var validBook = new Book(UUID.randomUUID(), null, "abc-123", null);
 
 		// WHEN trying to borrow that book by a null user
 		// THEN an error happens
@@ -194,11 +193,10 @@ public class BorrowServiceTest {
 	@Test
 	void failOnBookWithoutId() {
 		// GIVEN an invalid book: it has no id
-		var invalidBook = Book.builder().build();
-		invalidBook.setId(null);
+		var invalidBook = new Book(null, null, "abc-123", null);
 
 		// GIVEN a valid user
-		User validUser = User.builder().build();
+		User validUser = new User();
 
 		// WHEN trying to borrow that book by a user
 		// THEN an error happens
@@ -211,7 +209,7 @@ public class BorrowServiceTest {
 	@Test
 	void failOnNullBook() {
 		// GIVEN a valid user
-		User validUser = User.builder().build();
+		User validUser = new User();
 
 		// WHEN trying to borrow a null book by a user
 		// THEN an error happens
@@ -224,11 +222,11 @@ public class BorrowServiceTest {
 	@Test
 	void failOnUserWithoutId() {
 		// GIVEN an valid book
-		var validBook = Book.builder().build();
+		var validBook = new Book(UUID.randomUUID(), null, "abc-123", null);
 
 		// GIVEN an invalid user: he has no id
-		User invalidUser = User.builder().build();
-		invalidUser.setId(null);
+		User invalidUser = new User(null, null, null, null, null, null, null, null, null);
+
 
 		// WHEN trying to borrow that book by a user without id
 		// THEN an error happens
@@ -241,8 +239,8 @@ public class BorrowServiceTest {
 	@Test
 	void returnBookWithoutFine() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -251,11 +249,14 @@ public class BorrowServiceTest {
 				.thenReturn(Optional.of(book));
 
 		// GIVEN that a borrow exists for that pair
-		var borrow = Borrow.builder()
-				.book(book)
-				.user(user)
-				.expectedReturnDate(ZonedDateTime.now().plusDays(1))
-				.build();
+		var borrow = new Borrow(
+				UUID.randomUUID(),
+				book,
+				user,
+				null,
+				ZonedDateTime.now().plusDays(1),
+				null
+		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
 
@@ -277,8 +278,8 @@ public class BorrowServiceTest {
 	@Test
 	void returnBookWithFine() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -287,12 +288,15 @@ public class BorrowServiceTest {
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a borrow exists for that pair
-		var borrow = Borrow.builder()
-				.book(book)
-				.user(user)
+		var borrow = new Borrow(
+				UUID.randomUUID(),
+				book,
+				user,
+				null,
 				// the book should've been returned yesterday
-				.expectedReturnDate(ZonedDateTime.now().minusDays(1))
-				.build();
+				ZonedDateTime.now().minusDays(1),
+				null
+		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
 				.thenReturn(Optional.of(borrow));
 
@@ -320,8 +324,8 @@ public class BorrowServiceTest {
 	@Test
 	void failOnNonExistingBorrow() {
 		// GIVEN a book and a user
-		var book = Book.builder().isbn("abc-123").build();
-		var user = User.builder().email("karim@benzema.com").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
 		when(userRepository.findById(eq(user.getId())))
@@ -342,14 +346,14 @@ public class BorrowServiceTest {
 	@Test
 	void failOnBorrowNonExistingUser() {
 		// GIVEN an existing book
-		var book = Book.builder().isbn("abc-123").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
 
 		// GIVEN that the book exists in the repository
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.of(book));
 
 		// GIVEN a non-existing user
-		var user = User.builder().email("karim@benzema.com").build();
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 		when(userRepository.findById(eq(user.getId())))
 				.thenReturn(Optional.empty());
 
@@ -362,12 +366,12 @@ public class BorrowServiceTest {
 	@Test
 	void failOnBorrowNonExistingBook() {
 		// GIVEN an non-existing book
-		var book = Book.builder().isbn("abc-123").build();
+		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
 		when(bookRepository.findById(eq(book.getId())))
 				.thenReturn(Optional.empty());
 
 		// GIVEN an existing user
-		var user = User.builder().email("karim@benzema.com").build();
+		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// WHEN the user tries to borrow the non-existing book
 		assertThatExceptionOfType(EntityNotFoundException.class)

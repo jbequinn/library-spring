@@ -7,6 +7,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -54,11 +55,12 @@ public class BooksIT extends AbstractIntegrationTest {
 			given()
 				.contentType(ContentType.JSON)
 				.accept(ContentType.ANY)
-				.body(toJson(Book.builder()
-					.isbn("123-456-789")
-					.title("Matar a un ruiseñor")
-					.dateTimeBought(ZonedDateTime.parse("2014-09-01T00:00:00.0Z"))
-					.build()))
+				.body(toJson(new Book(
+						UUID.randomUUID(),
+						"Matar a un ruiseñor",
+						"123-456-789",
+						ZonedDateTime.parse("2014-09-01T00:00:00.0Z")
+				)))
 			.when()
 				.post("/books")
 			.then().assertThat()
