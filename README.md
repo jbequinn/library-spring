@@ -9,6 +9,7 @@ Simple Spring application for lending books to users. This project is a testing 
 - Spring Boot
 - Spring Data JPA
 - Spring Data Rest
+- Kotlin
 - Hibernate
 - Flyway
 - Elasticsearch
