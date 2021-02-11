@@ -15,5 +15,7 @@ interface BorrowRepository {
 
 	fun countExpiredBorrows(user: User, nowDate: ZonedDateTime): Int
 
+	fun findAllExpiredBorrows(time: ZonedDateTime): List<Borrow>
+
 	fun countActiveBorrows(user: User): Int
 }
