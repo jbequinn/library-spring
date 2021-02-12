@@ -20,7 +20,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
 
 	implementation("org.flywaydb:flyway-core")
 
