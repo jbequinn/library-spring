@@ -1,6 +1,7 @@
 plugins {
-	id("com.dodecaedro.library.java-library-conventions")
-	kotlin("jvm") version "1.4.30"
+	kotlin("jvm")
+	id("net.saliman.cobertura")
+	id("com.github.kt3k.coveralls")
 }
 
 dependencies {
@@ -8,14 +9,20 @@ dependencies {
 
 	implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	compileOnly("org.projectlombok:lombok:1.18.18")
-	annotationProcessor("org.projectlombok:lombok:1.18.18")
-	implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+	implementation("jakarta.persistence:jakarta.persistence-api")
 
-	compileOnly("jakarta.transaction:jakarta.transaction-api:1.3.3")
-	compileOnly("jakarta.validation:jakarta.validation-api:2.0.2")
+	compileOnly("jakarta.transaction:jakarta.transaction-api")
+	compileOnly("jakarta.validation:jakarta.validation-api")
 
-	testCompileOnly("org.projectlombok:lombok:1.18.18")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.18")
+	testCompileOnly("org.projectlombok:lombok")
+	testAnnotationProcessor("org.projectlombok:lombok")
+
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testImplementation("org.mockito:mockito-core")
+	testImplementation("org.mockito:mockito-junit-jupiter")
+	testImplementation("org.assertj:assertj-core")
 }

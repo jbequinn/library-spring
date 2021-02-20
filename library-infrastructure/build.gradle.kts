@@ -1,9 +1,7 @@
 plugins {
-	id("com.dodecaedro.library.java-application-conventions")
-	id("net.saliman.cobertura") version "4.0.0"
-	id("com.github.kt3k.coveralls") version "2.10.2"
-	id("org.springframework.boot") version "2.5.0-M1"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	kotlin("jvm")
+	id("net.saliman.cobertura")
+	id("com.github.kt3k.coveralls")
 }
 
 dependencies {
@@ -20,7 +18,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	implementation("org.flywaydb:flyway-core")
 
@@ -38,12 +36,4 @@ dependencies {
 	testImplementation("com.github.database-rider:rider-spring:1.22.0")
 	testImplementation("org.assertj:assertj-core")
 	testImplementation("io.rest-assured:rest-assured")
-}
-
-extra["testcontainersVersion"] = "1.15.1"
-
-dependencyManagement {
-	imports {
-		mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
-	}
 }

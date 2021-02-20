@@ -1,17 +1,17 @@
 plugins {
-	id("com.dodecaedro.library.java-library-conventions")
-	kotlin("jvm") version "1.4.30"
-	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.30-RC"
+	kotlin("jvm")
+	id ("org.jetbrains.kotlin.plugin.jpa")
 }
 
 dependencies {
 	implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	compileOnly("org.projectlombok:lombok:1.18.18")
-	annotationProcessor("org.projectlombok:lombok:1.18.18")
-	implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+	implementation("jakarta.persistence:jakarta.persistence-api")
 
-	testCompileOnly("org.projectlombok:lombok:1.18.18")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.18")
+	testCompileOnly("org.projectlombok:lombok")
+	testAnnotationProcessor("org.projectlombok:lombok")
 }

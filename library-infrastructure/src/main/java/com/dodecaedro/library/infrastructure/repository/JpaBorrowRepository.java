@@ -48,5 +48,5 @@ public interface JpaBorrowRepository extends PagingAndSortingRepository<Borrow, 
 			WHERE u = :user
 			AND b.actualReturnDate IS NULL
 			""")
-	int countActiveBorrows(User user);
+	int countActiveBorrows(@Param("user") User user);
 }

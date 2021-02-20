@@ -75,7 +75,7 @@ public abstract class AbstractIntegrationTest {
 		TimeZone.setDefault(TimeZone.getTimeZone(UTC)); // because DBUnit doesn't handle timezones correctly
 	}
 
-	String toJson(Object object) {
+	protected String toJson(Object object) {
 		try {
 			return objectMapper.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
