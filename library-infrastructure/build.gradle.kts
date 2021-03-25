@@ -22,8 +22,8 @@ dependencies {
 
 	implementation("org.flywaydb:flyway-core")
 
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
+	compileOnly("org.projectlombok:lombok:edge-SNAPSHOT")
+	annotationProcessor("org.projectlombok:lombok:edge-SNAPSHOT")
 
 	runtimeOnly("org.postgresql:postgresql")
 

@@ -11,15 +11,15 @@ dependencies {
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
+	compileOnly("org.projectlombok:lombok:edge-SNAPSHOT")
+	annotationProcessor("org.projectlombok:lombok:edge-SNAPSHOT")
 	implementation("jakarta.persistence:jakarta.persistence-api")
 
 	compileOnly("jakarta.transaction:jakarta.transaction-api")
 	compileOnly("jakarta.validation:jakarta.validation-api")
 
-	testCompileOnly("org.projectlombok:lombok")
-	testAnnotationProcessor("org.projectlombok:lombok")
+	testCompileOnly("org.projectlombok:lombok:edge-SNAPSHOT")
+	testAnnotationProcessor("org.projectlombok:lombok:edge-SNAPSHOT")
 
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testImplementation("org.mockito:mockito-core")
