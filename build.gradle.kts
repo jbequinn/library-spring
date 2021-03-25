@@ -20,7 +20,7 @@ allprojects {
 	version = "1.0-SNAPSHOT"
 
 	apply(plugin = "java")
-	java.sourceCompatibility = JavaVersion.VERSION_15
+	java.sourceCompatibility = JavaVersion.VERSION_16
 
 	repositories {
 		mavenCentral()
