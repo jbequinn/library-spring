@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.0-M3" apply false
+	id("org.springframework.boot") version "2.5.0-RC1" apply false
 	id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
 	id("net.saliman.cobertura") version "4.0.0" apply false
 	id("com.github.kt3k.coveralls") version "2.12.0" apply false
