@@ -7,7 +7,7 @@ plugins {
 	id("com.github.kt3k.coveralls") version "2.12.0" apply false
 	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.30-RC" apply false
 
-	kotlin("jvm") version "1.4.32"
+	kotlin("jvm") version "1.5.0"
 	kotlin("plugin.spring") version "1.4.32" apply false
 
 	java
