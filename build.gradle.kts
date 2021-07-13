@@ -8,7 +8,7 @@ plugins {
 	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.30-RC" apply false
 
 	kotlin("jvm") version "1.5.10"
-	kotlin("plugin.spring") version "1.5.20" apply false
+	kotlin("plugin.spring") version "1.5.21" apply false
 
 	java
 	idea
