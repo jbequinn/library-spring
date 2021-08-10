@@ -33,7 +33,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:elasticsearch")
 	testImplementation("org.testcontainers:postgresql")
-	testImplementation("com.github.database-rider:rider-spring:1.26.0")
+	testImplementation("com.github.database-rider:rider-spring:1.28.0")
 	testImplementation("org.assertj:assertj-core")
 	testImplementation("io.rest-assured:rest-assured")
 }
