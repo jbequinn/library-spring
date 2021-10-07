@@ -8,10 +8,10 @@ dependencies {
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	compileOnly("org.projectlombok:lombok:1.18.20")
+	compileOnly("org.projectlombok:lombok:1.18.22")
 	annotationProcessor("org.projectlombok:lombok:1.18.20")
 	implementation("jakarta.persistence:jakarta.persistence-api")
 
-	testCompileOnly("org.projectlombok:lombok:edge-SNAPSHOT")
+	testCompileOnly("org.projectlombok:lombok:1.18.22")
 	testAnnotationProcessor("org.projectlombok:lombok:edge-SNAPSHOT")
 }
