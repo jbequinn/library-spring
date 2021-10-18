@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring")
 	id("net.saliman.cobertura")
 	id("com.github.kt3k.coveralls")
+	id("io.freefair.lombok")
 }
 
 dependencies {
@@ -22,9 +23,6 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	implementation("org.flywaydb:flyway-core")
-
-	compileOnly("org.projectlombok:lombok:1.18.20")
-	annotationProcessor("org.projectlombok:lombok:1.18.20")
 
 	runtimeOnly("org.postgresql:postgresql")
 

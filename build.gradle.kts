@@ -6,6 +6,7 @@ plugins {
 	id("net.saliman.cobertura") version "4.0.0" apply false
 	id("com.github.kt3k.coveralls") version "2.12.0" apply false
 	id ("org.jetbrains.kotlin.plugin.jpa") version "1.6.0-RC" apply false
+	id("io.freefair.lombok") version "6.2.0" apply false
 
 	kotlin("jvm") version "1.5.31"
 	kotlin("plugin.spring") version "1.5.31" apply false

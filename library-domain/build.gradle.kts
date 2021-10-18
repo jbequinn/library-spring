@@ -2,6 +2,7 @@ plugins {
 	kotlin("jvm")
 	id("net.saliman.cobertura")
 	id("com.github.kt3k.coveralls")
+	id("io.freefair.lombok")
 }
 
 dependencies {
@@ -11,15 +12,10 @@ dependencies {
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	compileOnly("org.projectlombok:lombok:1.18.20")
-	annotationProcessor("org.projectlombok:lombok:1.18.20")
 	implementation("jakarta.persistence:jakarta.persistence-api")
 
 	compileOnly("jakarta.transaction:jakarta.transaction-api")
 	compileOnly("jakarta.validation:jakarta.validation-api")
-
-	testCompileOnly("org.projectlombok:lombok:edge-SNAPSHOT")
-	testAnnotationProcessor("org.projectlombok:lombok:edge-SNAPSHOT")
 
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testImplementation("org.mockito:mockito-core")
