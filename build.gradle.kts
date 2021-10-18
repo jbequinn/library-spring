@@ -5,7 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
 	id("net.saliman.cobertura") version "4.0.0" apply false
 	id("com.github.kt3k.coveralls") version "2.12.0" apply false
-	id ("org.jetbrains.kotlin.plugin.jpa") version "1.4.30-RC" apply false
+	id ("org.jetbrains.kotlin.plugin.jpa") version "1.6.0-RC" apply false
 
 	kotlin("jvm") version "1.5.31"
 	kotlin("plugin.spring") version "1.5.31" apply false
