@@ -1,5 +1,6 @@
 plugins {
 	kotlin("jvm")
+	kotlin("plugin.spring")
 	id("net.saliman.cobertura")
 	id("com.github.kt3k.coveralls")
 }
