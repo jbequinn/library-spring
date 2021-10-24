@@ -24,14 +24,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RepositoryRestController // override some methods from the @RepositoryRestResource
-@RequestMapping("books")
 @RequiredArgsConstructor
 public class BookController {
 	@NonNull private final JpaBookRepository bookRepository;
 	@NonNull private final ElasticBookSearchDocumentRepository searchDocumentRepository;
 	@NonNull private final BookToSearchDocumentConverter bookToSearchDocumentConverter;
 
-	@PostMapping
+	@PostMapping("books")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
 	@Transactional
@@ -41,7 +40,7 @@ public class BookController {
 		return resourceAssembler.toModel(bookRepository.save(book));
 	}
 
-	@GetMapping("search")
+	@GetMapping("books/search")
 	public ResponseEntity<?> findBooksByAttributes(@RequestParam("title") String title) {
 		var bookIds = searchDocumentRepository.findByTitle(title).stream()
 			.map(BookSearchDocument::getId)

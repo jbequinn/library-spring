@@ -21,13 +21,12 @@ import java.time.ZonedDateTime;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RepositoryRestController
-@RequestMapping("borrows")
 @RequiredArgsConstructor
 public class BorrowController {
 	@NonNull private final BorrowService borrowService;
 	@NonNull private final BorrowRepository borrowRepository;
 
-	@PostMapping("borrow")
+	@PostMapping("borrows/borrow")
 	public ResponseEntity<?> borrowBook(@RequestBody Borrow borrow)
 			throws ExpiredBorrowException, ActiveFinesException, BorrowMaximumLimitException {
 
@@ -38,13 +37,13 @@ public class BorrowController {
 				.body(EntityModel.of(createdBorrow));
 	}
 
-	@PostMapping("return")
+	@PostMapping("borrows/return")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void returnBook(@RequestBody Borrow borrow) {
 		borrowService.returnBook(borrow.getBook(), borrow.getUser());
 	}
 
-	@GetMapping("expired")
+	@GetMapping("borrows/expired")
 	public ResponseEntity<CollectionModel<BorrowModel>> getAllExpiredBorrowsAfter(
 			@RequestParam("time")
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)	ZonedDateTime time) {
