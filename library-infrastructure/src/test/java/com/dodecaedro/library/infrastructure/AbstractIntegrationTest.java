@@ -37,7 +37,7 @@ public abstract class AbstractIntegrationTest {
 	@LocalServerPort
 	private int port;
 
-	private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:13-alpine")
+	private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:14-alpine")
 			.withUsername("libraryuser")
 			.withPassword("librarypassword")
 			.withDatabaseName("librarydb");
