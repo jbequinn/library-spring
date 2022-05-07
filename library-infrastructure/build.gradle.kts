@@ -6,6 +6,10 @@ plugins {
 	id("io.freefair.lombok")
 }
 
+configurations.implementation {
+	exclude(group = "org.springframework.boot", module = "spring-boot-starter-tomcat")
+}
+
 dependencies {
 	implementation(project(":library-model"))
 	implementation(project(":library-domain"))
@@ -19,6 +23,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-jetty")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
