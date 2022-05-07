@@ -9,7 +9,7 @@ plugins {
 	id("io.freefair.lombok") version "6.4.0" apply false
 
 	kotlin("jvm") version "1.6.21"
-	kotlin("plugin.spring") version "1.6.10" apply false
+	kotlin("plugin.spring") version "1.6.21" apply false
 
 	java
 	idea
