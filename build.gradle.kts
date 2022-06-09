@@ -8,7 +8,7 @@ plugins {
 	id ("org.jetbrains.kotlin.plugin.jpa") version "1.6.0-RC" apply false
 	id("io.freefair.lombok") version "6.4.3" apply false
 
-	kotlin("jvm") version "1.6.21"
+	kotlin("jvm") version "1.7.0"
 	kotlin("plugin.spring") version "1.6.21" apply false
 
 	java
