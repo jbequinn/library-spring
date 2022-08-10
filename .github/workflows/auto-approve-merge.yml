@@ -1,5 +1,11 @@
 name: Dependabot auto-approve and merge
-on: pull_request
+
+# Only trigger when the build workflow succeeded
+on:
+  workflow_run:
+    workflows: ["CI build"]
+    types:
+      - completed
 
 permissions:
   contents: write
