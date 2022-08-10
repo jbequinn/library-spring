@@ -16,9 +16,9 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
-      
+
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2          
-          
+        uses: gradle/gradle-build-action@v2
+
       - name: Execute Gradle build
-        run: ./gradlew -Dkotlin.daemon.jvm.options=--illegal-access=permit build
+        run: ./gradlew build
