@@ -2,6 +2,9 @@ name: Dependabot auto-approve and merge
 
 # Only trigger when the build workflow succeeded
 on:
+  pull_request:
+    branches:
+      - main  
   workflow_run:
     workflows: ["CI build"]
     types:
@@ -12,9 +15,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  dependabot:
+  on-successful-build:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ (github.actor == 'dependabot[bot]') && (github.event.workflow_run.conclusion == 'success') }}
     steps:
       - name: Dependabot metadata
         id: metadata
