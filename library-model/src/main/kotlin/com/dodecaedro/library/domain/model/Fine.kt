@@ -9,9 +9,9 @@ data class Fine(
 	@Id val id: UUID? = UUID.randomUUID(),
 	@ManyToOne
 	@JoinColumn(name = "user_id", insertable = false, updatable = false)
-	var user: User?,
+	var user: User,
 	@Column(name = "fine_start_date")
-	var fineStartDate: ZonedDateTime?,
+	var fineStartDate: ZonedDateTime,
 	@Column(name = "fine_end_date")
-	var fineEndDate: ZonedDateTime?,
+	var fineEndDate: ZonedDateTime,
 )

@@ -9,7 +9,7 @@ import java.util.*
 interface BorrowRepository {
 	fun save(borrow: Borrow): Borrow
 
-	fun findByBookAndUser(book: Book, user: User): Optional<Borrow>
+	fun findByBookAndUser(book: Book, user: User): Borrow?
 
 	fun findAll(): List<Borrow>
 

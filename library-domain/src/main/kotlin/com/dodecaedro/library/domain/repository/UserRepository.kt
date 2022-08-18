@@ -4,7 +4,7 @@ import com.dodecaedro.library.domain.model.User
 import java.util.*
 
 interface UserRepository {
-	fun findById(userId: UUID): Optional<User>
+	fun findUserById(userId: UUID): User?
 
 	fun save(user: User): User
 

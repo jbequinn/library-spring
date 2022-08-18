@@ -7,11 +7,11 @@ import java.time.ZonedDateTime
 import java.util.*
 
 interface FineRepository {
-	fun findTopByUserOrderByFineEndDateDesc(user: User): Optional<Fine>
+	fun findTopByUserOrderByFineEndDateDesc(user: User): Fine?
 
 	fun save(fine: Fine): Fine
 
 	fun findActiveFinesInDate(user: User, time: ZonedDateTime): List<Fine>
 
-	fun findByBorrow(borrow: Borrow): Optional<Fine>
+	fun findByBorrow(borrow: Borrow): Fine?
 }

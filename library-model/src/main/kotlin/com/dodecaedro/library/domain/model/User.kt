@@ -17,7 +17,7 @@ data class User(
 	@Column(name = "join_date")
 	var joinDateTime: ZonedDateTime?,
 	@OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
-	var borrows: MutableList<Borrow>?,
+	var borrows: MutableList<Borrow>? = mutableListOf(),
 	@OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
-	var fines: MutableList<Fine>?,
+	var fines: MutableList<Fine>? = mutableListOf(),
 )

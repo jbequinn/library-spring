@@ -9,6 +9,7 @@ import io.restassured.http.ContentType;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -26,7 +27,8 @@ public class BorrowIT extends AbstractIntegrationTest {
 	@Test
 	public void createBorrow() {
 		// GIVEN a valid user and book
-		var user = new User(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01"), null, null, null, null, null, null, null, null);
+		var user = new User(UUID.fromString("3060754f-8543-416f-b4f5-6f762c620f01"), null, null,
+				null, null, null, null, null, null);
 		var book = new Book(UUID.fromString("264c72cb-c43e-4160-bd92-6f5fd1b22a06"), null, null, null);
 
 		// WHEN a new borrow is created

@@ -60,10 +60,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that the user does not have any active fines nor expired borrows
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
@@ -99,10 +99,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that the user *does have* an active fine
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
@@ -124,10 +124,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that the user does not have any fines
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
@@ -153,10 +153,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that the user does not have any active fines nor expired borrows
 		when(fineRepository.findActiveFinesInDate(eq(user), any()))
@@ -200,7 +200,7 @@ public class BorrowServiceTest {
 
 		// WHEN trying to borrow that book by a user
 		// THEN an error happens
-		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(invalidBook, validUser));
+		assertThatIllegalArgumentException().isThrownBy(() -> borrowService.borrowBook(invalidBook, validUser));
 
 		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
@@ -230,7 +230,7 @@ public class BorrowServiceTest {
 
 		// WHEN trying to borrow that book by a user without id
 		// THEN an error happens
-		assertThatNullPointerException().isThrownBy(() -> borrowService.borrowBook(validBook, invalidUser));
+		assertThatIllegalArgumentException().isThrownBy(() -> borrowService.borrowBook(validBook, invalidUser));
 
 		// AND THEN no borrow is created
 		verify(borrowRepository, never()).save(any());
@@ -243,10 +243,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that a borrow exists for that pair
 		var borrow = new Borrow(
@@ -258,7 +258,7 @@ public class BorrowServiceTest {
 				null
 		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
-				.thenReturn(Optional.of(borrow));
+				.thenReturn(borrow);
 
 		// GIVEN that the repository accepts new borrows
 		when(borrowRepository.save(any()))
@@ -282,10 +282,10 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN a borrow exists for that pair
 		var borrow = new Borrow(
@@ -298,7 +298,7 @@ public class BorrowServiceTest {
 				null
 		);
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
-				.thenReturn(Optional.of(borrow));
+				.thenReturn(borrow);
 
 		// GIVEN that the repository accepts new borrows
 		when(borrowRepository.save(any()))
@@ -328,14 +328,14 @@ public class BorrowServiceTest {
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
 
 		// GIVEN that the book and the user exist in the repositories
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.of(user));
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(user);
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN that no borrow exists for that user/book pair
 		when(borrowRepository.findByBookAndUser(eq(book), eq(user)))
-				.thenReturn(Optional.empty());
+				.thenReturn(null);
 
 		// WHEN the user tries to return the book
 		// THEN an error happens
@@ -349,13 +349,13 @@ public class BorrowServiceTest {
 		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
 
 		// GIVEN that the book exists in the repository
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.of(book));
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(book);
 
 		// GIVEN a non-existing user
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);
-		when(userRepository.findById(eq(user.getId())))
-				.thenReturn(Optional.empty());
+		when(userRepository.findUserById(eq(user.getId())))
+				.thenReturn(null);
 
 		// WHEN the non-existing user tries to borrow the book
 		assertThatExceptionOfType(EntityNotFoundException.class)
@@ -367,8 +367,8 @@ public class BorrowServiceTest {
 	void failOnBorrowNonExistingBook() {
 		// GIVEN an non-existing book
 		var book = new Book(UUID.randomUUID(), null, "abc-123", null);
-		when(bookRepository.findById(eq(book.getId())))
-				.thenReturn(Optional.empty());
+		when(bookRepository.findBookById(eq(book.getId())))
+				.thenReturn(null);
 
 		// GIVEN an existing user
 		var user = new User(UUID.randomUUID(), null, null, null, null, "karim@benzema.com", null, null, null);

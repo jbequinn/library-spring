@@ -4,11 +4,12 @@ import com.dodecaedro.library.domain.model.Book
 import java.util.*
 
 interface BookRepository {
-	fun findById(bookId: UUID): Optional<Book>
+
+	fun findBookById(bookId: UUID): Book?
 
 	fun save(book: Book): Book
 
-	fun findByIsbn(isbn: String): Optional<Book>
+	fun findByIsbn(isbn: String): Book?
 
 	fun findAll(): List<Book>
 
