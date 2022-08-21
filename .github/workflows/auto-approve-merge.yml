@@ -1,23 +1,17 @@
+# remember to set a 'required check' (e.g. 'build'), so the automerge depends on it
+
 name: Dependabot auto-approve and merge
 
-# Only trigger when the build workflow succeeded
-on:
-  pull_request:
-    branches:
-      - main  
-  workflow_run:
-    workflows: ["CI build"]
-    types:
-      - completed
+on: pull_request_target
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  on-successful-build:
+  approve-automerge:
     runs-on: ubuntu-latest
-    if: ${{ (github.actor == 'dependabot[bot]') && (github.event.workflow_run.conclusion == 'success') }}
+    if: ${{ (github.actor == 'dependabot[bot]') }}
     steps:
       - name: Dependabot metadata
         id: metadata
@@ -30,7 +24,8 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr merge --auto --merge --delete-branch "$PR_URL"
         env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
