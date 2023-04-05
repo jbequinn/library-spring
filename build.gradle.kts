@@ -41,7 +41,7 @@ allprojects {
 		configure<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension> {
 			imports {
 				mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-				mavenBom("org.testcontainers:testcontainers-bom:1.17.6")
+				mavenBom("org.testcontainers:testcontainers-bom:1.18.0")
 			}
 		}
 
